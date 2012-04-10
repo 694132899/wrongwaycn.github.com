@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | How to use Django with Apache and mod_wsgi | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/howto/deployment/modwsgi/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-how-to-use-django-with-apache-and-mod-wsgi">
+<span id="s-howto-deployment-modwsgi"></span><span id="how-to-use-django-with-apache-and-mod-wsgi"></span><span id="howto-deployment-modwsgi"></span><h1>How to use Django with Apache and mod_wsgi<a class="headerlink" href="index.html#how-to-use-django-with-apache-and-mod-wsgi" title="Permalink to this headline">¶</a></h1>
+<p>Deploying Django with <a class="reference external" href="http://httpd.apache.org/">Apache</a> and <a class="reference external" href="http://code.google.com/p/modwsgi/">mod_wsgi</a> is the recommended way to get
+Django into production.</p>
+<p>mod_wsgi is an Apache module which can be used to host any Python application
+which supports the <a class="reference external" href="http://www.python.org/dev/peps/pep-0333/">Python WSGI interface</a>, including Django. Django will work
+with any version of Apache which supports mod_wsgi.</p>
+<p>The <a class="reference external" href="http://code.google.com/p/modwsgi/">official mod_wsgi documentation</a> is fantastic; it&#8217;s your source for all
+the details about how to use mod_wsgi. You&#8217;ll probably want to start with the
+<a class="reference external" href="http://code.google.com/p/modwsgi/wiki/InstallationInstructions">installation and configuration documentation</a>.</p>
+<div class="section" id="s-basic-configuration">
+<span id="basic-configuration"></span><h2>Basic Configuration<a class="headerlink" href="index.html#basic-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Once you&#8217;ve got mod_wsgi installed and activated, edit your <tt class="docutils literal"><span class="pre">httpd.conf</span></tt> file
+and add:</p>
+<div class="highlight-python"><pre>WSGIScriptAlias / /path/to/mysite/apache/django.wsgi</pre>
+</div>
+<p>The first bit above is the url you want to be serving your application at (<tt class="docutils literal"><span class="pre">/</span></tt>
+indicates the root url), and the second is the location of a &quot;WSGI file&quot; -- see
+below -- on your system, usually inside of your project. This tells Apache
+to serve any request below the given URL using the WSGI application defined by that file.</p>
+<p>Next we'll need to actually create this WSGI application, so create the file
+mentioned in the second part of <tt class="docutils literal"><span class="pre">WSGIScriptAlias</span></tt> and add:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">import</span> <span class="nn">os</span>
+<span class="k">import</span> <span class="nn">sys</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;mysite.settings&#39;</span>
+
+<span class="k">import</span> <span class="nn">django.core.handlers.wsgi</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">django</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">wsgi</span><span class="o">.</span><span class="n">WSGIHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If your project is not on your <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt> by default you can add:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;/usr/local/django&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>just above the final <tt class="docutils literal"><span class="pre">import</span></tt> line to place your project on the path. Remember to
+replace 'mysite.settings' with your correct settings file, and '/usr/local/django'
+with your own project's location.</p>
+</div>
+<div class="section" id="s-serving-media-files">
+<span id="serving-media-files"></span><h2>Serving media files<a class="headerlink" href="index.html#serving-media-files" title="Permalink to this headline">¶</a></h2>
+<p>Django doesn't serve media files itself; it leaves that job to whichever Web
+server you choose.</p>
+<p>We recommend using a separate Web server -- i.e., one that's not also running
+Django -- for serving media. Here are some good choices:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.lighttpd.net/">lighttpd</a></li>
+<li><a class="reference external" href="http://wiki.nginx.org/Main">Nginx</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/TUX_web_server">TUX</a></li>
+<li>A stripped-down version of <a class="reference external" href="http://httpd.apache.org/">Apache</a></li>
+<li><a class="reference external" href="http://www.cherokee-project.com/">Cherokee</a></li>
+</ul>
+<p>If, however, you have no option but to serve media files on the same Apache
+<tt class="docutils literal"><span class="pre">VirtualHost</span></tt> as Django, you can set up Apache to serve some URLs as
+static media, and others using the mod_wsgi interface to Django.</p>
+<p>This example sets up Django at the site root, but explicitly serves <tt class="docutils literal"><span class="pre">robots.txt</span></tt>,
+<tt class="docutils literal"><span class="pre">favicon.ico</span></tt>, any CSS file, and anything in the <tt class="docutils literal"><span class="pre">/media/</span></tt> URL space as a static
+file. All other URLs will be served using mod_wsgi:</p>
+<div class="highlight-python"><pre>Alias /robots.txt /usr/local/wsgi/static/robots.txt
+Alias /favicon.ico /usr/local/wsgi/static/favicon.ico
+
+AliasMatch /([^/]*\.css) /usr/local/wsgi/static/styles/$1
+
+Alias /media/ /usr/local/wsgi/static/media/
+
+&lt;Directory /usr/local/wsgi/static&gt;
+Order deny,allow
+Allow from all
+&lt;/Directory&gt;
+
+WSGIScriptAlias / /usr/local/wsgi/scripts/django.wsgi
+
+&lt;Directory /usr/local/wsgi/scripts&gt;
+Order allow,deny
+Allow from all
+&lt;/Directory&gt;</pre>
+</div>
+<p>More details on configuring a mod_wsgi site to serve static files can be found
+in the mod_wsgi documentation on <a class="reference external" href="http://code.google.com/p/modwsgi/wiki/ConfigurationGuidelines#Hosting_Of_Static_Files">hosting static files</a>.</p>
+</div>
+<div class="section" id="s-details">
+<span id="details"></span><h2>Details<a class="headerlink" href="index.html#details" title="Permalink to this headline">¶</a></h2>
+<p>For more details, see the <a class="reference external" href="http://code.google.com/p/modwsgi/wiki/IntegrationWithDjango">mod_wsgi documentation on Django integration</a>,
+which explains the above in more detail, and walks through all the various
+options you've got when deploying under mod_wsgi.</p>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">How to use Django with Apache and mod_wsgi</a><ul>
+<li><a class="reference external" href="index.html#basic-configuration">Basic Configuration</a></li>
+<li><a class="reference external" href="index.html#serving-media-files">Serving media files</a></li>
+<li><a class="reference external" href="index.html#details">Details</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../index.html">Deploying Django</a></li>
+        
+        
+          <li>Next: <a href="../modpython/index.html">How to use Django with Apache and mod_python</a></li>
+        
+        <li><a href="../../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../../index.html">&#8220;How-to&#8221; guides</a>
+          
+            <ul><li><a href="../index.html">Deploying Django</a>
+          
+          <ul><li>How to use Django with Apache and mod_wsgi</li></ul>
+          </li></ul></li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

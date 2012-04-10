@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Django documentation | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+  <style type="text/css" media="screen">
+    
+    p.rubric { font-size:150%; font-weight:normal; margin-bottom:.2em; color:#487858; }
+    div.section dt { font-weight: normal; }
+    
+    #s-getting-help { float: right; width: 40%; background: #E1ECE2; padding: 1em; margin: 2em 0 2em 2em; }
+    #s-getting-help h2 { margin: 0; }
+    
+    #s-django-documentation div.section div.section h3 { margin: 0; }
+    #s-django-documentation div.section div.section { background: #E1ECE2; padding: 1em; margin: 2em 0 2em 57%; }
+    #s-django-documentation div.section div.section a.reference { white-space: nowrap; }
+    
+    #s-using-django dl,
+    #s-add-on-contrib-applications dl,
+    #s-solving-specific-problems dl,
+    #s-reference dl
+        { float: left; width: 57%; }
+
+    #s-add-on-contrib-applications,
+    #s-solving-specific-problems,
+    #s-reference,
+    #s-and-all-the-rest
+        { clear: left; }
+  </style>
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0//">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-django-documentation">
+<span id="s-index"></span><span id="django-documentation"></span><span id="index"></span><h1>Django documentation<a class="headerlink" href="index.html#django-documentation" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Everything you need to know about Django (and then some).</p>
+<div class="section" id="s-getting-help">
+<span id="getting-help"></span><h2>Getting help<a class="headerlink" href="index.html#getting-help" title="Permalink to this headline">¶</a></h2>
+<p>Having trouble? We&#8217;d like to help!</p>
+<ul class="simple">
+<li>Try the <a class="reference external" href="faq/index.html#faq-index"><em>FAQ</em></a> &#8211; it&#8217;s got answers to many common questions.</li>
+<li>Looking for specific information? Try the <a class="reference external" href="genindex/index.html"><em>Index</em></a>, <a class="reference external" href="modindex/index.html"><em>Module Index</em></a> or
+the <a class="reference external" href="contents/index.html#contents"><em>detailed table of contents</em></a>.</li>
+<li>Search for information in the <a class="reference external" href="http://groups.google.com/group/django-users/">archives of the django-users mailing list</a>, or
+<a class="reference external" href="http://groups.google.com/group/django-users/">post a question</a>.</li>
+<li>Ask a question in the <a class="reference external" href="irc://irc.freenode.net/django">#django IRC channel</a>, or search the <a class="reference external" href="http://oebfare.com/logger/django/">IRC logs</a> to see
+if its been asked before.</li>
+<li>Report bugs with Django in our <a class="reference external" href="http://code.djangoproject.com/">ticket tracker</a>.</li>
+</ul>
+</div>
+<div class="section" id="s-first-steps">
+<span id="first-steps"></span><h2>First steps<a class="headerlink" href="index.html#first-steps" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>From scratch:</strong>
+<a class="reference external" href="intro/overview/index.html#intro-overview"><em>Overview</em></a> |
+<a class="reference external" href="intro/install/index.html#intro-install"><em>Installation</em></a></li>
+<li><strong>Tutorial:</strong>
+<a class="reference external" href="intro/tutorial01/index.html#intro-tutorial01"><em>Part 1</em></a> |
+<a class="reference external" href="intro/tutorial02/index.html#intro-tutorial02"><em>Part 2</em></a> |
+<a class="reference external" href="intro/tutorial03/index.html#intro-tutorial03"><em>Part 3</em></a> |
+<a class="reference external" href="intro/tutorial04/index.html#intro-tutorial04"><em>Part 4</em></a></li>
+</ul>
+</div>
+<div class="section" id="s-the-model-layer">
+<span id="the-model-layer"></span><h2>The model layer<a class="headerlink" href="index.html#the-model-layer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Models:</strong>
+<a class="reference external" href="topics/db/models/index.html#topics-db-models"><em>Model syntax</em></a> |
+<a class="reference external" href="ref/models/fields/index.html#ref-models-fields"><em>Field types</em></a> |
+<a class="reference external" href="ref/models/options/index.html#ref-models-options"><em>Meta options</em></a></li>
+<li><strong>QuerySets:</strong>
+<a class="reference external" href="topics/db/queries/index.html#topics-db-queries"><em>Executing queries</em></a> |
+<a class="reference external" href="ref/models/querysets/index.html#ref-models-querysets"><em>QuerySet method reference</em></a></li>
+<li><strong>Model instances:</strong>
+<a class="reference external" href="ref/models/instances/index.html#ref-models-instances"><em>Instance methods</em></a> |
+<a class="reference external" href="ref/models/relations/index.html#ref-models-relations"><em>Accessing related objects</em></a></li>
+<li><strong>Advanced:</strong>
+<a class="reference external" href="topics/db/managers/index.html#topics-db-managers"><em>Managers</em></a> |
+<a class="reference external" href="topics/db/sql/index.html#topics-db-sql"><em>Raw SQL</em></a> |
+<a class="reference external" href="topics/db/transactions/index.html#topics-db-transactions"><em>Transactions</em></a> |
+<a class="reference external" href="topics/db/aggregation/index.html#topics-db-aggregation"><em>Aggregation</em></a> |
+<a class="reference external" href="howto/custom-model-fields/index.html#howto-custom-model-fields"><em>Custom fields</em></a></li>
+<li><strong>Other:</strong>
+<a class="reference external" href="ref/databases/index.html#ref-databases"><em>Supported databases</em></a> |
+<a class="reference external" href="howto/legacy-databases/index.html#howto-legacy-databases"><em>Legacy databases</em></a> |
+<a class="reference external" href="howto/initial-data/index.html#howto-initial-data"><em>Providing initial data</em></a></li>
+</ul>
+</div>
+<div class="section" id="s-the-template-layer">
+<span id="the-template-layer"></span><h2>The template layer<a class="headerlink" href="index.html#the-template-layer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>For designers:</strong>
+<a class="reference external" href="topics/templates/index.html#topics-templates"><em>Syntax overview</em></a> |
+<a class="reference external" href="ref/templates/builtins/index.html#ref-templates-builtins"><em>Built-in tags and filters</em></a></li>
+<li><strong>For programmers:</strong>
+<a class="reference external" href="ref/templates/api/index.html#ref-templates-api"><em>Template API</em></a> |
+<a class="reference external" href="howto/custom-template-tags/index.html#howto-custom-template-tags"><em>Custom tags and filters</em></a></li>
+</ul>
+</div>
+<div class="section" id="s-the-view-layer">
+<span id="the-view-layer"></span><h2>The view layer<a class="headerlink" href="index.html#the-view-layer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>The basics:</strong>
+<a class="reference external" href="topics/http/urls/index.html#topics-http-urls"><em>URLconfs</em></a> |
+<a class="reference external" href="topics/http/views/index.html#topics-http-views"><em>View functions</em></a> |
+<a class="reference external" href="topics/http/shortcuts/index.html#topics-http-shortcuts"><em>Shortcuts</em></a></li>
+<li><strong>Reference:</strong>  <a class="reference external" href="ref/request-response/index.html#ref-request-response"><em>Request/response objects</em></a></li>
+<li><strong>File uploads:</strong>
+<a class="reference external" href="topics/http/file-uploads/index.html#topics-http-file-uploads"><em>Overview</em></a> |
+<a class="reference external" href="ref/files/file/index.html#ref-files-file"><em>File objects</em></a> |
+<a class="reference external" href="ref/files/storage/index.html#ref-files-storage"><em>Storage API</em></a> |
+<a class="reference external" href="topics/files/index.html#topics-files"><em>Managing files</em></a> |
+<a class="reference external" href="howto/custom-file-storage/index.html#howto-custom-file-storage"><em>Custom storage</em></a></li>
+<li><strong>Generic views:</strong>
+<a class="reference external" href="topics/generic-views/index.html#topics-generic-views"><em>Overview</em></a> |
+<a class="reference external" href="ref/generic-views/index.html#ref-generic-views"><em>Built-in generic views</em></a></li>
+<li><strong>Advanced:</strong>
+<a class="reference external" href="howto/outputting-csv/index.html#howto-outputting-csv"><em>Generating CSV</em></a> |
+<a class="reference external" href="howto/outputting-pdf/index.html#howto-outputting-pdf"><em>Generating PDF</em></a></li>
+<li><strong>Middleware:</strong>
+<a class="reference external" href="topics/http/middleware/index.html#topics-http-middleware"><em>Overview</em></a> |
+<a class="reference external" href="ref/middleware/index.html#ref-middleware"><em>Built-in middleware classes</em></a></li>
+</ul>
+</div>
+<div class="section" id="s-forms">
+<span id="forms"></span><h2>Forms<a class="headerlink" href="index.html#forms" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>The basics:</strong>
+<a class="reference external" href="topics/forms/index.html#topics-forms-index"><em>Overview</em></a> |
+<a class="reference external" href="ref/forms/api/index.html#ref-forms-api"><em>Form API</em></a> |
+<a class="reference external" href="ref/forms/fields/index.html#ref-forms-fields"><em>Built-in fields</em></a> |
+<a class="reference external" href="ref/forms/widgets/index.html#ref-forms-widgets"><em>Built-in widgets</em></a></li>
+<li><strong>Advanced:</strong>
+<a class="reference external" href="topics/forms/modelforms/index.html#topics-forms-modelforms"><em>Forms for models</em></a> |
+<a class="reference external" href="topics/forms/media/index.html#topics-forms-media"><em>Integrating media</em></a> |
+<a class="reference external" href="topics/forms/formsets/index.html#topics-forms-formsets"><em>Formsets</em></a> |
+<a class="reference external" href="ref/forms/validation/index.html#ref-forms-validation"><em>Customizing validation</em></a></li>
+<li><strong>Extras:</strong>
+<a class="reference external" href="ref/contrib/formtools/form-preview/index.html#ref-contrib-formtools-form-preview"><em>Form preview</em></a> |
+<a class="reference external" href="ref/contrib/formtools/form-wizard/index.html#ref-contrib-formtools-form-wizard"><em>Form wizard</em></a></li>
+</ul>
+</div>
+<div class="section" id="s-the-development-process">
+<span id="the-development-process"></span><h2>The development process<a class="headerlink" href="index.html#the-development-process" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Settings:</strong>
+<a class="reference external" href="topics/settings/index.html#topics-settings"><em>Overview</em></a> |
+<a class="reference external" href="ref/settings/index.html#ref-settings"><em>Full list of settings</em></a></li>
+<li><strong>django-admin.py and manage.py:</strong>
+<a class="reference external" href="ref/django-admin/index.html#ref-django-admin"><em>Overview</em></a> |
+<a class="reference external" href="howto/custom-management-commands/index.html#howto-custom-management-commands"><em>Adding custom commands</em></a></li>
+<li><strong>Testing:</strong>  <a class="reference external" href="topics/testing/index.html#topics-testing"><em>Overview</em></a></li>
+<li><strong>Deployment:</strong>
+<a class="reference external" href="howto/deployment/index.html#howto-deployment-index"><em>Overview</em></a> |
+<a class="reference external" href="howto/deployment/modwsgi/index.html#howto-deployment-modwsgi"><em>Apache/mod_wsgi</em></a> |
+<a class="reference external" href="howto/deployment/modpython/index.html#howto-deployment-modpython"><em>Apache/mod_python</em></a> |
+<a class="reference external" href="howto/deployment/fastcgi/index.html#howto-deployment-fastcgi"><em>FastCGI/SCGI/AJP</em></a> |
+<a class="reference external" href="howto/apache-auth/index.html#howto-apache-auth"><em>Apache authentication</em></a> |
+<a class="reference external" href="howto/static-files/index.html#howto-static-files"><em>Serving static files</em></a> |
+<a class="reference external" href="howto/error-reporting/index.html#howto-error-reporting"><em>Tracking code errors by e-mail</em></a></li>
+</ul>
+</div>
+<div class="section" id="s-other-batteries-included">
+<span id="other-batteries-included"></span><h2>Other batteries included<a class="headerlink" href="index.html#other-batteries-included" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="ref/contrib/admin/index.html#ref-contrib-admin"><em>Admin site</em></a> | <a class="reference external" href="ref/contrib/admin/actions/index.html#ref-contrib-admin-actions"><em>Admin actions</em></a></li>
+<li><a class="reference external" href="topics/auth/index.html#topics-auth"><em>Authentication</em></a></li>
+<li><a class="reference external" href="topics/cache/index.html#topics-cache"><em>Cache system</em></a></li>
+<li><a class="reference external" href="topics/conditional-view-processing/index.html#topics-conditional-processing"><em>Conditional content processing</em></a></li>
+<li><a class="reference external" href="ref/contrib/comments/index.html#ref-contrib-comments-index"><em>Comments</em></a> | <a class="reference external" href="ref/contrib/comments/moderation/index.html#ref-contrib-comments-moderation"><em>Moderation</em></a> | <a class="reference external" href="ref/contrib/comments/custom/index.html#ref-contrib-comments-custom"><em>Custom comments</em></a></li>
+<li><a class="reference external" href="ref/contrib/contenttypes/index.html#ref-contrib-contenttypes"><em>Content types</em></a></li>
+<li><a class="reference external" href="ref/contrib/csrf/index.html#ref-contrib-csrf"><em>Cross Site Request Forgery protection</em></a></li>
+<li><a class="reference external" href="ref/contrib/databrowse/index.html#ref-contrib-databrowse"><em>Databrowse</em></a></li>
+<li><a class="reference external" href="topics/email/index.html#topics-email"><em>E-mail (sending)</em></a></li>
+<li><a class="reference external" href="ref/contrib/flatpages/index.html#ref-contrib-flatpages"><em>Flatpages</em></a></li>
+<li><a class="reference external" href="ref/contrib/humanize/index.html#ref-contrib-humanize"><em>Humanize</em></a></li>
+<li><a class="reference external" href="topics/i18n/index.html#topics-i18n"><em>Internationalization</em></a></li>
+<li><a class="reference external" href="howto/jython/index.html#howto-jython"><em>Jython support</em></a></li>
+<li><a class="reference external" href="ref/contrib/localflavor/index.html#ref-contrib-localflavor"><em>&#8220;Local flavor&#8221;</em></a></li>
+<li><a class="reference external" href="topics/pagination/index.html#topics-pagination"><em>Pagination</em></a></li>
+<li><a class="reference external" href="ref/contrib/redirects/index.html#ref-contrib-redirects"><em>Redirects</em></a></li>
+<li><a class="reference external" href="topics/serialization/index.html#topics-serialization"><em>Serialization</em></a></li>
+<li><a class="reference external" href="topics/http/sessions/index.html#topics-http-sessions"><em>Sessions</em></a></li>
+<li><a class="reference external" href="topics/signals/index.html#topics-signals"><em>Signals</em></a></li>
+<li><a class="reference external" href="ref/contrib/sitemaps/index.html#ref-contrib-sitemaps"><em>Sitemaps</em></a></li>
+<li><a class="reference external" href="ref/contrib/sites/index.html#ref-contrib-sites"><em>Sites</em></a></li>
+<li><a class="reference external" href="ref/contrib/syndication/index.html#ref-contrib-syndication"><em>Syndication feeds (RSS/Atom)</em></a></li>
+<li><a class="reference external" href="ref/unicode/index.html#ref-unicode"><em>Unicode in Django</em></a></li>
+<li><a class="reference external" href="ref/contrib/webdesign/index.html#ref-contrib-webdesign"><em>Web design helpers</em></a></li>
+</ul>
+</div>
+<div class="section" id="s-the-django-open-source-project">
+<span id="the-django-open-source-project"></span><h2>The Django open-source project<a class="headerlink" href="index.html#the-django-open-source-project" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Community:</strong>
+<a class="reference external" href="internals/contributing/index.html#internals-contributing"><em>How to get involved</em></a> |
+<a class="reference external" href="internals/release-process/index.html#internals-release-process"><em>The release process</em></a> |
+<a class="reference external" href="internals/committers/index.html#internals-committers"><em>Team of committers</em></a> |
+<a class="reference external" href="internals/svn/index.html#internals-svn"><em>The Django source code repository</em></a></li>
+<li><strong>Design philosophies:</strong>
+<a class="reference external" href="misc/design-philosophies/index.html#misc-design-philosophies"><em>Overview</em></a></li>
+<li><strong>Documentation:</strong>
+<a class="reference external" href="internals/documentation/index.html#internals-documentation"><em>About this documentation</em></a></li>
+<li><strong>Third-party distributions:</strong>
+<a class="reference external" href="misc/distributions/index.html#misc-distributions"><em>Overview</em></a></li>
+<li><strong>Django over time:</strong>
+<a class="reference external" href="misc/api-stability/index.html#misc-api-stability"><em>API stability</em></a> |
+<a class="reference external" href="releases/index.html#releases-index"><em>Release notes</em></a> |
+<a class="reference external" href="internals/deprecation/index.html#internals-deprecation"><em>Deprecation Timeline</em></a></li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+        
+        <li><a href="contents/index.html">Table of contents</a></li>
+        
+          <li><a href="genindex/index.html">General Index</a></li>
+        
+          <li><a href="modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="index.html">Django dev documentation</a>
+          
+          <ul><li>Django documentation</li></ul>
+          
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

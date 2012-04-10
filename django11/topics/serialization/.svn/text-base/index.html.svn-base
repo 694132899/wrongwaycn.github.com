@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Serializing Django objects | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/topics/serialization/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-serializing-django-objects">
+<span id="s-topics-serialization"></span><span id="serializing-django-objects"></span><span id="topics-serialization"></span><h1>Serializing Django objects<a class="headerlink" href="index.html#serializing-django-objects" title="Permalink to this headline">¶</a></h1>
+<p>Django&#8217;s serialization framework provides a mechanism for &#8220;translating&#8221; Django
+objects into other formats. Usually these other formats will be text-based and
+used for sending Django objects over a wire, but it&#8217;s possible for a
+serializer to handle any format (text-based or not).</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">If you just want to get some data from your tables into a serialized
+form, you could use the <tt class="xref docutils literal"><span class="pre">dumpdata</span></tt> management command.</p>
+</div>
+<div class="section" id="s-serializing-data">
+<span id="serializing-data"></span><h2>Serializing data<a class="headerlink" href="index.html#serializing-data" title="Permalink to this headline">¶</a></h2>
+<p>At the highest level, serializing data is a very simple operation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">django.core</span> <span class="k">import</span> <span class="n">serializers</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="s">&quot;xml&quot;</span><span class="p">,</span> <span class="n">SomeModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The arguments to the <tt class="docutils literal"><span class="pre">serialize</span></tt> function are the format to serialize the data
+to (see <a class="reference internal" href="index.html#id1">Serialization formats</a>) and a <a title="django.db.models.QuerySet" class="reference external" href="../../ref/models/querysets/index.html#django.db.models.QuerySet"><tt class="xref docutils literal"><span class="pre">QuerySet</span></tt></a> to
+serialize. (Actually, the second argument can be any iterator that yields Django
+objects, but it'll almost always be a QuerySet).</p>
+<p>You can also use a serializer object directly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">XMLSerializer</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="s">&quot;xml&quot;</span><span class="p">)</span>
+<span class="n">xml_serializer</span> <span class="o">=</span> <span class="n">XMLSerializer</span><span class="p">()</span>
+<span class="n">xml_serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">queryset</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">xml_serializer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is useful if you want to serialize data directly to a file-like object
+(which includes an <a title="django.http.HttpResponse" class="reference external" href="../../ref/request-response/index.html#django.http.HttpResponse"><tt class="xref docutils literal"><span class="pre">HttpResponse</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;file.xml&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+<span class="n">xml_serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">SomeModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="n">stream</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="s-subset-of-fields">
+<span id="subset-of-fields"></span><h3>Subset of fields<a class="headerlink" href="index.html#subset-of-fields" title="Permalink to this headline">¶</a></h3>
+<p>If you only want a subset of fields to be serialized, you can
+specify a <tt class="docutils literal"><span class="pre">fields</span></tt> argument to the serializer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">django.core</span> <span class="k">import</span> <span class="n">serializers</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="s">&#39;xml&#39;</span><span class="p">,</span> <span class="n">SomeModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;size&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In this example, only the <tt class="docutils literal"><span class="pre">name</span></tt> and <tt class="docutils literal"><span class="pre">size</span></tt> attributes of each model will
+be serialized.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Depending on your model, you may find that it is not possible to
+deserialize a model that only serializes a subset of its fields. If a
+serialized object doesn't specify all the fields that are required by a
+model, the deserializer will not be able to save deserialized instances.</p>
+</div>
+</div>
+<div class="section" id="s-inherited-models">
+<span id="inherited-models"></span><h3>Inherited Models<a class="headerlink" href="index.html#inherited-models" title="Permalink to this headline">¶</a></h3>
+<p>If you have a model that is defined using an <a class="reference external" href="../db/models/index.html#abstract-base-classes"><em>abstract base class</em></a>, you don't have to do anything special to serialize
+that model. Just call the serializer on the object (or objects) that you want to
+serialize, and the output will be a complete representation of the serialized
+object.</p>
+<p>However, if you have a model that uses <a class="reference external" href="../db/models/index.html#multi-table-inheritance"><em>multi-table inheritance</em></a>, you also need to serialize all of the base classes
+for the model. This is because only the fields that are locally defined on the
+model will be serialized. For example, consider the following models:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Place</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mf">50</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Place</span><span class="p">):</span>
+    <span class="n">serves_hot_dogs</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you only serialize the Restaurant model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="s">&#39;xml&#39;</span><span class="p">,</span> <span class="n">Restaurant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>the fields on the serialized output will only contain the <cite>serves_hot_dogs</cite>
+attribute. The <cite>name</cite> attribute of the base class will be ignored.</p>
+<p>In order to fully serialize your Restaurant instances, you will need to
+serialize the Place models as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">all_objects</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Restaurant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">Place</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="s">&#39;xml&#39;</span><span class="p">,</span> <span class="n">all_objects</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="s-deserializing-data">
+<span id="deserializing-data"></span><h2>Deserializing data<a class="headerlink" href="index.html#deserializing-data" title="Permalink to this headline">¶</a></h2>
+<p>Deserializing data is also a fairly simple operation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">serializers</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="s">&quot;xml&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">do_something_with</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see, the <tt class="docutils literal"><span class="pre">deserialize</span></tt> function takes the same format argument as
+<tt class="docutils literal"><span class="pre">serialize</span></tt>, a string or stream of data, and returns an iterator.</p>
+<p>However, here it gets slightly complicated. The objects returned by the
+<tt class="docutils literal"><span class="pre">deserialize</span></tt> iterator <em>aren't</em> simple Django objects. Instead, they are
+special <tt class="docutils literal"><span class="pre">DeserializedObject</span></tt> instances that wrap a created -- but unsaved --
+object and any associated relationship data.</p>
+<p>Calling <tt class="docutils literal"><span class="pre">DeserializedObject.save()</span></tt> saves the object to the database.</p>
+<p>This ensures that deserializing is a non-destructive operation even if the
+data in your serialized representation doesn't match what's currently in the
+database. Usually, working with these <tt class="docutils literal"><span class="pre">DeserializedObject</span></tt> instances looks
+something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">deserialized_object</span> <span class="ow">in</span> <span class="n">serializers</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="s">&quot;xml&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">object_should_be_saved</span><span class="p">(</span><span class="n">deserialized_object</span><span class="p">):</span>
+        <span class="n">deserialized_object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In other words, the usual use is to examine the deserialized objects to make
+sure that they are &quot;appropriate&quot; for saving before doing so.  Of course, if you
+trust your data source you could just save the object and move on.</p>
+<p>The Django object itself can be inspected as <tt class="docutils literal"><span class="pre">deserialized_object.object</span></tt>.</p>
+</div>
+<div class="section" id="s-id1">
+<span id="s-serialization-formats"></span><span id="id1"></span><span id="serialization-formats"></span><h2>Serialization formats<a class="headerlink" href="index.html#id1" title="Permalink to this headline">¶</a></h2>
+<p>Django supports a number of serialization formats, some of which require you
+to install third-party Python modules:</p>
+<table class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Identifier</th>
+<th class="head">Information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">xml</span></tt></td>
+<td>Serializes to and from a simple XML dialect.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">json</span></tt></td>
+<td>Serializes to and from <a class="reference external" href="http://json.org/">JSON</a> (using a version of <a class="reference external" href="http://undefined.org/python/#simplejson">simplejson</a>
+bundled with Django).</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">python</span></tt></td>
+<td>Translates to and from &quot;simple&quot; Python objects (lists, dicts,
+strings, etc.).  Not really all that useful on its own, but
+used as a base for other serializers.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">yaml</span></tt></td>
+<td>Serializes to YAML (YAML Ain't a Markup Language). This
+serializer is only available if <a class="reference external" href="http://www.pyyaml.org/">PyYAML</a> is installed.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="s-notes-for-specific-serialization-formats">
+<span id="notes-for-specific-serialization-formats"></span><h2>Notes for specific serialization formats<a class="headerlink" href="index.html#notes-for-specific-serialization-formats" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-id2">
+<span id="id2"></span><h3>json<a class="headerlink" href="index.html#id2" title="Permalink to this headline">¶</a></h3>
+<p>If you're using UTF-8 (or any other non-ASCII encoding) data with the JSON
+serializer, you must pass <tt class="docutils literal"><span class="pre">ensure_ascii=False</span></tt> as a parameter to the
+<tt class="docutils literal"><span class="pre">serialize()</span></tt> call. Otherwise, the output won't be encoded correctly.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">json_serializer</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="s">&quot;json&quot;</span><span class="p">)()</span>
+<span class="n">json_serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The Django source code includes the <a class="reference external" href="http://undefined.org/python/#simplejson">simplejson</a> module. However, if you're
+using Python 2.6 (which includes a builtin version of the module), Django will
+use the builtin <tt class="docutils literal"><span class="pre">json</span></tt> module automatically. If you have a system installed
+version that includes the C-based speedup extension, or your system version is
+more recent than the version shipped with Django (currently, 2.0.7), the
+system version will be used instead of the version included with Django.</p>
+<p>Be aware that if you're serializing using that module directly, not all Django
+output can be passed unmodified to simplejson. In particular, <a class="reference external" href="../i18n/index.html#lazy-translations"><em>lazy
+translation objects</em></a> need a <a class="reference external" href="http://svn.red-bean.com/bob/simplejson/tags/simplejson-1.7/docs/index.html">special encoder</a> written for
+them. Something like this will work:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">django.utils.functional</span> <span class="k">import</span> <span class="n">Promise</span>
+<span class="k">from</span> <span class="nn">django.utils.encoding</span> <span class="k">import</span> <span class="n">force_unicode</span>
+
+<span class="k">class</span> <span class="nc">LazyEncoder</span><span class="p">(</span><span class="n">simplejson</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Promise</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">force_unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">LazyEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Serializing Django objects</a><ul>
+<li><a class="reference external" href="index.html#serializing-data">Serializing data</a><ul>
+<li><a class="reference external" href="index.html#subset-of-fields">Subset of fields</a></li>
+<li><a class="reference external" href="index.html#inherited-models">Inherited Models</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#deserializing-data">Deserializing data</a></li>
+<li><a class="reference external" href="index.html#id1">Serialization formats</a></li>
+<li><a class="reference external" href="index.html#notes-for-specific-serialization-formats">Notes for specific serialization formats</a><ul>
+<li><a class="reference external" href="index.html#id2">json</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../pagination/index.html">Pagination</a></li>
+        
+        
+          <li>Next: <a href="../settings/index.html">Django settings</a></li>
+        
+        <li><a href="../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../index.html">Using Django</a>
+          
+          <ul><li>Serializing Django objects</li></ul>
+          </li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

@@ -1,0 +1,1014 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Model 字段参考 （Model field reference） | Django 文档</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    当前文档仅适用于 Django SVN 版本，与上个版本有显著不同。上个版本文档请查阅：
+      <a href="http://docs.djangoproject.com/en/1.0/ref/models/fields/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-module-django.db.models.fields">
+<span id="s-ref-models-fields"></span><span id="module-django.db.models.fields"></span><span id="ref-models-fields"></span><h1>Model 字段参考 (Model field reference)<a class="headerlink" href="index.html#module-django.db.models.fields" title="Permalink to this headline">¶</a></h1>
+<p>本文档包含所有 <a class="reference internal" href="index.html#field-options">字段选项 (field options)</a> 的内部细节和 Django 已经提供的 <a class="reference internal" href="index.html#field-types">field types</a> 。</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">参见</p>
+<p class="last">如果内置的字段不能满足你的应用，你可以很容易地If the built-in fields don&#8217;t do the trick, you can easily <a class="reference external" href="../../../howto/custom-model-fields/index.html#howto-custom-model-fields"><em>编写自定义 model 字段 (write your own custom model fields)</em></a>。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注意</p>
+<p class="last">从技术上讲， model 是定义在 <tt class="xref docutils literal"><span class="pre">django.db.models.fields</span></tt> 里面，但为了使用方便，它们被导入到 <a title="" class="reference external" href="../../../topics/db/models/index.html#module-django.db.models"><tt class="xref docutils literal"><span class="pre">django.db.models</span></tt></a> 中；标准上，我们导入 <tt class="docutils literal"><span class="pre">from</span> <span class="pre">django.db</span> <span class="pre">import</span> <span class="pre">models</span></tt> ，然后使用 <tt class="docutils literal"><span class="pre">models.&lt;Foo&gt;Field</span></tt> 的形式使用字段。</p>
+</div>
+<div class="section" id="s-field-options">
+<span id="s-common-model-field-options"></span><span id="field-options"></span><span id="common-model-field-options"></span><h2>字段选项 (Field options)<a class="headerlink" href="index.html#field-options" title="Permalink to this headline">¶</a></h2>
+<p>下列参数对所有字段类型都是有效的，同时这些参数也是可选的。</p>
+<div class="section" id="s-null">
+<span id="null"></span><h3><tt class="docutils literal"><span class="pre">null</span></tt><a class="headerlink" href="index.html#null" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.null">
+<!--[django.db.models.Field.null]--><tt class="descclassname">Field.</tt><tt class="descname">null</tt><a class="headerlink" href="index.html#django.db.models.Field.null" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>如果为 <tt class="xref docutils literal"><span class="pre">True</span></tt> ，Django 就会将空值(empty)存储为数据库中的 <tt class="docutils literal"><span class="pre">NULL</span></tt> 。默认值是 <tt class="xref docutils literal"><span class="pre">False</span></tt>。</p>
+<p>要注意空字符串(empty string)总是被存储为空字符串，而不是 <tt class="docutils literal"><span class="pre">NULL</span></tt>。 <tt class="docutils literal"><span class="pre">null=True</span></tt> 只对非字符串字段有意义，比如整数(integer)，布尔值(boolean)，日期(dates)。如果你允许表单提交空值，无论是哪种字段，你还要再设置 <tt class="docutils literal"><span class="pre">blank=True</span></tt> ，这是因为 <a title="django.db.models.Field.null" class="reference internal" href="index.html#django.db.models.Field.null"><tt class="xref docutils literal"><span class="pre">null</span></tt></a> 仅仅影响数据库存储 (详见
+<a title="django.db.models.Field.blank" class="reference internal" href="index.html#django.db.models.Field.blank"><tt class="xref docutils literal"><span class="pre">blank</span></tt></a>)。</p>
+<p>除非你有很充分的理由，否则不要在字符串字段(比如<a title="django.db.models.CharField" class="reference internal" href="index.html#django.db.models.CharField"><tt class="xref docutils literal"><span class="pre">CharField</span></tt></a> 和 <a title="django.db.models.TextField" class="reference internal" href="index.html#django.db.models.TextField"><tt class="xref docutils literal"><span class="pre">TextField</span></tt></a>)上使用 <a title="django.db.models.Field.null" class="reference internal" href="index.html#django.db.models.Field.null"><tt class="xref docutils literal"><span class="pre">null</span></tt></a> 。在字符串字段上声明 <tt class="docutils literal"><span class="pre">null=True</span></tt> ，就意味着有两种意义的空值：<tt class="docutils literal"><span class="pre">NULL</span></tt>，和空字符串(empty string)。大多数情况下，存在两种空值是多余的。Django 按惯例是使用空字符串，而非 <tt class="docutils literal"><span class="pre">NULL</span></tt> 。</p>
+<div class="admonition note">
+<p class="first admonition-title">注意</p>
+<p class="last">在使用 Oracle 数据库时，<tt class="docutils literal"><span class="pre">null=True</span></tt> 选项将被强加到有可能是空值的字符串字段，而且会在数据库中保存 <tt class="docutils literal"><span class="pre">NULL</span></tt> ，来表示空字符串。</p>
+</div>
+</div>
+<div class="section" id="s-blank">
+<span id="blank"></span><h3><tt class="docutils literal"><span class="pre">blank</span></tt><a class="headerlink" href="index.html#blank" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.blank">
+<!--[django.db.models.Field.blank]--><tt class="descclassname">Field.</tt><tt class="descname">blank</tt><a class="headerlink" href="index.html#django.db.models.Field.blank" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>如果为 <tt class="xref docutils literal"><span class="pre">True</span></tt>，字段允许不填。默认为 <tt class="xref docutils literal"><span class="pre">False</span></tt> 。</p>
+<p>要注意该选项与 <a title="django.db.models.Field.null" class="reference internal" href="index.html#django.db.models.Field.null"><tt class="xref docutils literal"><span class="pre">null</span></tt></a> 不同。 <a title="django.db.models.Field.null" class="reference internal" href="index.html#django.db.models.Field.null"><tt class="xref docutils literal"><span class="pre">null</span></tt></a> 纯粹是数据库范畴的概念，而 <a title="django.db.models.Field.blank" class="reference internal" href="index.html#django.db.models.Field.blank"><tt class="xref docutils literal"><span class="pre">blank</span></tt></a> 是数据验证范畴的。如果某个字段声明了 <tt class="docutils literal"><span class="pre">blank=True</span></tt>，那么 Django 的管理后台就允许该字段填写空值；否则，如果声明为 <tt class="docutils literal"><span class="pre">blank=False</span></tt>，该字段就是必填的。</p>
+</div>
+<div class="section" id="s-choices">
+<span id="choices"></span><h3><tt class="docutils literal"><span class="pre">choices</span></tt><a class="headerlink" href="index.html#choices" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.choices">
+<!--[django.db.models.Field.choices]--><tt class="descclassname">Field.</tt><tt class="descname">choices</tt><a class="headerlink" href="index.html#django.db.models.Field.choices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>它是一个可迭代的二元组(比如，列表或是元组)，用来给字段提供选择项。</p>
+<p>如果设置了 choices ，Django 的管理后台就会显示选择框，而不是标准的文本框，而且这个选择框的选项就是 choices 中的元组。</p>
+<p>这是一个 choices 列表的例子：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">YEAR_IN_SCHOOL_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;FR&#39;</span><span class="p">,</span> <span class="s">&#39;Freshman&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;SO&#39;</span><span class="p">,</span> <span class="s">&#39;Sophomore&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;JR&#39;</span><span class="p">,</span> <span class="s">&#39;Junior&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;SR&#39;</span><span class="p">,</span> <span class="s">&#39;Senior&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;GR&#39;</span><span class="p">,</span> <span class="s">&#39;Graduate&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>每个元组中的第一个元素，是存储在数据库中的值；第二个元素是该选项更易理解的描述。</p>
+<p>choices 列表可以定义为 model 类的一部分：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">GENDER_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="s">&#39;Male&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="s">&#39;Female&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mf">1</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">GENDER_CHOICES</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>也可以定义在 model 类之外：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">GENDER_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="s">&#39;Male&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;F&#39;</span><span class="p">,</span> <span class="s">&#39;Female&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mf">1</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">GENDER_CHOICES</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>你也可以将 choices 整理成命名组，这样代码更有条理，结构更清晰：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MEDIA_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;Audio&#39;</span><span class="p">,</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s">&#39;vinyl&#39;</span><span class="p">,</span> <span class="s">&#39;Vinyl&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;cd&#39;</span><span class="p">,</span> <span class="s">&#39;CD&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;Video&#39;</span><span class="p">,</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s">&#39;vhs&#39;</span><span class="p">,</span> <span class="s">&#39;VHS Tape&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;dvd&#39;</span><span class="p">,</span> <span class="s">&#39;DVD&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;unknown&#39;</span><span class="p">,</span> <span class="s">&#39;Unknown&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>每个元组中的第一个元素会用做组的命名。第二个元素是一个可迭代的二元组，每个二元组都包含一个一个值和一个易于理解的描述。分组选项可以和未分组选项组合在一个单独的列表当中(比如上例中的 <cite>unknown</cite> 项)。</p>
+<p>Djanog 会对设置了 <a title="django.db.models.Field.choices" class="reference internal" href="index.html#django.db.models.Field.choices"><tt class="xref docutils literal"><span class="pre">choices</span></tt></a> 的字段添加一个方法。这个方法根据该字段的当前值获取它易于理解的描述。详见数据库 API 文档中的 <a title="django.db.models.Model.get_FOO_display" class="reference external" href="../instances/index.html#django.db.models.Model.get_FOO_display"><tt class="xref docutils literal"><span class="pre">get_FOO_display()</span></tt></a> 。</p>
+<p>最后注意一点，choices 可以是任何可迭代的对象，并不仅仅只是列表或是元组。这意味着你可以构造动态的 choices ，不过你最好通过 <a title="django.db.models.ForeignKey" class="reference internal" href="index.html#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">ForeignKey</span></tt></a> 使用一张适合的数据表来构造动态 choices。毕竟 <a title="django.db.models.Field.choices" class="reference internal" href="index.html#django.db.models.Field.choices"><tt class="xref docutils literal"><span class="pre">choices</span></tt></a> 适用于变动不大的静态数据。</p>
+</div>
+<div class="section" id="s-db-column">
+<span id="db-column"></span><h3><tt class="docutils literal"><span class="pre">db_column</span></tt><a class="headerlink" href="index.html#db-column" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.db_column">
+<!--[django.db.models.Field.db_column]--><tt class="descclassname">Field.</tt><tt class="descname">db_column</tt><a class="headerlink" href="index.html#django.db.models.Field.db_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>该字段在数据库中所使用的列名称。如果没有声明，Django 就会以该字段的名称做为列名。</p>
+<p>列名称可以是 SQL 保留字，也可以包含不允许出现在 Python 变量名的特殊字符，比如连字符。这是因为 Django 会在幕后给列名和表名加上引号。</p>
+</div>
+<div class="section" id="s-db-index">
+<span id="db-index"></span><h3><tt class="docutils literal"><span class="pre">db_index</span></tt><a class="headerlink" href="index.html#db-index" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.db_index">
+<!--[django.db.models.Field.db_index]--><tt class="descclassname">Field.</tt><tt class="descname">db_index</tt><a class="headerlink" href="index.html#django.db.models.Field.db_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>如果为 <tt class="xref docutils literal"><span class="pre">True</span></tt>，运行 <cite>django-admin.py sqlindexes &lt;sqlindexes&gt;</cite> 会为该字段输出一条 <tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">INDEX</span></tt> 语句。</p>
+</div>
+<div class="section" id="s-db-tablespace">
+<span id="db-tablespace"></span><h3><tt class="docutils literal"><span class="pre">db_tablespace</span></tt><a class="headerlink" href="index.html#db-tablespace" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.db_tablespace">
+<!--[django.db.models.Field.db_tablespace]--><tt class="descclassname">Field.</tt><tt class="descname">db_tablespace</tt><a class="headerlink" href="index.html#django.db.models.Field.db_tablespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="versionadded">
+<span class="title">这部分是在 Django 1.0 新增的：</span> <a class="reference external" href="../../../releases/1.0/index.html#releases-1-0"><em>请查看版本文档</em></a></div>
+<p>如果该字段是索引字段，db_tablespace 就表示该索引所在的数据库表空间的名称。如果项目配置文件中设定了 <a class="reference external" href="../../settings/index.html#setting-DEFAULT_INDEX_TABLESPACE"><tt class="xref docutils literal"><span class="pre">DEFAULT_INDEX_TABLESPACE</span></tt></a> ，那么默认值就是配置项的值；如果你指定了该 model 中 Meta 内嵌类的 <a title="django.db.models.Field.db_tablespace" class="reference internal" href="index.html#django.db.models.Field.db_tablespace"><tt class="xref docutils literal"><span class="pre">db_tablespace</span></tt></a> ，那么默认值就是 Meta 中 db_tablespace 的值。如果数据库不支持表空间，就会忽略该选项。</p>
+</div>
+<div class="section" id="s-default">
+<span id="default"></span><h3><tt class="docutils literal"><span class="pre">default</span></tt><a class="headerlink" href="index.html#default" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.default">
+<!--[django.db.models.Field.default]--><tt class="descclassname">Field.</tt><tt class="descname">default</tt><a class="headerlink" href="index.html#django.db.models.Field.default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>该字段的默认值。它可以是一个值，也可以是一个可调用的对象(这里称之为对象C)。若是后者，那么每次创建一个新对象时，对象C都将被调用。</p>
+</div>
+<div class="section" id="s-editable">
+<span id="editable"></span><h3><tt class="docutils literal"><span class="pre">editable</span></tt><a class="headerlink" href="index.html#editable" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.editable">
+<!--[django.db.models.Field.editable]--><tt class="descclassname">Field.</tt><tt class="descname">editable</tt><a class="headerlink" href="index.html#django.db.models.Field.editable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>如果为 <tt class="xref docutils literal"><span class="pre">False</span></tt> ，那么在 Django 管理后台中就不会编辑该字段；同样，在 Django 自动生成的表单中也不会编辑该字段。默认值是 <tt class="xref docutils literal"><span class="pre">True</span></tt> 。</p>
+</div>
+<div class="section" id="s-help-text">
+<span id="help-text"></span><h3><tt class="docutils literal"><span class="pre">help_text</span></tt><a class="headerlink" href="index.html#help-text" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.help_text">
+<!--[django.db.models.Field.help_text]--><tt class="descclassname">Field.</tt><tt class="descname">help_text</tt><a class="headerlink" href="index.html#django.db.models.Field.help_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>附加的提示信息。在管理后台编辑该对象的表单中，它显示在该字段下面。即使你的对象无须在后台管理，对于文档化也是很用的。</p>
+<p>注意，在管理后台显示该提示信息时，并不会对其转义。所以你可以在 <a title="django.db.models.Field.help_text" class="reference internal" href="index.html#django.db.models.Field.help_text"><tt class="xref docutils literal"><span class="pre">help_text</span></tt></a> 中包含 HTML 。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">help_text</span><span class="o">=</span><span class="s">&quot;Please use the following format: &lt;em&gt;YYYY-MM-DD&lt;/em&gt;.&quot;</span>
+</pre></div>
+</div>
+<p>你也可以使用纯文本，还可以用 <tt class="docutils literal"><span class="pre">django.utils.html.escape()</span></tt> 转义任何 HTML 字符。</p>
+</div>
+<div class="section" id="s-primary-key">
+<span id="primary-key"></span><h3><tt class="docutils literal"><span class="pre">primary_key</span></tt><a class="headerlink" href="index.html#primary-key" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.primary_key">
+<!--[django.db.models.Field.primary_key]--><tt class="descclassname">Field.</tt><tt class="descname">primary_key</tt><a class="headerlink" href="index.html#django.db.models.Field.primary_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>如果为 <tt class="xref docutils literal"><span class="pre">True</span></tt>，那么该字段就是 model 的主键。</p>
+<p>如果你没有指定任何一个字段的 <tt class="docutils literal"><span class="pre">primary_key=True</span></tt> ，Django 就会自动添加一个 <a title="django.db.models.IntegerField" class="reference internal" href="index.html#django.db.models.IntegerField"><tt class="xref docutils literal"><span class="pre">IntegerField</span></tt></a> 做为主键字段。所以除非你想重写默认的主键行为，否则没必要在任何字段上设置 <tt class="docutils literal"><span class="pre">primary_key=True</span></tt> 。详见
+<a class="reference external" href="../../../topics/db/models/index.html#automatic-primary-key-fields"><em>自增主键字段 (Automatic primary key fields)</em></a> 。</p>
+<p><tt class="docutils literal"><span class="pre">primary_key=True</span></tt> 意味着 <a title="django.db.models.Field.null" class="reference internal" href="index.html#django.db.models.Field.null"><tt class="xref docutils literal"><span class="pre">null=False</span></tt></a> 和 <a title="django.db.models.Field.unique" class="reference internal" href="index.html#django.db.models.Field.unique"><tt class="xref docutils literal"><span class="pre">unique=True</span></tt></a> 。一个对象只能有一个主键。</p>
+</div>
+<div class="section" id="s-unique">
+<span id="unique"></span><h3><tt class="docutils literal"><span class="pre">unique</span></tt><a class="headerlink" href="index.html#unique" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.unique">
+<!--[django.db.models.Field.unique]--><tt class="descclassname">Field.</tt><tt class="descname">unique</tt><a class="headerlink" href="index.html#django.db.models.Field.unique" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>如果为 <tt class="xref docutils literal"><span class="pre">True</span></tt>，该字段值就必须是全表唯一的。</p>
+<p>它同时作用于数据库层级以及 Django 的管理后台和表单层级。如果你保存 model 时，某个 <a title="django.db.models.Field.unique" class="reference internal" href="index.html#django.db.models.Field.unique"><tt class="xref docutils literal"><span class="pre">unique</span></tt></a> 字段的值是重复的，那么 <a title="django.db.models.Model.save" class="reference external" href="../instances/index.html#django.db.models.Model.save"><tt class="xref docutils literal"><span class="pre">save()</span></tt></a> 方法就会抛出 <tt class="xref docutils literal"><span class="pre">django.db.IntegrityError</span></tt> 异常。</p>
+<p>这个选项在所有的字段上都是可用的，除了 <a title="django.db.models.ManyToManyField" class="reference internal" href="index.html#django.db.models.ManyToManyField"><tt class="xref docutils literal"><span class="pre">ManyToManyField</span></tt></a> 和
+<a title="django.db.models.FileField" class="reference internal" href="index.html#django.db.models.FileField"><tt class="xref docutils literal"><span class="pre">FileField</span></tt></a> 以外。</p>
+</div>
+<div class="section" id="s-unique-for-date">
+<span id="unique-for-date"></span><h3><tt class="docutils literal"><span class="pre">unique_for_date</span></tt><a class="headerlink" href="index.html#unique-for-date" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.unique_for_date">
+<!--[django.db.models.Field.unique_for_date]--><tt class="descclassname">Field.</tt><tt class="descname">unique_for_date</tt><a class="headerlink" href="index.html#django.db.models.Field.unique_for_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>如果要求在某个日期内，该字段值在数据表中是唯一的(就不存在时期和字段值都相同的记录)，那就可以将 unique_for_date 设置为某个 <a title="django.db.models.DateField" class="reference internal" href="index.html#django.db.models.DateField"><tt class="xref docutils literal"><span class="pre">DateField</span></tt></a> 或 <a title="django.db.models.DateTimeField" class="reference internal" href="index.html#django.db.models.DateTimeField"><tt class="xref docutils literal"><span class="pre">DateTimeField</span></tt></a> 的名称。</p>
+<p>例如，假设你有一个声明了 <tt class="docutils literal"><span class="pre">unique_for_date=&quot;pub_date&quot;</span></tt> 的 <tt class="docutils literal"><span class="pre">title</span></tt> 字段，那么 Django 就不会允许出现 <tt class="docutils literal"><span class="pre">title</span></tt> 和 <tt class="docutils literal"><span class="pre">pub_date</span></tt> 相同的两条记录。</p>
+<p>它作用于 Django 的管理后台和表单层级，而非数据库层级。</p>
+</div>
+<div class="section" id="s-unique-for-month">
+<span id="unique-for-month"></span><h3><tt class="docutils literal"><span class="pre">unique_for_month</span></tt><a class="headerlink" href="index.html#unique-for-month" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.unique_for_month">
+<!--[django.db.models.Field.unique_for_month]--><tt class="descclassname">Field.</tt><tt class="descname">unique_for_month</tt><a class="headerlink" href="index.html#django.db.models.Field.unique_for_month" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>和 <a title="django.db.models.Field.unique_for_date" class="reference internal" href="index.html#django.db.models.Field.unique_for_date"><tt class="xref docutils literal"><span class="pre">unique_for_date</span></tt></a> 相似，只不过限定的是月分。</p>
+</div>
+<div class="section" id="s-unique-for-year">
+<span id="unique-for-year"></span><h3><tt class="docutils literal"><span class="pre">unique_for_year</span></tt><a class="headerlink" href="index.html#unique-for-year" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.unique_for_year">
+<!--[django.db.models.Field.unique_for_year]--><tt class="descclassname">Field.</tt><tt class="descname">unique_for_year</tt><a class="headerlink" href="index.html#django.db.models.Field.unique_for_year" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>和 <a title="django.db.models.Field.unique_for_date" class="reference internal" href="index.html#django.db.models.Field.unique_for_date"><tt class="xref docutils literal"><span class="pre">unique_for_date</span></tt></a>， <a title="django.db.models.Field.unique_for_month" class="reference internal" href="index.html#django.db.models.Field.unique_for_month"><tt class="xref docutils literal"><span class="pre">unique_for_month</span></tt></a> 相似，只不过限定的是年分。</p>
+</div>
+<div class="section" id="s-verbose-name">
+<span id="verbose-name"></span><h3><tt class="docutils literal"><span class="pre">verbose_name</span></tt><a class="headerlink" href="index.html#verbose-name" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="django.db.models.Field.verbose_name">
+<!--[django.db.models.Field.verbose_name]--><tt class="descclassname">Field.</tt><tt class="descname">verbose_name</tt><a class="headerlink" href="index.html#django.db.models.Field.verbose_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>该字段易于理解的名称。如果没有提供自述名，Django 会根据字段的属性名自动创建自述名--就是将属性名称中的空格替换成下划线。详见 <a class="reference external" href="../../../topics/db/models/index.html#verbose-field-names"><em>字段的自述名(Verbose field names)</em></a>.</p>
+</div>
+</div>
+<div class="section" id="s-field-types">
+<span id="s-model-field-types"></span><span id="field-types"></span><span id="model-field-types"></span><h2>字段类型(Field types)<a class="headerlink" href="index.html#field-types" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-autofield">
+<span id="autofield"></span><h3><tt class="docutils literal"><span class="pre">AutoField</span></tt><a class="headerlink" href="index.html#autofield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.AutoField">
+<!--[django.db.models.AutoField]-->class <tt class="descname">AutoField</tt>(<em>**options</em>)<a class="headerlink" href="index.html#django.db.models.AutoField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>它是一个根据 ID 自增长的 <a title="django.db.models.IntegerField" class="reference internal" href="index.html#django.db.models.IntegerField"><tt class="xref docutils literal"><span class="pre">IntegerField</span></tt></a> 字段。通常，你不必直接使用该字段。如果你没在别的字段上指定主键，Django 就会自动添加主键字段。详见 <a class="reference external" href="../../../topics/db/models/index.html#automatic-primary-key-fields"><em>自增主键字段(Automatic primary key fields)</em></a>。</p>
+</div>
+<div class="section" id="s-booleanfield">
+<span id="booleanfield"></span><h3><tt class="docutils literal"><span class="pre">BooleanField</span></tt><a class="headerlink" href="index.html#booleanfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.BooleanField">
+<!--[django.db.models.BooleanField]-->class <tt class="descname">BooleanField</tt>(<em>**options</em>)<a class="headerlink" href="index.html#django.db.models.BooleanField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>一个布尔值(true/false)字段。</p>
+<p>Django 的管理后台用checkbox来表现该字段类型。</p>
+<div class="admonition-mysql-users admonition ">
+<p class="first admonition-title">MySQL 用户请注意：</p>
+<p class="last">布尔字段在 MySQL 中被存储为 <tt class="docutils literal"><span class="pre">TINYINT</span></tt> 列。它的值只能是 0 或 1 (其他大多数据库都有适用的 <tt class="docutils literal"><span class="pre">BOOLEAN</span></tt> 类型)。所以仅在使用 MySQL 的情况下，从数据库中检索 <tt class="docutils literal"><span class="pre">BooleanField</span></tt> 并保存为 model 的属性，这时属性值是 1 或是 0 ，而不是 <tt class="xref docutils literal"><span class="pre">True</span></tt> 或 <tt class="xref docutils literal"><span class="pre">False</span></tt> 。正常情况下，这不会引起问题，因为 Python 保证令 <tt class="docutils literal"><span class="pre">1</span> <span class="pre">==</span> <span class="pre">True</span></tt> 和 <tt class="docutils literal"><span class="pre">0</span> <span class="pre">==</span> <span class="pre">False</span></tt> 都是有效的。只是在你编写类似 <tt class="docutils literal"><span class="pre">obj</span> <span class="pre">is</span> <span class="pre">True</span></tt> 语句时，如果 <tt class="docutils literal"><span class="pre">obj</span></tt> 正是 model 的一个布尔属性值，那你就要留心注意了。因为在使用 <tt class="docutils literal"><span class="pre">mysql</span></tt> 数据库时，&quot;<tt class="docutils literal"><span class="pre">is</span></tt>&quot; 操作是无效的。在这种场合下，使用<b>相等</b>判断更好(使用 &quot;<tt class="docutils literal"><span class="pre">==</span></tt>&quot;)。</p>
+</div>
+</div>
+<div class="section" id="s-charfield">
+<span id="charfield"></span><h3><tt class="docutils literal"><span class="pre">CharField</span></tt><a class="headerlink" href="index.html#charfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.CharField">
+<!--[django.db.models.CharField]-->class <tt class="descname">CharField</tt>(<em>max_length=None</em><span class="optional">[</span>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.CharField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>它是一个字符串字段，对小字符串和大字符串都适用。</p>
+<p>对于更大的文本，应该使用 <a title="django.db.models.TextField" class="reference internal" href="index.html#django.db.models.TextField"><tt class="xref docutils literal"><span class="pre">TextField</span></tt></a> 。</p>
+<p>Django 的管理后台用 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> (单行输入框) 来表示这种字段。</p>
+<p><a title="django.db.models.CharField" class="reference internal" href="index.html#django.db.models.CharField"><tt class="xref docutils literal"><span class="pre">CharField</span></tt></a> 有一个必须传入的参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.CharField.max_length">
+<!--[django.db.models.CharField.max_length]--><tt class="descclassname">CharField.</tt><tt class="descname">max_length</tt><a class="headerlink" href="index.html#django.db.models.CharField.max_length" title="Permalink to this definition">¶</a></dt>
+<dd>字段的最大字符数。它作用于数据库层级和 Django 的数据验证层级。</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">注意</p>
+<p class="last">如果你正在编写的应用要求满足多种数据库，那么你就要注意不同数据库对 <tt class="docutils literal"><span class="pre">max_length</span></tt> 有不同的限制。详见 <a class="reference external" href="../../databases/index.html#ref-databases"><em>数据库 (database backend notes)</em></a> 。</p>
+</div>
+<div class="admonition-mysql-users admonition ">
+<p class="first admonition-title">MySQL 用户请注意：</p>
+<p class="last">如果你使用 MySQLdb 1.2.2 和 <tt class="docutils literal"><span class="pre">utf8_bin</span></tt>
+字符集(非默认设置)，有几点注意事项要格外留意。详见 <a class="reference external" href="../../databases/index.html#mysql-collation"><em>MySQL 数据库 (MySQL database notes)</em></a> 。</p>
+</div>
+</div>
+<div class="section" id="s-commaseparatedintegerfield">
+<span id="commaseparatedintegerfield"></span><h3><tt class="docutils literal"><span class="pre">CommaSeparatedIntegerField</span></tt><a class="headerlink" href="index.html#commaseparatedintegerfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.CommaSeparatedIntegerField">
+<!--[django.db.models.CommaSeparatedIntegerField]-->class <tt class="descname">CommaSeparatedIntegerField</tt>(<em>max_length=None</em><span class="optional">[</span>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.CommaSeparatedIntegerField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>它用来存放以逗号间隔的整数序列。和 <a title="django.db.models.CharField" class="reference internal" href="index.html#django.db.models.CharField"><tt class="xref docutils literal"><span class="pre">CharField</span></tt></a> 一样，必须为它提供 <a title="django.db.models.CharField.max_length" class="reference internal" href="index.html#django.db.models.CharField.max_length"><tt class="xref docutils literal"><span class="pre">max_length</span></tt></a> 参数。而且要注意不同数据库对 max_length 的限制。</p>
+</div>
+<div class="section" id="s-datefield">
+<span id="datefield"></span><h3><tt class="docutils literal"><span class="pre">DateField</span></tt><a class="headerlink" href="index.html#datefield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.DateField">
+<!--[django.db.models.DateField]-->class <tt class="descname">DateField</tt>(<span class="optional">[</span><em>auto_now=False</em>, <em>auto_now_add=False</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.DateField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>该字段利用 Python 的 <tt class="docutils literal"><span class="pre">datetime.date</span></tt> 实例来表示日期。下面是它额外的可选参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.DateField.auto_now">
+<!--[django.db.models.DateField.auto_now]--><tt class="descclassname">DateField.</tt><tt class="descname">auto_now</tt><a class="headerlink" href="index.html#django.db.models.DateField.auto_now" title="Permalink to this definition">¶</a></dt>
+<dd>每一次保存对象时，Django 都会自动将该字段的值设置为当前时间。一般用来表示 <b>&quot;最后修改&quot;</b> 时间。要注意使用的是<b>当前日期</b>，而并非默认值，所以你不能通过重写默认值的办法来改变保存时间。</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.DateField.auto_now_add">
+<!--[django.db.models.DateField.auto_now_add]--><tt class="descclassname">DateField.</tt><tt class="descname">auto_now_add</tt><a class="headerlink" href="index.html#django.db.models.DateField.auto_now_add" title="Permalink to this definition">¶</a></dt>
+<dd>在第一次创建对象时，Django 自动将该字段的值设置为当前时间，一般用来表示对象创建时间。它使用的同样是<b>当前日期</b>，而非默认值。</dd></dl>
+
+<p>Django 管理后台使用一个带有 Javascript 日历的 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> 来表示该字段，它带有一个当前日期的快捷选择。那个 JavaScript 日历总是以星期天做为一个星期的第一天。</p>
+</div>
+<div class="section" id="s-datetimefield">
+<span id="datetimefield"></span><h3><tt class="docutils literal"><span class="pre">DateTimeField</span></tt><a class="headerlink" href="index.html#datetimefield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.DateTimeField">
+<!--[django.db.models.DateTimeField]-->class <tt class="descname">DateTimeField</tt>(<span class="optional">[</span><em>auto_now=False</em>, <em>auto_now_add=False</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.DateTimeField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>该字段利用 <tt class="docutils literal"><span class="pre">datetime.datetime</span></tt> 实例表示日期和时间。该字段所按受的参数和 <a title="django.db.models.DateField" class="reference internal" href="index.html#django.db.models.DateField"><tt class="xref docutils literal"><span class="pre">DateField</span></tt></a> 一样。</p>
+<p>Django 的管理后台使用两个 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> 分别表示日期和时间，同样也带有 JavaScript 快捷选项。</p>
+</div>
+<div class="section" id="s-decimalfield">
+<span id="decimalfield"></span><h3><tt class="docutils literal"><span class="pre">DecimalField</span></tt><a class="headerlink" href="index.html#decimalfield" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<span class="title">这部分是在 Django 1.0 中新增的：</span> <a class="reference external" href="../../../releases/1.0/index.html#releases-1-0"><em>请查看版本文档</em></a></div>
+<dl class="class">
+<dt id="django.db.models.DecimalField">
+<!--[django.db.models.DecimalField]-->class <tt class="descname">DecimalField</tt>(<em>max_digits=None</em>, <em>decimal_places=None</em><span class="optional">[</span>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.DecimalField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>它是使用 <tt class="xref docutils literal"><span class="pre">Decimal</span></tt> 实例表示固定精度的十进制数的字段。它有两个必须的参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.DecimalField.max_digits">
+<!--[django.db.models.DecimalField.max_digits]--><tt class="descclassname">DecimalField.</tt><tt class="descname">max_digits</tt><a class="headerlink" href="index.html#django.db.models.DecimalField.max_digits" title="Permalink to this definition">¶</a></dt>
+<dd>数字允许的最大位数</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.DecimalField.decimal_places">
+<!--[django.db.models.DecimalField.decimal_places]--><tt class="descclassname">DecimalField.</tt><tt class="descname">decimal_places</tt><a class="headerlink" href="index.html#django.db.models.DecimalField.decimal_places" title="Permalink to this definition">¶</a></dt>
+<dd>小数的最大位数</dd></dl>
+
+<p>例如，要存储的数字最大值是999，而带有两个小数位，你可以使用：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">max_digits</span><span class="o">=</span><span class="mf">5</span><span class="p">,</span> <span class="n">decimal_places</span><span class="o">=</span><span class="mf">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>要存储大约是十亿级且带有10个小数位的数字，就这样写：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">max_digits</span><span class="o">=</span><span class="mf">19</span><span class="p">,</span> <span class="n">decimal_places</span><span class="o">=</span><span class="mf">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Django 管理后台使用 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> (单行输入框) 表示该字段。</p>
+</div>
+<div class="section" id="s-emailfield">
+<span id="emailfield"></span><h3><tt class="docutils literal"><span class="pre">EmailField</span></tt><a class="headerlink" href="index.html#emailfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.EmailField">
+<!--[django.db.models.EmailField]-->class <tt class="descname">EmailField</tt>(<span class="optional">[</span><em>max_length=75</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.EmailField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>它是带有 email 合法性检测的A <a title="django.db.models.CharField" class="reference internal" href="index.html#django.db.models.CharField"><tt class="xref docutils literal"><span class="pre">CharField</span></tt></a> 。</p>
+</div>
+<div class="section" id="s-filefield">
+<span id="filefield"></span><h3><tt class="docutils literal"><span class="pre">FileField</span></tt><a class="headerlink" href="index.html#filefield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.FileField">
+<!--[django.db.models.FileField]-->class <tt class="descname">FileField</tt>(<em>upload_to=None</em><span class="optional">[</span>, <em>max_length=100</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.FileField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>文件上传字段</p>
+<div class="admonition note">
+<p class="first admonition-title">注意</p>
+<p class="last">该字段不支持 <tt class="docutils literal"><span class="pre">primary_key</span></tt> 和 <tt class="docutils literal"><span class="pre">unique</span></tt> 参数，否则会抛出 <tt class="docutils literal"><span class="pre">TypeError</span></tt> 异常。</p>
+</div>
+<p>它有一个必须的参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.FileField.upload_to">
+<!--[django.db.models.FileField.upload_to]--><tt class="descclassname">FileField.</tt><tt class="descname">upload_to</tt><a class="headerlink" href="index.html#django.db.models.FileField.upload_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>用于保存文件的本地文件系统。它根据 <a class="reference external" href="../../settings/index.html#setting-MEDIA_ROOT"><tt class="xref docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> 设置确定该文件的 <a title="django.core.files.File.url" class="reference external" href="../../files/file/index.html#django.core.files.File.url"><tt class="xref docutils literal"><span class="pre">url</span></tt></a> 属性。</p>
+<p>该路径可以包含 <a class="reference external" href="http://docs.python.org/lib/module-time.html#l2h-1941">时间格式串 (strftime formatting)</a>，可以在上传文件的时候替换成当时日期／时间(这样，就不会出现在上传文件把某个目录塞满的情况了)。</p>
+<div class="versionchanged">
+<span class="title">在 Django 1.0 已改动：</span> <a class="reference external" href="../../../releases/1.0/index.html#releases-1-0"><em>请查看版本文档</em></a></div>
+<p>该参数也可以是一个可调用项，比如是一个函式，可以调用函式获得包含文件名的上传路径。这个可调用项必须要接受两个参数，并且返回一个保存文件用的 Unix-Style 的路径(用 / 斜杠)。两个参数分别是：</p>
+<table class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">参数</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">instance</span></tt></td>
+<td><p class="first">定义了当前 <tt class="docutils literal"><span class="pre">FileField</span></tt> 的 model 实例。更准确地说，就是以该文件为附件的 model 实例。</p>
+<p class="last">大多数情况下，在保存该文件时， model 实例对象还并没有保存到数据库，这是因为它很有可能使用默认的 <tt class="docutils literal"><span class="pre">AutoField</span></tt>，而此时它还没有从数据库中获得主键值。(用法见oteam的<a href='http://oteam.cn/2008/10/4/dynamic-upload-paths-in-django/'>http://oteam.cn/2008/10/4/dynamic-upload-paths-in-django/</a>)</p>
+</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">filename</span></tt></td>
+<td>上传文件的原始名称。在生成最终路径的时候，有可能会用到它。</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>还有一个可选的参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.FileField.storage">
+<!--[django.db.models.FileField.storage]--><tt class="descclassname">FileField.</tt><tt class="descname">storage</tt><a class="headerlink" href="index.html#django.db.models.FileField.storage" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<span class="title">这部分是在 Django 1.0 中新增的：</span> <a class="reference external" href="../../../releases/1.0/index.html#releases-1-0"><em>请查看版本文档</em></a></div>
+<p>负责保存和获取文件的对象。详见 <a class="reference external" href="../../../topics/files/index.html#topics-files"><em>Managing files</em></a>。</p>
+</dd></dl>
+
+<p>Django 管理后台使用 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;file&quot;&gt;</span></tt> (一个文件上传的部件) 来表示这个对象。</p>
+<p>在 model 中使用 <a title="django.db.models.FileField" class="reference internal" href="index.html#django.db.models.FileField"><tt class="xref docutils literal"><span class="pre">FileField</span></tt></a> 或 <a title="django.db.models.ImageField" class="reference internal" href="index.html#django.db.models.ImageField"><tt class="xref docutils literal"><span class="pre">ImageField</span></tt></a> (稍后会提到) 要按照以下的步骤：</p>
+<ol class="arabic simple">
+<li>在项目配置文件中，你要定义 <a class="reference external" href="../../settings/index.html#setting-MEDIA_ROOT"><tt class="xref docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> ，将它的值设为用来存放上传文件的目录的完整路径。(基于性能的考虑，Django 没有将文件保存在数据库中。) ，然后定义 <a class="reference external" href="../../settings/index.html#setting-MEDIA_URL"><tt class="xref docutils literal"><span class="pre">MEDIA_URL</span></tt></a> ，将它的值设为表示该目录的网址。要确保 web 服务器所用的帐号拥有对该目录的写权限。</li>
+<li>在 model 里面添加 <a title="django.db.models.FileField" class="reference internal" href="index.html#django.db.models.FileField"><tt class="xref docutils literal"><span class="pre">FileField</span></tt></a> 或 <a title="django.db.models.ImageField" class="reference internal" href="index.html#django.db.models.ImageField"><tt class="xref docutils literal"><span class="pre">ImageField</span></tt></a> ，并且确认已定义了 <a title="django.db.models.FileField.upload_to" class="reference internal" href="index.html#django.db.models.FileField.upload_to"><tt class="xref docutils literal"><span class="pre">upload_to</span></tt></a> 项，让 Django 知道应该用 <a class="reference external" href="../../settings/index.html#setting-MEDIA_ROOT"><tt class="xref docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> 的哪个子目录来保存文件。</li>
+<li>存储在数据库当中的仅仅只是文件的路径(而且是相对于 <a class="reference external" href="../../settings/index.html#setting-MEDIA_ROOT"><tt class="xref docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> 的相对路径)。你可能已经想到利用 Django 提供的 <a title="django.core.files.File.url" class="reference external" href="../../files/file/index.html#django.core.files.File.url"><tt class="xref docutils literal"><span class="pre">url</span></tt></a> 这个方便的函式。举个例子，如果你的 <a title="django.db.models.ImageField" class="reference internal" href="index.html#django.db.models.ImageField"><tt class="xref docutils literal"><span class="pre">ImageField</span></tt></a> 名称是 <tt class="docutils literal"><span class="pre">mug_shot</span></tt>，那么你可以在模板中使用
+<tt class="docutils literal"><span class="pre">{{</span> <span class="pre">object.mug_shot.url</span> <span class="pre">}}</span></tt> ，就能得到图片的完整网址。</li>
+</ol>
+<p>例如，假设你的 <a class="reference external" href="../../settings/index.html#setting-MEDIA_ROOT"><tt class="xref docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> 被设为 <tt class="docutils literal"><span class="pre">'/home/media'</span></tt>，<a title="django.db.models.FileField.upload_to" class="reference internal" href="index.html#django.db.models.FileField.upload_to"><tt class="xref docutils literal"><span class="pre">upload_to</span></tt></a> 被设为 <tt class="docutils literal"><span class="pre">'photos/%Y/%m/%d'</span></tt>。 <a title="django.db.models.FileField.upload_to" class="reference internal" href="index.html#django.db.models.FileField.upload_to"><tt class="xref docutils literal"><span class="pre">upload_to</span></tt></a> 中的 <tt class="docutils literal"><span class="pre">'%Y/%m/%d'</span></tt> 是一个 <a class="reference external" href="http://docs.python.org/lib/module-time.html#l2h-1941">时间格式字符串 (strftime formatting)</a>； <tt class="docutils literal"><span class="pre">'%Y'</span></tt> 是四位的年分，<tt class="docutils literal"><span class="pre">'%m'</span></tt> 是两位的月分， <tt class="docutils literal"><span class="pre">'%d'</span></tt> 是两位的日子。如果你在2007年01月15号上传了一个文件，那么这个文件就保存在 <tt class="docutils literal"><span class="pre">/home/media/photos/2007/01/15</span></tt> 目录下。</p>
+<p>如果你想得到上传文件的本地文件名称，文件网址，或是文件的大小，你可以使用 <a title="django.core.files.File.name" class="reference external" href="../../files/file/index.html#django.core.files.File.name"><tt class="xref docutils literal"><span class="pre">name</span></tt></a>, <a title="django.core.files.File.url" class="reference external" href="../../files/file/index.html#django.core.files.File.url"><tt class="xref docutils literal"><span class="pre">url</span></tt></a>
+和 <a title="django.core.files.File.size" class="reference external" href="../../files/file/index.html#django.core.files.File.size"><tt class="xref docutils literal"><span class="pre">size</span></tt></a> 属性；详见 <a class="reference external" href="../../../topics/files/index.html#topics-files"><em>管理文件 (Managing files)</em></a>。</p>
+<p>注意：在上传文件时，要警惕保存文件的位置和文件的类型，这么做的原因是为了避免安全漏洞。<b>对每一个上传文件都要验证</b>，这样你才能确保上传的文件是你想要的文件。举个例子，如果你盲目地让别人上传文件，而没有对上传文件进行验证，如果保存文件的目录处于 web 服务器的根目录下，万一有人上传了一个 CGI 或是 PHP 脚本，然后通过访问脚本网址来运行上传的脚本，那可就太危险了。<b>千万不要让这样的事情发生！</b></p>
+<div class="versionadded">
+<span class="title">这部分是在 Django 1.0 中新增的：</span> 在这个版本中，新加了 <tt class="docutils literal"><span class="pre">max_length</span></tt> 参数。</div>
+<p>默认情况下，<a title="django.db.models.FileField" class="reference internal" href="index.html#django.db.models.FileField"><tt class="xref docutils literal"><span class="pre">FileField</span></tt></a> 实例在数据库中的对应列是 <tt class="docutils literal"><span class="pre">varchar(100)</span></tt> ，和其他字段一样，你可以利用 <a title="django.db.models.CharField.max_length" class="reference internal" href="index.html#django.db.models.CharField.max_length"><tt class="xref docutils literal"><span class="pre">max_length</span></tt></a> 参数改变字段的最大长度。</p>
+</div>
+<div class="section" id="s-filepathfield">
+<span id="filepathfield"></span><h3><tt class="docutils literal"><span class="pre">FilePathField</span></tt><a class="headerlink" href="index.html#filepathfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.FilePathField">
+<!--[django.db.models.FilePathField]-->class <tt class="descname">FilePathField</tt>(<em>path=None</em><span class="optional">[</span>, <em>match=None</em>, <em>recursive=False</em>, <em>max_length=100</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.FilePathField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>它是一个 <a title="django.db.models.CharField" class="reference internal" href="index.html#django.db.models.CharField"><tt class="xref docutils literal"><span class="pre">CharField</span></tt></a> ，它用来选择文件系统下某个目录里面的某些文件。它有三个专有的参数，只有第一个参数是必须的：</p>
+<dl class="attribute">
+<dt id="django.db.models.FilePathField.path">
+<!--[django.db.models.FilePathField.path]--><tt class="descclassname">FilePathField.</tt><tt class="descname">path</tt><a class="headerlink" href="index.html#django.db.models.FilePathField.path" title="Permalink to this definition">¶</a></dt>
+<dd>这个参数是必需的。它是一个目录的绝对路径，而这个目录就是 <a title="django.db.models.FilePathField" class="reference internal" href="index.html#django.db.models.FilePathField"><tt class="xref docutils literal"><span class="pre">FilePathField</span></tt></a> 用来选择文件的那个目录。比如： <tt class="docutils literal"><span class="pre">&quot;/home/images&quot;</span></tt>.</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.FilePathField.match">
+<!--[django.db.models.FilePathField.match]--><tt class="descclassname">FilePathField.</tt><tt class="descname">match</tt><a class="headerlink" href="index.html#django.db.models.FilePathField.match" title="Permalink to this definition">¶</a></dt>
+<dd>可选参数。它是一个正则表达式字符串， <a title="django.db.models.FilePathField" class="reference internal" href="index.html#django.db.models.FilePathField"><tt class="xref docutils literal"><span class="pre">FilePathField</span></tt></a>
+用它来过滤文件名称，只有符合条件的文件才出现在文件选择列表中。要注意正则表达式只匹配文件名，而不是匹配文件路径。例如： <tt class="docutils literal"><span class="pre">&quot;foo.*\.txt$&quot;</span></tt> 只匹配名为 <tt class="docutils literal"><span class="pre">foo23.txt</span></tt> 而不匹配 <tt class="docutils literal"><span class="pre">bar.txt</span></tt> 和 <tt class="docutils literal"><span class="pre">foo23.gif</span></tt>。</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.FilePathField.recursive">
+<!--[django.db.models.FilePathField.recursive]--><tt class="descclassname">FilePathField.</tt><tt class="descname">recursive</tt><a class="headerlink" href="index.html#django.db.models.FilePathField.recursive" title="Permalink to this definition">¶</a></dt>
+<dd>可选参数。它的值是 <tt class="xref docutils literal"><span class="pre">True</span></tt> 或 <tt class="xref docutils literal"><span class="pre">False</span></tt>。默认值是 <tt class="xref docutils literal"><span class="pre">False</span></tt>。它指定是否包含 <a title="django.db.models.FilePathField.path" class="reference internal" href="index.html#django.db.models.FilePathField.path"><tt class="xref docutils literal"><span class="pre">path</span></tt></a> 下的子目录。</dd></dl>
+
+<p>当然，这三个参数可以同时使用。</p>
+<p>前面已经提到了 <a title="django.db.models.FilePathField.match" class="reference internal" href="index.html#django.db.models.FilePathField.match"><tt class="xref docutils literal"><span class="pre">match</span></tt></a> 只匹配文件名称，而不是文件路径。所以下面这个例子：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">FilePathField</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s">&quot;/home/images&quot;</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s">&quot;foo.*&quot;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p> 将匹配 <tt class="docutils literal"><span class="pre">/home/images/foo.gif</span></tt> ，而不匹配 <tt class="docutils literal"><span class="pre">/home/images/foo/bar.gif</span></tt>。这是因为 <a title="django.db.models.FilePathField.match" class="reference internal" href="index.html#django.db.models.FilePathField.match"><tt class="xref docutils literal"><span class="pre">match</span></tt></a> 只匹配文件名
+(<tt class="docutils literal"><span class="pre">foo.gif</span></tt> 和 <tt class="docutils literal"><span class="pre">bar.gif</span></tt>).</p>
+<div class="versionadded">
+<span class="title">这部分是在 Django 1.0 中新增的：</span> 在这个版本中，新加了 <tt class="docutils literal"><span class="pre">max_length</span></tt> 参数。</div>
+<p>默认情况下， <a title="django.db.models.FilePathField" class="reference internal" href="index.html#django.db.models.FilePathField"><tt class="xref docutils literal"><span class="pre">FilePathField</span></tt></a> 实例在数据库中的对应列是s <tt class="docutils literal"><span class="pre">varchar(100)</span></tt> 。和其他字段一样，你可以利用 <a title="django.db.models.CharField.max_length" class="reference internal" href="index.html#django.db.models.CharField.max_length"><tt class="xref docutils literal"><span class="pre">max_length</span></tt></a> 参数改变字段的最大升序。</p>
+</div>
+<div class="section" id="s-floatfield">
+<span id="floatfield"></span><h3><tt class="docutils literal"><span class="pre">FloatField</span></tt><a class="headerlink" href="index.html#floatfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.FloatField">
+<!--[django.db.models.FloatField]-->class <tt class="descname">FloatField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.FloatField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="versionchanged">
+<span class="title">在 Django 1.0 在已改动：</span> <a class="reference external" href="../../../releases/1.0/index.html#releases-1-0"><em>请查看版本文档</em></a></div>
+<p>该字段在  Python 中使用by a <tt class="docutils literal"><span class="pre">float</span></tt> 实例来表示一个浮点数。</p>
+<p>Django 管理后台用 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> (一个单行输入框) 表示该字段。</p>
+</div>
+<div class="section" id="s-imagefield">
+<span id="imagefield"></span><h3><tt class="docutils literal"><span class="pre">ImageField</span></tt><a class="headerlink" href="index.html#imagefield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.ImageField">
+<!--[django.db.models.ImageField]-->class <tt class="descname">ImageField</tt>(<em>upload_to=None</em><span class="optional">[</span>, <em>height_field=None</em>, <em>width_field=None</em>, <em>max_length=100</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.ImageField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>和 <a title="django.db.models.FileField" class="reference internal" href="index.html#django.db.models.FileField"><tt class="xref docutils literal"><span class="pre">FileField</span></tt></a> 一样，只是会验证上传对象是不是一个合法的图象文件。它有两个可选参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.ImageField.height_field">
+<!--[django.db.models.ImageField.height_field]--><tt class="descclassname">ImageField.</tt><tt class="descname">height_field</tt><a class="headerlink" href="index.html#django.db.models.ImageField.height_field" title="Permalink to this definition">¶</a></dt>
+<dd>保存图片高度的字段名称。在保存对象时，会根据该字段设定的高度，对图片文件进行缩放转换。</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.ImageField.width_field">
+<!--[django.db.models.ImageField.width_field]--><tt class="descclassname">ImageField.</tt><tt class="descname">width_field</tt><a class="headerlink" href="index.html#django.db.models.ImageField.width_field" title="Permalink to this definition">¶</a></dt>
+<dd>保存图片宽度的字段名称。在保存对象时，会根据该字段设定的宽度，对图片文件进行缩放转换。</dd></dl>
+
+<p>除了那些在 <a title="django.db.models.FileField" class="reference internal" href="index.html#django.db.models.FileField"><tt class="xref docutils literal"><span class="pre">FileField</span></tt></a> 中有效的参数之外， <a title="django.db.models.ImageField" class="reference internal" href="index.html#django.db.models.ImageField"><tt class="xref docutils literal"><span class="pre">ImageField</span></tt></a> 还可以使用 <tt class="docutils literal"><span class="pre">File.height</span></tt> and <tt class="docutils literal"><span class="pre">File.width</span></tt> 两个属性。详见<a class="reference external" href="../../../topics/files/index.html#topics-files"><em>管理文件 (Managing files)</em></a>(但我个人wrongway并没有找到这两个参数的介绍)。</p>
+<p>使用该字段要求安装 <a class="reference external" href="http://www.pythonware.com/products/pil/">Python Imaging Library(PIL)</a>.</p>
+<div class="versionadded">
+<span class="title">这部分是在 Django 1.0 中新增的：</span> 在新版本中新加了 <tt class="docutils literal"><span class="pre">max_length</span></tt> 参数。</div>
+<p>默认情况下， <a title="django.db.models.ImageField" class="reference internal" href="index.html#django.db.models.ImageField"><tt class="xref docutils literal"><span class="pre">ImageField</span></tt></a> 实例对应着数据库中的
+created as <tt class="docutils literal"><span class="pre">varchar(100)</span></tt> 列。和其他字段一样，你可以使用 <a title="django.db.models.CharField.max_length" class="reference internal" href="index.html#django.db.models.CharField.max_length"><tt class="xref docutils literal"><span class="pre">max_length</span></tt></a> 参数来改变字段的最大长度。</p>
+</div>
+<div class="section" id="s-integerfield">
+<span id="integerfield"></span><h3><tt class="docutils literal"><span class="pre">IntegerField</span></tt><a class="headerlink" href="index.html#integerfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.IntegerField">
+<!--[django.db.models.IntegerField]-->class <tt class="descname">IntegerField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.IntegerField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>整数字段。Django 管理后台用 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> (一个单行输入框) 表示该字段。</p>
+</div>
+<div class="section" id="s-ipaddressfield">
+<span id="ipaddressfield"></span><h3><tt class="docutils literal"><span class="pre">IPAddressField</span></tt><a class="headerlink" href="index.html#ipaddressfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.IPAddressField">
+<!--[django.db.models.IPAddressField]-->class <tt class="descname">IPAddressField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.IPAddressField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>以字符串形式(比如 192.0.2.30)表示 IP 地址字段。Django 管理后台使用 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> (一个单行输入框) 表示该字段。</p>
+</div>
+<div class="section" id="s-nullbooleanfield">
+<span id="nullbooleanfield"></span><h3><tt class="docutils literal"><span class="pre">NullBooleanField</span></tt><a class="headerlink" href="index.html#nullbooleanfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.NullBooleanField">
+<!--[django.db.models.NullBooleanField]-->class <tt class="descname">NullBooleanField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.NullBooleanField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>与 <a title="django.db.models.BooleanField" class="reference internal" href="index.html#django.db.models.BooleanField"><tt class="xref docutils literal"><span class="pre">BooleanField</span></tt></a> 相似，但多了一个 <tt class="docutils literal"><span class="pre">NULL</span></tt> 选项。建议用该字段代替使用  <tt class="docutils literal"><span class="pre">null=True</span></tt> 选项的 <a title="django.db.models.BooleanField" class="reference internal" href="index.html#django.db.models.BooleanField"><tt class="xref docutils literal"><span class="pre">BooleanField</span></tt></a> 。Django 管理后台使用 <tt class="docutils literal"><span class="pre">&lt;select&gt;</span></tt> 选择框来表示该字段，选择框有三个选项，分别是 &quot;Unknown&quot;, &quot;Yes&quot; 和 &quot;No&quot; 。</p>
+</div>
+<div class="section" id="s-positiveintegerfield">
+<span id="positiveintegerfield"></span><h3><tt class="docutils literal"><span class="pre">PositiveIntegerField</span></tt><a class="headerlink" href="index.html#positiveintegerfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.PositiveIntegerField">
+<!--[django.db.models.PositiveIntegerField]-->class <tt class="descname">PositiveIntegerField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.PositiveIntegerField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>和 <a title="django.db.models.IntegerField" class="reference internal" href="index.html#django.db.models.IntegerField"><tt class="xref docutils literal"><span class="pre">IntegerField</span></tt></a> 相似，但字段值必须是非负数。</p>
+</div>
+<div class="section" id="s-positivesmallintegerfield">
+<span id="positivesmallintegerfield"></span><h3><tt class="docutils literal"><span class="pre">PositiveSmallIntegerField</span></tt><a class="headerlink" href="index.html#positivesmallintegerfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.PositiveSmallIntegerField">
+<!--[django.db.models.PositiveSmallIntegerField]-->class <tt class="descname">PositiveSmallIntegerField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.PositiveSmallIntegerField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>和 <a title="django.db.models.PositiveIntegerField" class="reference internal" href="index.html#django.db.models.PositiveIntegerField"><tt class="xref docutils literal"><span class="pre">PositiveIntegerField</span></tt></a> 类似，但数值的取值范围较小，受限于数据库设置。</p>
+</div>
+<div class="section" id="s-slugfield">
+<span id="slugfield"></span><h3><tt class="docutils literal"><span class="pre">SlugField</span></tt><a class="headerlink" href="index.html#slugfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.SlugField">
+<!--[django.db.models.SlugField]-->class <tt class="descname">SlugField</tt>(<span class="optional">[</span><em>max_length=50</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.SlugField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="../../../glossary/index.html#term-slug"><em>Slug</em></a> 是一个新闻术语，是指某个事件的短标签。它只能由字母，数字，下划线或连字符组成。通赏情况下，它被用做网址的一部分。</p>
+<p>和 CharField 类似，你可以指定 <a title="django.db.models.CharField.max_length" class="reference internal" href="index.html#django.db.models.CharField.max_length"><tt class="xref docutils literal"><span class="pre">max_length</span></tt></a> (要注意数据库兼容性和本节提到的 <a title="django.db.models.CharField.max_length" class="reference internal" href="index.html#django.db.models.CharField.max_length"><tt class="xref docutils literal"><span class="pre">max_length</span></tt></a> )。如果没有指定 <a title="django.db.models.CharField.max_length" class="reference internal" href="index.html#django.db.models.CharField.max_length"><tt class="xref docutils literal"><span class="pre">max_length</span></tt></a> ，Django 会默认字段长度为50。</p>
+<p>该字段会自动设置 <a title="django.db.models.Field.db_index" class="reference internal" href="index.html#django.db.models.Field.db_index"><tt class="xref docutils literal"><span class="pre">Field.db_index</span></tt></a> to <tt class="xref docutils literal"><span class="pre">True</span></tt>。</p>
+<p>基于其他字段的值来自动填充 Slug 字段是很有用的。你可以在 Django 的管理后台中使用 <a title="django.contrib.admin.ModelAdmin.prepopulated_fields" class="reference external" href="../../contrib/admin/index.html#django.contrib.admin.ModelAdmin.prepopulated_fields"><tt class="xref docutils literal"><span class="pre">prepopulated_fields</span></tt></a> 来做到这一点。</p>
+</div>
+<div class="section" id="s-smallintegerfield">
+<span id="smallintegerfield"></span><h3><tt class="docutils literal"><span class="pre">SmallIntegerField</span></tt><a class="headerlink" href="index.html#smallintegerfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.SmallIntegerField">
+<!--[django.db.models.SmallIntegerField]-->class <tt class="descname">SmallIntegerField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.SmallIntegerField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>和 <a title="django.db.models.IntegerField" class="reference internal" href="index.html#django.db.models.IntegerField"><tt class="xref docutils literal"><span class="pre">IntegerField</span></tt></a> 类似，但数值的取值范围较小，受限于数据库的限制。</p>
+</div>
+<div class="section" id="s-textfield">
+<span id="textfield"></span><h3><tt class="docutils literal"><span class="pre">TextField</span></tt><a class="headerlink" href="index.html#textfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.TextField">
+<!--[django.db.models.TextField]-->class <tt class="descname">TextField</tt>(<span class="optional">[</span><em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.TextField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>大文本字段。Django 的管理后台使用 <tt class="docutils literal"><span class="pre">&lt;textarea&gt;</span></tt> (一个多行文本框) 表示该字段。</p>
+<div class="admonition-mysql-users admonition ">
+<p class="first admonition-title">MySQL 用户请注意</p>
+<p class="last">如果你正在使用 MySQLdb 1.2.1p2 和 <tt class="docutils literal"><span class="pre">utf8_bin</span></tt>
+字符集(非默认设置)，有几点注意事项要格外留意，详见 <a class="reference external" href="../../databases/index.html#mysql-collation"><em>MySQL database notes</em></a> 。</p>
+</div>
+</div>
+<div class="section" id="s-timefield">
+<span id="timefield"></span><h3><tt class="docutils literal"><span class="pre">TimeField</span></tt><a class="headerlink" href="index.html#timefield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.TimeField">
+<!--[django.db.models.TimeField]-->class <tt class="descname">TimeField</tt>(<span class="optional">[</span><em>auto_now=False</em>, <em>auto_now_add=False</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.TimeField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>该字段使用 Python 的 <tt class="docutils literal"><span class="pre">datetime.time</span></tt> 实例来表示时间。它和 <a title="django.db.models.DateField" class="reference internal" href="index.html#django.db.models.DateField"><tt class="xref docutils literal"><span class="pre">DateField</span></tt></a> 接受同样的自动填充的参数。</p>
+<p>Django 管理后台使用一个带 Javascript 快捷链接 的 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> 表示该字段。</p>
+</div>
+<div class="section" id="s-urlfield">
+<span id="urlfield"></span><h3><tt class="docutils literal"><span class="pre">URLField</span></tt><a class="headerlink" href="index.html#urlfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.URLField">
+<!--[django.db.models.URLField]-->class <tt class="descname">URLField</tt>(<span class="optional">[</span><em>verify_exists=True</em>, <em>max_length=200</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.URLField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>保存 URL 的 <a title="django.db.models.CharField" class="reference internal" href="index.html#django.db.models.CharField"><tt class="xref docutils literal"><span class="pre">CharField</span></tt></a> 。它有一个额外的可选参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.URLField.verify_exists">
+<!--[django.db.models.URLField.verify_exists]--><tt class="descclassname">URLField.</tt><tt class="descname">verify_exists</tt><a class="headerlink" href="index.html#django.db.models.URLField.verify_exists" title="Permalink to this definition">¶</a></dt>
+<dd>如果为 <tt class="xref docutils literal"><span class="pre">True</span></tt> (默认值)，Django 在保存对象时会检测该 URL 是否可访问(比如，网址可以正常访问，不返回404错误)。值得注意的是，如果你使用的是一个单线程开发服务器，那么验证网址会挂起当前线程。当然，对于生产用的多线程服务器来说，这就不是一个问题了。</dd></dl>
+
+<p>Django 管理后台使用 <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></tt> (一个单行输入框) 表示该字段。</p>
+<p>和所有 <a title="django.db.models.CharField" class="reference internal" href="index.html#django.db.models.CharField"><tt class="xref docutils literal"><span class="pre">CharField</span></tt></a> 子类一样，<a title="django.db.models.URLField" class="reference internal" href="index.html#django.db.models.URLField"><tt class="xref docutils literal"><span class="pre">URLField</span></tt></a> 接受可选的 <tt class="xref docutils literal"><span class="pre">max_length</span></tt> 参数，该参数默认值是200。</p>
+</div>
+<div class="section" id="s-xmlfield">
+<span id="xmlfield"></span><h3><tt class="docutils literal"><span class="pre">XMLField</span></tt><a class="headerlink" href="index.html#xmlfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.XMLField">
+<!--[django.db.models.XMLField]-->class <tt class="descname">XMLField</tt>(<em>schema_path=None</em><span class="optional">[</span>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.XMLField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>这是一个根据给定的 schema 验证所输文本是否是合法 XML 的 <a title="django.db.models.TextField" class="reference internal" href="index.html#django.db.models.TextField"><tt class="xref docutils literal"><span class="pre">TextField</span></tt></a> 字段。它有一个必需的参数：</p>
+<dl class="attribute">
+<dt id="django.db.models.schema_path">
+<!--[django.db.models.schema_path]--><tt class="descname">schema_path</tt><a class="headerlink" href="index.html#django.db.models.schema_path" title="Permalink to this definition">¶</a></dt>
+<dd>用来验证 XML 的 <a class="reference external" href="http://www.relaxng.org/">RelaxNG</a> schema 的文件路径。</dd></dl>
+
+</div>
+</div>
+<div class="section" id="s-module-django.db.models.fields.related">
+<span id="module-django.db.models.fields.related"></span><h2>关联关系字段 (Relationship fields)<a class="headerlink" href="index.html#module-django.db.models.fields.related" title="Permalink to this headline">¶</a></h2>
+<p>Django 也定义了一组用来表示关联关系的字段。</p>
+<div class="section" id="s-foreignkey">
+<span id="s-ref-foreignkey"></span><span id="foreignkey"></span><span id="ref-foreignkey"></span><h3><tt class="docutils literal"><span class="pre">ForeignKey</span></tt><a class="headerlink" href="index.html#foreignkey" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.ForeignKey">
+<!--[django.db.models.ForeignKey]-->class <tt class="descname">ForeignKey</tt>(<em>othermodel</em><span class="optional">[</span>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.ForeignKey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>这是一个多对一关系。必须为它提供一个位置参数：被关联的 model 类。</p>
+<p id="recursive-relationships">要创建递归关联时--与对象自己做多对一关系，那就使用 <tt class="docutils literal"><span class="pre">models.ForeignKey('self')</span></tt> 。</p>
+<p id="lazy-relationships">如果你要与某个尚未定义的 model 建立关联 ，就使用 model 的名称，而不是使用 model 对象本身：</p>
+<div class="highlight-python"><pre>class Car(models.Model):
+    manufacturer = models.ForeignKey('Manufacturer')
+    # ...
+
+class Manufacturer(models.Model):
+    # ...</pre>
+</div>
+<div class="versionadded">
+<span class="title">这部分是在 Django 1.0 中新建的：</span> <a class="reference external" href="../../../releases/1.0/index.html#releases-1-0"><em>请查看版本文档</em></a></div>
+<p>要与其他应用中的 model 相关联，你要用完整的应用标签来显式地定义关联。例如，如果上面的 <tt class="docutils literal"><span class="pre">Manufacturer</span></tt> model 定义在另外一个名为 <tt class="docutils literal"><span class="pre">production</span></tt> 的应用中，你只要用：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">manufacturer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;production.Manufacturer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在解决两个应用双向依赖时，这种引用方法非常有用。</p>
+<div class="section" id="s-database-representation">
+<span id="database-representation"></span><h4>数据库表现 (Database Representation)<a class="headerlink" href="index.html#database-representation" title="Permalink to this headline">¶</a></h4>
+<p>Django 使用该字段名称＋ <tt class="docutils literal"><span class="pre">&quot;_id&quot;</span></tt> 做为数据库中的列名称。在上面的例子中， <tt class="docutils literal"><span class="pre">Car</span></tt> model 对应的数据表中会有一个 <tt class="docutils literal"><span class="pre">manufacturer_id</span></tt> 列。(你可以通过显式地指定 <a title="django.db.models.Field.db_column" class="reference internal" href="index.html#django.db.models.Field.db_column"><tt class="xref docutils literal"><span class="pre">db_column</span></tt></a> 来改变该字段的列名称)。不过，除非你想自定义 SQL ，否则没必要更改数据库的列名称。</p>
+</div>
+<div class="section" id="s-arguments">
+<span id="s-foreign-key-arguments"></span><span id="arguments"></span><span id="foreign-key-arguments"></span><h4>参数 (Arguments)<a class="headerlink" href="index.html#arguments" title="Permalink to this headline">¶</a></h4>
+<p><a title="django.db.models.ForeignKey" class="reference internal" href="index.html#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">ForeignKey</span></tt></a> 接受下列这些可选参数，这些参数定义了关系是如何运行的。</p>
+<dl class="attribute">
+<dt id="django.db.models.ForeignKey.limit_choices_to">
+<!--[django.db.models.ForeignKey.limit_choices_to]--><tt class="descclassname">ForeignKey.</tt><tt class="descname">limit_choices_to</tt><a class="headerlink" href="index.html#django.db.models.ForeignKey.limit_choices_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>它是一个包含筛选条件和对应值的字典 (详见see <a class="reference external" href="../../../topics/db/queries/index.html#topics-db-queries"><em>制作查询(Making queries)</em></a>)，用来在 Django 管理后台筛选关联对象。例如，利用 Python 的 <tt class="docutils literal"><span class="pre">datetime</span></tt> 模块，过滤掉不符合筛选条件关联对象：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">limit_choices_to</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;pub_date__lte&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>只有 <tt class="docutils literal"><span class="pre">pub_date</span></tt> 在当前日期之前的关联对象才允许被选。</p>
+<p>也可以使用 <tt class="xref docutils literal"><span class="pre">Q</span></tt> 对象来代替字典，从而实现更复杂的筛选，详见 <a class="reference external" href="../../../topics/db/queries/index.html#complex-lookups-with-q"><em>复杂查询 (complex queries)</em></a>。</p>
+<p><tt class="docutils literal"><span class="pre">limit_choices_to</span></tt> 对于在管理后台显示为 inline 的关联对象不起作用。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.ForeignKey.related_name">
+<!--[django.db.models.ForeignKey.related_name]--><tt class="descclassname">ForeignKey.</tt><tt class="descname">related_name</tt><a class="headerlink" href="index.html#django.db.models.ForeignKey.related_name" title="Permalink to this definition">¶</a></dt>
+<dd>反向名称，用来从被关联字段指向关联字段。在 <a class="reference external" href="../../../topics/db/queries/index.html#backwards-related-objects"><em>被关联对象文档 (related objects documentation)</em></a> 中有详细介绍和范例。注意，在你定义 <a class="reference external" href="../../../topics/db/models/index.html#abstract-base-classes"><em>抽象 model (abstract models)</em></a> 时，你必须显式指定反向名称; 只有在你这么做了之后， <a class="reference external" href="../../../topics/db/models/index.html#abstract-related-name"><em>某些特别语法 (some special syntax)</em></a> 才能正常使用。</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.ForeignKey.to_field">
+<!--[django.db.models.ForeignKey.to_field]--><tt class="descclassname">ForeignKey.</tt><tt class="descname">to_field</tt><a class="headerlink" href="index.html#django.db.models.ForeignKey.to_field" title="Permalink to this definition">¶</a></dt>
+<dd>指定当前关系与被关联对象中的哪个字段关联。默认情况下，to_field 指向被关联对象的主键。</dd></dl>
+
+</div>
+</div>
+<div class="section" id="s-manytomanyfield">
+<span id="s-ref-manytomany"></span><span id="manytomanyfield"></span><span id="ref-manytomany"></span><h3><tt class="docutils literal"><span class="pre">ManyToManyField</span></tt><a class="headerlink" href="index.html#manytomanyfield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.ManyToManyField">
+<!--[django.db.models.ManyToManyField]-->class <tt class="descname">ManyToManyField</tt>(<em>othermodel</em><span class="optional">[</span>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.ManyToManyField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>用来定义多对多关系。必须给它一个位置参数：被关联的 model 类。工作方式和 <a title="django.db.models.ForeignKey" class="reference internal" href="index.html#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">ForeignKey</span></tt></a> 一样, 连 <a class="reference internal" href="index.html#recursive-relationships"><em>递归关联 (recursive)</em></a> and <a class="reference internal" href="index.html#lazy-relationships"><em>延后关联 (lazy)</em></a> 都一样。</p>
+<div class="section" id="s-id1">
+<span id="id1"></span><h4>数据库表示 (Database Representation)<a class="headerlink" href="index.html#id1" title="Permalink to this headline">¶</a></h4>
+<p> Django 创建一个中间表来表示多对多关系。默认情况下，中间表的名称由两个关系表名结合而成。由于某些数据库对表名的长度有限制，所以中间表的名称会自动限制在64个字符以内，并包含一个不重复的哈希字符串。这意味着，你可能看到类似 <tt class="docutils literal"><span class="pre">author_books_9cdf4</span></tt> 这样的表名称；这是很正常的。你可以使用
+<a title="django.db.models.ManyToManyField.db_table" class="reference internal" href="index.html#django.db.models.ManyToManyField.db_table"><tt class="xref docutils literal"><span class="pre">db_table</span></tt></a> 选项手动指定中间表名称。</p>
+</div>
+<div class="section" id="s-id2">
+<span id="s-manytomany-arguments"></span><span id="id2"></span><span id="manytomany-arguments"></span><h4>参数 (Arguments)<a class="headerlink" href="index.html#id2" title="Permalink to this headline">¶</a></h4>
+<p><a title="django.db.models.ManyToManyField" class="reference internal" href="index.html#django.db.models.ManyToManyField"><tt class="xref docutils literal"><span class="pre">ManyToManyField</span></tt></a> 接受下列可选参数，这些参数定义了关系是如何运行的。</p>
+<dl class="attribute">
+<dt id="django.db.models.ManyToManyField.related_name">
+<!--[django.db.models.ManyToManyField.related_name]--><tt class="descclassname">ManyToManyField.</tt><tt class="descname">related_name</tt><a class="headerlink" href="index.html#django.db.models.ManyToManyField.related_name" title="Permalink to this definition">¶</a></dt>
+<dd>和 <a title="django.db.models.ForeignKey.related_name" class="reference internal" href="index.html#django.db.models.ForeignKey.related_name"><tt class="xref docutils literal"><span class="pre">ForeignKey.related_name</span></tt></a> 用法一样。</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.ManyToManyField.limit_choices_to">
+<!--[django.db.models.ManyToManyField.limit_choices_to]--><tt class="descclassname">ManyToManyField.</tt><tt class="descname">limit_choices_to</tt><a class="headerlink" href="index.html#django.db.models.ManyToManyField.limit_choices_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>和 <a title="django.db.models.ForeignKey.limit_choices_to" class="reference internal" href="index.html#django.db.models.ForeignKey.limit_choices_to"><tt class="xref docutils literal"><span class="pre">ForeignKey.limit_choices_to</span></tt></a> 用法一样。</p>
+<p><tt class="docutils literal"><span class="pre">limit_choices_to</span></tt> 对于通过 <a title="django.db.models.ManyToManyField.through" class="reference internal" href="index.html#django.db.models.ManyToManyField.through"><tt class="xref docutils literal"><span class="pre">through</span></tt></a> 参数指定了中介表的 <tt class="docutils literal"><span class="pre">ManyToManyField</span></tt> 不起作用。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.ManyToManyField.symmetrical">
+<!--[django.db.models.ManyToManyField.symmetrical]--><tt class="descclassname">ManyToManyField.</tt><tt class="descname">symmetrical</tt><a class="headerlink" href="index.html#django.db.models.ManyToManyField.symmetrical" title="Permalink to this definition">¶</a></dt>
+<dd><p>只要定义递归的多对多关系时起作用。假调有下面这样一个 model :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">friends</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s">&quot;self&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Django 处理该 model 时，Django 会发现这个一个关联自己的递归 <a title="django.db.models.ManyToManyField" class="reference internal" href="index.html#django.db.models.ManyToManyField"><tt class="xref docutils literal"><span class="pre">ManyToManyField</span></tt></a> ，所以 Django 不会给该字段添加一个指向 <tt class="docutils literal"><span class="pre">Person</span></tt> 类的 <tt class="docutils literal"><span class="pre">person_set</span></tt> 属性，而是把 <a title="django.db.models.ManyToManyField" class="reference internal" href="index.html#django.db.models.ManyToManyField"><tt class="xref docutils literal"><span class="pre">ManyToManyField</span></tt></a>  视为对称的--也就是说，如果我是你的朋友，那么你自然也就是我的朋友。</p>
+<p>如果不想将递归的多对多关系设为对称的，那你就指定 <a title="django.db.models.ManyToManyField.symmetrical" class="reference internal" href="index.html#django.db.models.ManyToManyField.symmetrical"><tt class="xref docutils literal"><span class="pre">symmetrical</span></tt></a> 为 <tt class="xref docutils literal"><span class="pre">False</span></tt>。这样就会强迫 Django 添加反向名称，从而将该 <a title="django.db.models.ManyToManyField" class="reference internal" href="index.html#django.db.models.ManyToManyField"><tt class="xref docutils literal"><span class="pre">ManyToManyField</span></tt></a> 关联改为非对称的。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.ManyToManyField.through">
+<!--[django.db.models.ManyToManyField.through]--><tt class="descclassname">ManyToManyField.</tt><tt class="descname">through</tt><a class="headerlink" href="index.html#django.db.models.ManyToManyField.through" title="Permalink to this definition">¶</a></dt>
+<dd><p>Django 会自动生成一张表来管理多对多关系。但是，如果你想手动指定中间表，你可以用 <a title="django.db.models.ManyToManyField.through" class="reference internal" href="index.html#django.db.models.ManyToManyField.through"><tt class="xref docutils literal"><span class="pre">through</span></tt></a> 选项来指定 model 使用另外某个 model 来管理多对多关系。而这个 model 就是中间表所对应的 model 。(我将through所指定的中间表称为<b>中介表</b>)。</p>
+<p>当你想使用 <a class="reference external" href="../../../topics/db/models/index.html#intermediary-manytomany"><em>多对多关系中的其他数据 (extra data with a many-to-many relationship)</em></a> 时，一般要用到这个选项。</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="django.db.models.ManyToManyField.db_table">
+<!--[django.db.models.ManyToManyField.db_table]--><tt class="descclassname">ManyToManyField.</tt><tt class="descname">db_table</tt><a class="headerlink" href="index.html#django.db.models.ManyToManyField.db_table" title="Permalink to this definition">¶</a></dt>
+<dd>指定数据库中保存多对多关系数据的表名称。如果没有提供该选项，Django 就会根据两个关系表的名称生成一个新的表名，做为中间表的名称。</dd></dl>
+
+</div>
+</div>
+<div class="section" id="s-onetoonefield">
+<span id="s-ref-onetoone"></span><span id="onetoonefield"></span><span id="ref-onetoone"></span><h3><tt class="docutils literal"><span class="pre">OneToOneField</span></tt><a class="headerlink" href="index.html#onetoonefield" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="django.db.models.OneToOneField">
+<!--[django.db.models.OneToOneField]-->class <tt class="descname">OneToOneField</tt>(<em>othermodel</em><span class="optional">[</span>, <em>parent_link=False</em>, <em>**options</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.OneToOneField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>用来定义一对一关系。笼统地讲，它与声明了 <a title="django.db.models.Field.unique" class="reference internal" href="index.html#django.db.models.Field.unique"><tt class="xref docutils literal"><span class="pre">unique=True</span></tt></a> 的 <a title="django.db.models.ForeignKey" class="reference internal" href="index.html#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">ForeignKey</span></tt></a> 非常相似，不同的是使用反向关联的时候，得到的不是一个对象列表，而是一个单独的对象。</p>
+<p>在某个 model 扩展自另一个 model 时，这个字段是非常有用的；例如： <a class="reference external" href="../../../topics/db/models/index.html#multi-table-inheritance"><em>多表继承 (Multi-table inheritance)</em></a> 就是通过在子 model 中添加一个指向父 model 的一对一关联而实现的。</p>
+<p>必须给该字段一个参数：被关联的 model 类。工作方式和 <a title="django.db.models.ForeignKey" class="reference internal" href="index.html#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">ForeignKey</span></tt></a> 一样，连 <a class="reference internal" href="index.html#recursive-relationships"><em>递归关联 (recursive)</em></a>
+和 <a class="reference internal" href="index.html#lazy-relationships"><em>延后关联 (lazy)</em></a> 都一样。</p>
+<p id="onetoone-arguments">此外，<tt class="docutils literal"><span class="pre">OneToOneField</span></tt> 接受 <a title="django.db.models.ForeignKey" class="reference internal" href="index.html#django.db.models.ForeignKey"><tt class="xref docutils literal"><span class="pre">ForeignKey</span></tt></a> 可接受的参数，只有一个参数是 OnetoOneField 专有的：</p>
+<dl class="attribute">
+<dt id="django.db.models.OneToOneField.parent_link">
+<!--[django.db.models.OneToOneField.parent_link]--><tt class="descclassname">OneToOneField.</tt><tt class="descname">parent_link</tt><a class="headerlink" href="index.html#django.db.models.OneToOneField.parent_link" title="Permalink to this definition">¶</a></dt>
+<dd>如果为 <tt class="xref docutils literal"><span class="pre">True</span></tt> ，并且作用于继承自某个父 model 的子 model 上(这里不能是延后继承，父 model 必须真实存在)，那么该字段就会变成指向父类实例的引用(或者叫链接)，而不是象其他 <tt class="docutils literal"><span class="pre">OneToOneField</span></tt> 那样用于扩展父类并继承父类属性。</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Model field reference</a><ul>
+<li><a class="reference external" href="index.html#field-options">Field options</a><ul>
+<li><a class="reference external" href="index.html#null"><tt class="docutils literal"><span class="pre">null</span></tt></a></li>
+<li><a class="reference external" href="index.html#blank"><tt class="docutils literal"><span class="pre">blank</span></tt></a></li>
+<li><a class="reference external" href="index.html#choices"><tt class="docutils literal"><span class="pre">choices</span></tt></a></li>
+<li><a class="reference external" href="index.html#db-column"><tt class="docutils literal"><span class="pre">db_column</span></tt></a></li>
+<li><a class="reference external" href="index.html#db-index"><tt class="docutils literal"><span class="pre">db_index</span></tt></a></li>
+<li><a class="reference external" href="index.html#db-tablespace"><tt class="docutils literal"><span class="pre">db_tablespace</span></tt></a></li>
+<li><a class="reference external" href="index.html#default"><tt class="docutils literal"><span class="pre">default</span></tt></a></li>
+<li><a class="reference external" href="index.html#editable"><tt class="docutils literal"><span class="pre">editable</span></tt></a></li>
+<li><a class="reference external" href="index.html#help-text"><tt class="docutils literal"><span class="pre">help_text</span></tt></a></li>
+<li><a class="reference external" href="index.html#primary-key"><tt class="docutils literal"><span class="pre">primary_key</span></tt></a></li>
+<li><a class="reference external" href="index.html#unique"><tt class="docutils literal"><span class="pre">unique</span></tt></a></li>
+<li><a class="reference external" href="index.html#unique-for-date"><tt class="docutils literal"><span class="pre">unique_for_date</span></tt></a></li>
+<li><a class="reference external" href="index.html#unique-for-month"><tt class="docutils literal"><span class="pre">unique_for_month</span></tt></a></li>
+<li><a class="reference external" href="index.html#unique-for-year"><tt class="docutils literal"><span class="pre">unique_for_year</span></tt></a></li>
+<li><a class="reference external" href="index.html#verbose-name"><tt class="docutils literal"><span class="pre">verbose_name</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#field-types">Field types</a><ul>
+<li><a class="reference external" href="index.html#autofield"><tt class="docutils literal"><span class="pre">AutoField</span></tt></a></li>
+<li><a class="reference external" href="index.html#booleanfield"><tt class="docutils literal"><span class="pre">BooleanField</span></tt></a></li>
+<li><a class="reference external" href="index.html#charfield"><tt class="docutils literal"><span class="pre">CharField</span></tt></a></li>
+<li><a class="reference external" href="index.html#commaseparatedintegerfield"><tt class="docutils literal"><span class="pre">CommaSeparatedIntegerField</span></tt></a></li>
+<li><a class="reference external" href="index.html#datefield"><tt class="docutils literal"><span class="pre">DateField</span></tt></a></li>
+<li><a class="reference external" href="index.html#datetimefield"><tt class="docutils literal"><span class="pre">DateTimeField</span></tt></a></li>
+<li><a class="reference external" href="index.html#decimalfield"><tt class="docutils literal"><span class="pre">DecimalField</span></tt></a></li>
+<li><a class="reference external" href="index.html#emailfield"><tt class="docutils literal"><span class="pre">EmailField</span></tt></a></li>
+<li><a class="reference external" href="index.html#filefield"><tt class="docutils literal"><span class="pre">FileField</span></tt></a></li>
+<li><a class="reference external" href="index.html#filepathfield"><tt class="docutils literal"><span class="pre">FilePathField</span></tt></a></li>
+<li><a class="reference external" href="index.html#floatfield"><tt class="docutils literal"><span class="pre">FloatField</span></tt></a></li>
+<li><a class="reference external" href="index.html#imagefield"><tt class="docutils literal"><span class="pre">ImageField</span></tt></a></li>
+<li><a class="reference external" href="index.html#integerfield"><tt class="docutils literal"><span class="pre">IntegerField</span></tt></a></li>
+<li><a class="reference external" href="index.html#ipaddressfield"><tt class="docutils literal"><span class="pre">IPAddressField</span></tt></a></li>
+<li><a class="reference external" href="index.html#nullbooleanfield"><tt class="docutils literal"><span class="pre">NullBooleanField</span></tt></a></li>
+<li><a class="reference external" href="index.html#positiveintegerfield"><tt class="docutils literal"><span class="pre">PositiveIntegerField</span></tt></a></li>
+<li><a class="reference external" href="index.html#positivesmallintegerfield"><tt class="docutils literal"><span class="pre">PositiveSmallIntegerField</span></tt></a></li>
+<li><a class="reference external" href="index.html#slugfield"><tt class="docutils literal"><span class="pre">SlugField</span></tt></a></li>
+<li><a class="reference external" href="index.html#smallintegerfield"><tt class="docutils literal"><span class="pre">SmallIntegerField</span></tt></a></li>
+<li><a class="reference external" href="index.html#textfield"><tt class="docutils literal"><span class="pre">TextField</span></tt></a></li>
+<li><a class="reference external" href="index.html#timefield"><tt class="docutils literal"><span class="pre">TimeField</span></tt></a></li>
+<li><a class="reference external" href="index.html#urlfield"><tt class="docutils literal"><span class="pre">URLField</span></tt></a></li>
+<li><a class="reference external" href="index.html#xmlfield"><tt class="docutils literal"><span class="pre">XMLField</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#module-django.db.models.fields.related">Relationship fields</a><ul>
+<li><a class="reference external" href="index.html#foreignkey"><tt class="docutils literal"><span class="pre">ForeignKey</span></tt></a><ul>
+<li><a class="reference external" href="index.html#database-representation">Database Representation</a></li>
+<li><a class="reference external" href="index.html#arguments">Arguments</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#manytomanyfield"><tt class="docutils literal"><span class="pre">ManyToManyField</span></tt></a><ul>
+<li><a class="reference external" href="index.html#id1">Database Representation</a></li>
+<li><a class="reference external" href="index.html#id2">Arguments</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#onetoonefield"><tt class="docutils literal"><span class="pre">OneToOneField</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../index.html">Models</a></li>
+        
+        
+          <li>Next: <a href="../relations/index.html">Related objects reference</a></li>
+        
+        <li><a href="../../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../../index.html">API Reference</a>
+          
+            <ul><li><a href="../index.html">Models</a>
+          
+          <ul><li>Model field reference</li></ul>
+          </li></ul></li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

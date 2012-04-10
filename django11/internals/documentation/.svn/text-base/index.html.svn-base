@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | How the Django documentation works | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/internals/documentation/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-how-the-django-documentation-works">
+<span id="s-internals-documentation"></span><span id="how-the-django-documentation-works"></span><span id="internals-documentation"></span><h1>How the Django documentation works<a class="headerlink" href="index.html#how-the-django-documentation-works" title="Permalink to this headline">¶</a></h1>
+<p>... and how to contribute.</p>
+<p>Django&#8217;s documentation uses the <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> documentation system, which in turn is
+based on <a class="reference external" href="http://docutils.sf.net/">docutils</a>. The basic idea is that lightly-formatted plain-text
+documentation is transformed into HTML, PDF, and any other output format.</p>
+<p>To actually build the documentation locally, you&#8217;ll currently need to install
+Sphinx &#8211; <tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">Sphinx</span></tt> should do the trick.</p>
+<p>Then, building the html is easy; just <tt class="docutils literal"><span class="pre">make</span> <span class="pre">html</span></tt> from the <tt class="docutils literal"><span class="pre">docs</span></tt> directory.</p>
+<p>To get started contributing, you&#8217;ll want to read the <a class="reference external" href="http://sphinx.pocoo.org/rest.html">ReStructuredText
+Primer</a>. After that, you&#8217;ll want to read about the <a class="reference external" href="http://sphinx.pocoo.org/markup/">Sphinx-specific markup</a>
+that&#8217;s used to manage metadata, indexing, and cross-references.</p>
+<p>The main thing to keep in mind as you write and edit docs is that the more
+semantic markup you can add the better. So:</p>
+<div class="highlight-python"><pre>Add ``django.contrib.auth`` to your ``INSTALLED_APPS``...</pre>
+</div>
+<p>Isn't nearly as helpful as:</p>
+<div class="highlight-python"><pre>Add :mod:`django.contrib.auth` to your :setting:`INSTALLED_APPS`...</pre>
+</div>
+<p>This is because Sphinx will generate proper links for the latter, which greatly
+helps readers. There's basically no limit to the amount of useful markup you can
+add.</p>
+<div class="section" id="s-django-specific-markup">
+<span id="django-specific-markup"></span><h2>Django-specific markup<a class="headerlink" href="index.html#django-specific-markup" title="Permalink to this headline">¶</a></h2>
+<p>Besides the <a class="reference external" href="http://sphinx.pocoo.org/markup/desc.html">Sphinx built-in markup</a>, Django's docs defines some extra description units:</p>
+<ul>
+<li><p class="first">Settings:</p>
+<div class="highlight-python"><pre>.. setting:: INSTALLED_APPS</pre>
+</div>
+<p>To link to a setting, use <tt class="docutils literal"><span class="pre">:setting:`INSTALLED_APPS`</span></tt>.</p>
+</li>
+<li><p class="first">Template tags:</p>
+<div class="highlight-python"><pre>.. templatetag:: regroup</pre>
+</div>
+<p>To link, use <tt class="docutils literal"><span class="pre">:ttag:`regroup`</span></tt>.</p>
+</li>
+<li><p class="first">Template filters:</p>
+<div class="highlight-python"><pre>.. templatefilter:: linebreaksbr</pre>
+</div>
+<p>To link, use <tt class="docutils literal"><span class="pre">:tfilter:`linebreaksbr`</span></tt>.</p>
+</li>
+<li><p class="first">Field lookups (i.e. <tt class="docutils literal"><span class="pre">Foo.objects.filter(bar__exact=whatever)</span></tt>):</p>
+<div class="highlight-python"><pre>.. fieldlookup:: exact</pre>
+</div>
+<p>To link, use <tt class="docutils literal"><span class="pre">:lookup:`exact`</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">django-admin</span></tt> commands:</p>
+<div class="highlight-python"><pre>.. django-admin:: syncdb</pre>
+</div>
+<p>To link, use <tt class="docutils literal"><span class="pre">:djadmin:`syncdb`</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">django-admin</span></tt> command-line options:</p>
+<div class="highlight-python"><pre>.. django-admin-option:: --traceback</pre>
+</div>
+<p>To link, use <tt class="docutils literal"><span class="pre">:djadminopt:`--traceback`</span></tt>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="s-an-example">
+<span id="an-example"></span><h2>An example<a class="headerlink" href="index.html#an-example" title="Permalink to this headline">¶</a></h2>
+<p>For a quick example of how it all fits together, check this out:</p>
+<ul>
+<li><p class="first">First, the <tt class="docutils literal"><span class="pre">ref/settings.txt</span></tt> document starts out like this:</p>
+<div class="highlight-python"><pre>.. _ref-settings:
+
+Available settings
+==================
+
+...</pre>
+</div>
+</li>
+<li><p class="first">Next, if you look at the <tt class="docutils literal"><span class="pre">topics/settings.txt</span></tt> document, you can see how
+a link to <tt class="docutils literal"><span class="pre">ref/settings</span></tt> works:</p>
+<div class="highlight-python"><pre>Available settings
+==================
+
+For a full list of available settings, see the :ref:`settings reference
+&lt;ref-settings&gt;`.</pre>
+</div>
+</li>
+<li><p class="first">Next, notice how the settings (right now just the top few) are annotated:</p>
+<div class="highlight-python"><pre>.. setting:: ADMIN_FOR
+
+ADMIN_FOR
+---------
+
+Default: ``()`` (Empty tuple)
+
+Used for admin-site settings modules, this should be a tuple of settings
+modules (in the format ``'foo.bar.baz'``) for which this site is an
+admin.
+
+The admin site uses this in its automatically-introspected
+documentation of models, views and template tags.</pre>
+</div>
+<p>This marks up the following header as the &quot;canonical&quot; target for the
+setting <tt class="docutils literal"><span class="pre">ADMIN_FOR</span></tt> This means any time I talk about <tt class="docutils literal"><span class="pre">ADMIN_FOR</span></tt>, I
+can reference it using <tt class="docutils literal"><span class="pre">:setting:`ADMIN_FOR`</span></tt>.</p>
+</li>
+</ul>
+<p>That's basically how everything fits together.</p>
+</div>
+<div class="section" id="s-todo">
+<span id="todo"></span><h2>TODO<a class="headerlink" href="index.html#todo" title="Permalink to this headline">¶</a></h2>
+<p>The work is mostly done, but here's what's left, in rough order of priority.</p>
+<ul>
+<li><p class="first">Change the &quot;Added/changed in development version&quot; callouts to proper
+Sphinx <tt class="docutils literal"><span class="pre">..</span> <span class="pre">versionadded::</span></tt> or <tt class="docutils literal"><span class="pre">..</span> <span class="pre">versionchanged::</span></tt> directives.</p>
+</li>
+<li><p class="first">Check for and fix malformed links. Do this by running <tt class="docutils literal"><span class="pre">make</span> <span class="pre">linkcheck</span></tt>
+and fix all of the 300+ errors/warnings.</p>
+<p>In particular, look at all the relative links; these need to be
+changed to proper references.</p>
+</li>
+<li><p class="first">Most of the various <tt class="docutils literal"><span class="pre">index.txt</span></tt> documents have <em>very</em> short or even
+non-existent intro text. Each of those documents needs a good short intro
+the content below that point.</p>
+</li>
+<li><p class="first">The glossary is very perfunctory. It needs to be filled out.</p>
+</li>
+<li><p class="first">Add more metadata targets: there's lots of places that look like:</p>
+<div class="highlight-python"><pre>``File.close()``
+~~~~~~~~~~~~~~~~</pre>
+</div>
+<p>... these should be:</p>
+<div class="highlight-python"><pre>.. method:: File.close()</pre>
+</div>
+<p>That is, use metadata instead of titles.</p>
+</li>
+<li><p class="first">Add more links -- nearly everything that's an inline code literal
+right now can probably be turned into a xref.</p>
+<p>See the <tt class="docutils literal"><span class="pre">literals_to_xrefs.py</span></tt> file in <tt class="docutils literal"><span class="pre">_ext</span></tt> -- it's a shell script
+to help do this work.</p>
+<p>This will probably be a continuing, never-ending project.</p>
+</li>
+<li><p class="first">Add <a class="reference external" href="http://sphinx.pocoo.org/markup/desc.html#info-field-lists">info field lists</a> where appropriate.</p>
+</li>
+<li><p class="first">Add <tt class="docutils literal"><span class="pre">..</span> <span class="pre">code-block::</span> <span class="pre">&lt;lang&gt;</span></tt> to literal blocks so that they get
+highlighted.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="s-hints">
+<span id="hints"></span><h2>Hints<a class="headerlink" href="index.html#hints" title="Permalink to this headline">¶</a></h2>
+<p>Some hints for making things look/read better:</p>
+<ul>
+<li><p class="first">Whenever possible, use links. So, use <tt class="docutils literal"><span class="pre">:setting:`ADMIN_FOR`</span></tt> instead of
+<tt class="docutils literal"><span class="pre">``ADMIN_FOR``</span></tt>.</p>
+</li>
+<li><p class="first">Some directives (<tt class="docutils literal"><span class="pre">..</span> <span class="pre">setting::</span></tt>, for one) are prefix-style directives;
+they go <em>before</em> the unit they're describing. These are known as
+&quot;crossref&quot; directives. Others (<tt class="docutils literal"><span class="pre">..</span> <span class="pre">class::</span></tt>, e.g.) generate their own
+markup; these should go inside the section they're describing. These are
+called &quot;description units&quot;.</p>
+<p>You can tell which are which by looking at in <tt class="docutils literal"><span class="pre">_ext/djangodocs.py</span></tt>;
+it registers roles as one of the other.</p>
+</li>
+<li><p class="first">When referring to classes/functions/modules, etc., you'll want to use the
+fully-qualified name of the target
+(<tt class="docutils literal"><span class="pre">:class:`django.contrib.contenttypes.models.ContentType`</span></tt>).</p>
+<p>Since this doesn't look all that awesome in the output -- it shows the
+entire path to the object -- you can prefix the target with a <tt class="docutils literal"><span class="pre">~</span></tt>
+(that's a tilde) to get just the &quot;last bit&quot; of that path. So
+<tt class="docutils literal"><span class="pre">:class:`~django.contrib.contenttypes.models.ContentType`</span></tt> will just
+display a link with the title &quot;ContentType&quot;.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">How the Django documentation works</a><ul>
+<li><a class="reference external" href="index.html#django-specific-markup">Django-specific markup</a></li>
+<li><a class="reference external" href="index.html#an-example">An example</a></li>
+<li><a class="reference external" href="index.html#todo">TODO</a></li>
+<li><a class="reference external" href="index.html#hints">Hints</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../contributing/index.html">Contributing to Django</a></li>
+        
+        
+          <li>Next: <a href="../committers/index.html">Django committers</a></li>
+        
+        <li><a href="../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../index.html">Django internals</a>
+          
+          <ul><li>How the Django documentation works</li></ul>
+          </li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

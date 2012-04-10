@@ -1,0 +1,83 @@
+10
+
+dir
+26
+svn://192.168.1.198/koder/djangodoc/docs.djangoproject.com/en/dev/ref/contrib/comments
+svn://192.168.1.198/koder
+
+
+
+2009-12-04T00:11:41.522762Z
+26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+d492fbcb-f7df-4532-980b-997a494e2102
+
+settings
+dir
+
+signals
+dir
+
+moderation
+dir
+
+models
+dir
+
+forms
+dir
+
+upgrade
+dir
+
+custom
+dir
+
+index.html
+file
+
+
+
+
+2009-12-04T00:13:10.140014Z
+dc69cbbabe6db2a5f9351ccac239a26b
+2009-12-04T00:11:41.522762Z
+26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+28066
+

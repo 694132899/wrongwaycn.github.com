@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Django 1.0.1 release notes | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/releases/1.0.1/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-django-1-0-1-release-notes">
+<span id="s-releases-1-0-1"></span><span id="django-1-0-1-release-notes"></span><span id="releases-1-0-1"></span><h1>Django 1.0.1 release notes<a class="headerlink" href="index.html#django-1-0-1-release-notes" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to Django 1.0.1!</p>
+<p>This is the first &#8220;bugfix&#8221; release in the Django 1.0 series, improving
+the stability and performance of the Django 1.0 codebase. As such,
+Django 1.0.1 contains no new features (and, pursuant to <a class="reference external" href="../../misc/api-stability/index.html">our
+compatibility policy</a>, maintains backwards compatibility with Django
+1.0), but does contain a number of fixes and other
+improvements. Django 1.0.1 is a recommended upgrade for any
+development or deployment currently using or targeting Django 1.0.</p>
+<div class="section" id="s-fixes-and-improvements-in-django-1-0-1">
+<span id="fixes-and-improvements-in-django-1-0-1"></span><h2>Fixes and improvements in Django 1.0.1<a class="headerlink" href="index.html#fixes-and-improvements-in-django-1-0-1" title="Permalink to this headline">¶</a></h2>
+<p>Django 1.0.1 contains over two hundred fixes to the original Django
+1.0 codebase; full details of every fix are available in <a class="reference external" href="http://code.djangoproject.com/log/django/branches/releases/1.0.X">the
+Subversion log of the 1.0.X branch</a>, but here are some of the
+highlights:</p>
+<ul class="simple">
+<li>Several fixes in <tt class="docutils literal"><span class="pre">django.contrib.comments</span></tt>, pertaining to RSS
+feeds of comments, default ordering of comments and the XHTML and
+internationalization of the default templates for comments.</li>
+<li>Multiple fixes for Django&#8217;s support of Oracle databases, including
+pagination support for GIS QuerySets, more efficient slicing of
+results and improved introspection of existing databases.</li>
+<li>Several fixes for query support in the Django object-relational
+mapper, including repeated setting and resetting of ordering and
+fixes for working with <tt class="docutils literal"><span class="pre">INSERT</span></tt>-only queries.</li>
+<li>Multiple fixes for inline forms in formsets.</li>
+<li>Multiple fixes for <tt class="docutils literal"><span class="pre">unique</span></tt> and <tt class="docutils literal"><span class="pre">unique_together</span></tt> model
+constraints in automatically-generated forms.</li>
+<li>Fixed support for custom callable <tt class="docutils literal"><span class="pre">upload_to</span></tt> declarations when
+handling file uploads through automatically-generated forms.</li>
+<li>Fixed support for sorting an admin change list based on a callable
+attributes in <tt class="docutils literal"><span class="pre">list_display</span></tt>.</li>
+<li>A fix to the application of autoescaping for literal strings passed
+to the <tt class="docutils literal"><span class="pre">join</span></tt> template filter. Previously, literal strings passed
+to <tt class="docutils literal"><span class="pre">join</span></tt> were automatically escaped, contrary to <a class="reference external" href="../../topics/templates/index.html#string-literals-and-automatic-escaping">the documented
+behavior for autoescaping and literal strings</a>. Literal strings
+passed to <tt class="docutils literal"><span class="pre">join</span></tt> are no longer automatically escaped, meaning you
+must now manually escape them; this is an incompatibility if you
+were relying on this bug, but not if you were relying on escaping
+behaving as documented.</li>
+<li>Improved and expanded translation files for many of the languages
+Django supports by default.</li>
+<li>And as always, a large number of improvements to Django&#8217;s
+documentation, including both corrections to existing documents and
+expanded and new documentation.</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Django 1.0.1 release notes</a><ul>
+<li><a class="reference external" href="index.html#fixes-and-improvements-in-django-1-0-1">Fixes and improvements in Django 1.0.1</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../1.0-porting-guide/index.html">Porting your apps from Django 0.96 to 1.0</a></li>
+        
+        
+          <li>Next: <a href="../1.0.2/index.html">Django 1.0.2 release notes</a></li>
+        
+        <li><a href="../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../index.html">Release notes</a>
+          
+          <ul><li>Django 1.0.1 release notes</li></ul>
+          </li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | 关联对象参考(Related objects reference) | Django 文档</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    当前文档仅适用于 Django SVN 版本，与上个版本有显著不同。上个版本文档请查阅：
+      <a href="http://docs.djangoproject.com/en/1.0/ref/models/relations/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-related-objects-reference">
+<span id="s-ref-models-relations"></span><span id="related-objects-reference"></span><span id="ref-models-relations"></span><h1>关联对象参考(Related objects reference)<a class="headerlink" href="index.html#related-objects-reference" title="Permalink to this headline">¶</a></h1>
+<p>该文档描述了在使用一对多或是多对多关系时，在 manager 中可用的方法。该文档使用下面两个案例：</p>
+<ul>
+<li><p class="first">一个是以 <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> 关联的一对多关系：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Reporter</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">reporter</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Reporter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在上面这个例子当中，下面所提及的方法都包含在 <tt class="docutils literal"><span class="pre">reporter.article_set</span></tt> 这个 manager 当中。</p>
+</li>
+<li><p class="first">另一个例子则是以 <tt class="docutils literal"><span class="pre">ManyToManyField</span></tt> 关联的多对多关系：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Topping</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在这个例子中，下面所提及的方法都包含在 <tt class="docutils literal"><span class="pre">topping.pizza_set</span></tt> 和 <tt class="docutils literal"><span class="pre">pizza.toppings</span></tt> 两个 manager 中。</p>
+</li>
+</ul>
+<dl class="method">
+<dt id="django.db.models.QuerySet.add">
+<!--[django.db.models.QuerySet.add]--><tt class="descclassname">QuerySet.</tt><tt class="descname">add</tt>(<em>obj1</em><span class="optional">[</span>, <em>obj2</em>, <em>...</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.QuerySet.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>添加指定的 model 对象到关联对象集中。</p>
+<p>例如：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">Entry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mf">234</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">entry_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="c"># Associates Entry e with Blog b.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="django.db.models.QuerySet.create">
+<!--[django.db.models.QuerySet.create]--><tt class="descclassname">QuerySet.</tt><tt class="descname">create</tt>(<em>**kwargs</em>)<a class="headerlink" href="index.html#django.db.models.QuerySet.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>创建一个新对象并保存，然后将其添加到关联对象集中，并返回这个新对象：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">entry_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">headline</span><span class="o">=</span><span class="s">&#39;Hello&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">body_text</span><span class="o">=</span><span class="s">&#39;Hi&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">pub_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mf">2005</span><span class="p">,</span> <span class="mf">1</span><span class="p">,</span> <span class="mf">1</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="go"># No need to call e.save() at this point -- it&#39;s already been saved.</span>
+</pre></div>
+</div>
+<p>这基本上等价于(下面所列的稍稍有点简单)：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span>
+<span class="go">....     blog=b,</span>
+<span class="go">....     headline=&#39;Hello&#39;,</span>
+<span class="go">....     body_text=&#39;Hi&#39;,</span>
+<span class="go">....     pub_date=datetime.date(2005, 1, 1)</span>
+<span class="go">.... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>要注意：没必要对定义关系的 model 指定关键字参数。在上面的例子当中，我们并没有将 <tt class="docutils literal"><span class="pre">blog</span></tt> 做为参数传给 <tt class="docutils literal"><span class="pre">create()</span></tt> 方法。Django 会将新的 <tt class="docutils literal"><span class="pre">Entry</span></tt> 对象中 <tt class="docutils literal"><span class="pre">blog</span></tt> 字段设置为 <tt class="docutils literal"><span class="pre">b</span></tt>。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="django.db.models.QuerySet.remove">
+<!--[django.db.models.QuerySet.remove]--><tt class="descclassname">QuerySet.</tt><tt class="descname">remove</tt>(<em>obj1</em><span class="optional">[</span>, <em>obj2</em>, <em>...</em><span class="optional">]</span>)<a class="headerlink" href="index.html#django.db.models.QuerySet.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>从关联对象集中移除指定的对象：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">Entry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mf">234</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">entry_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="c"># Disassociates Entry e from Blog b.</span>
+</pre></div>
+</div>
+<p>为了避免出现数据不一致的情况出现，这个方法仅对指定了 <tt class="docutils literal"><span class="pre">null=True</span></tt> 的 <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> 外键对象有用。如果关联字段并没有设置 <tt class="xref docutils literal"><span class="pre">None</span></tt> (<tt class="docutils literal"><span class="pre">NULL</span></tt>)，那么对象就不能从关系中被删除。在上面的例子中，将 <tt class="docutils literal"><span class="pre">e</span></tt> 对象从 <tt class="docutils literal"><span class="pre">b.entry_set()</span></tt> 中删除，就相当于令 <tt class="docutils literal"><span class="pre">e.blog</span> <span class="pre">=</span> <span class="pre">None</span></tt>，如果 <tt class="docutils literal"><span class="pre">blog</span></tt> <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> 不允许 <tt class="docutils literal"><span class="pre">null=True</span></tt>，那么上面的操作就无法进行。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="django.db.models.QuerySet.clear">
+<!--[django.db.models.QuerySet.clear]--><tt class="descclassname">QuerySet.</tt><tt class="descname">clear</tt>()<a class="headerlink" href="index.html#django.db.models.QuerySet.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>从关联对象集中清空所有对象：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">entry_set</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>要注意并不是删除关联的对象，仅仅是将他们从关系中剥离。</p>
+<p>和 <tt class="docutils literal"><span class="pre">remove()</span></tt> 一样， <tt class="docutils literal"><span class="pre">clear()</span></tt> 也仅仅在 <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> 上可用，并且要求字段的 <tt class="docutils literal"><span class="pre">null=True</span></tt>。</p>
+</dd></dl>
+
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Related objects reference</a></li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../fields/index.html">Model field reference</a></li>
+        
+        
+          <li>Next: <a href="../options/index.html">Model <tt class="docutils literal docutils literal docutils literal"><span class="pre">Meta</span></tt> options</a></li>
+        
+        <li><a href="../../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../../index.html">API Reference</a>
+          
+            <ul><li><a href="../index.html">Models</a>
+          
+          <ul><li>Related objects reference</li></ul>
+          </li></ul></li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

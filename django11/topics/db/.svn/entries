@@ -1,0 +1,80 @@
+10
+
+dir
+26
+svn://192.168.1.198/koder/djangodoc/docs.djangoproject.com/en/dev/topics/db
+svn://192.168.1.198/koder
+
+
+
+2009-12-04T00:11:41.522762Z
+26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+d492fbcb-f7df-4532-980b-997a494e2102
+
+sql
+dir
+
+models
+dir
+
+aggregation
+dir
+
+transactions
+dir
+
+index.html
+file
+
+
+
+
+2009-12-04T00:13:08.000011Z
+ac44e7a7eeb77cd10f57e19e4654935f
+2009-12-04T00:11:41.522762Z
+26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8154
+
+managers
+dir
+
+queries
+dir
+

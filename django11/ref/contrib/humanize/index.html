@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | django.contrib.humanize | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/ref/contrib/humanize/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-module-django.contrib.humanize">
+<span id="s-ref-contrib-humanize"></span><span id="module-django.contrib.humanize"></span><span id="ref-contrib-humanize"></span><h1>django.contrib.humanize<a class="headerlink" href="index.html#module-django.contrib.humanize" title="Permalink to this headline">¶</a></h1>
+<p>A set of Django template filters useful for adding a &#8220;human touch&#8221; to data.</p>
+<p>To activate these filters, add <tt class="docutils literal"><span class="pre">'django.contrib.humanize'</span></tt> to your
+<a class="reference external" href="../../settings/index.html#setting-INSTALLED_APPS"><tt class="xref docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting. Once you&#8217;ve done that, use
+<tt class="docutils literal"><span class="pre">{%</span> <span class="pre">load</span> <span class="pre">humanize</span> <span class="pre">%}</span></tt> in a template, and you&#8217;ll have access to these filters:</p>
+<div class="section" id="s-apnumber">
+<span id="apnumber"></span><h2>apnumber<a class="headerlink" href="index.html#apnumber" title="Permalink to this headline">¶</a></h2>
+<p>For numbers 1-9, returns the number spelled out. Otherwise, returns the
+number. This follows Associated Press style.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">1</span></tt> becomes <tt class="docutils literal"><span class="pre">'one'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">2</span></tt> becomes <tt class="docutils literal"><span class="pre">'two'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">10</span></tt> becomes <tt class="docutils literal"><span class="pre">10</span></tt>.</li>
+</ul>
+<p>You can pass in either an integer or a string representation of an integer.</p>
+</div>
+<div class="section" id="s-intcomma">
+<span id="intcomma"></span><h2>intcomma<a class="headerlink" href="index.html#intcomma" title="Permalink to this headline">¶</a></h2>
+<p>Converts an integer to a string containing commas every three digits.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">4500</span></tt> becomes <tt class="docutils literal"><span class="pre">'4,500'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">45000</span></tt> becomes <tt class="docutils literal"><span class="pre">'45,000'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">450000</span></tt> becomes <tt class="docutils literal"><span class="pre">'450,000'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">4500000</span></tt> becomes <tt class="docutils literal"><span class="pre">'4,500,000'</span></tt>.</li>
+</ul>
+<p>You can pass in either an integer or a string representation of an integer.</p>
+</div>
+<div class="section" id="s-intword">
+<span id="intword"></span><h2>intword<a class="headerlink" href="index.html#intword" title="Permalink to this headline">¶</a></h2>
+<p>Converts a large integer to a friendly text representation. Works best for
+numbers over 1 million.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">1000000</span></tt> becomes <tt class="docutils literal"><span class="pre">'1.0</span> <span class="pre">million'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">1200000</span></tt> becomes <tt class="docutils literal"><span class="pre">'1.2</span> <span class="pre">million'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">1200000000</span></tt> becomes <tt class="docutils literal"><span class="pre">'1.2</span> <span class="pre">billion'</span></tt>.</li>
+</ul>
+<p>Values up to 1000000000000000 (one quadrillion) are supported.</p>
+<p>You can pass in either an integer or a string representation of an integer.</p>
+</div>
+<div class="section" id="s-ordinal">
+<span id="ordinal"></span><h2>ordinal<a class="headerlink" href="index.html#ordinal" title="Permalink to this headline">¶</a></h2>
+<p>Converts an integer to its ordinal as a string.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">1</span></tt> becomes <tt class="docutils literal"><span class="pre">'1st'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">2</span></tt> becomes <tt class="docutils literal"><span class="pre">'2nd'</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">3</span></tt> becomes <tt class="docutils literal"><span class="pre">'3rd'</span></tt>.</li>
+</ul>
+<p>You can pass in either an integer or a string representation of an integer.</p>
+</div>
+<div class="section" id="s-naturalday">
+<span id="naturalday"></span><h2>naturalday<a class="headerlink" href="index.html#naturalday" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<span class="title">New in Django 1.0:</span> <a class="reference external" href="../../../releases/1.0/index.html#releases-1-0"><em>Please, see the release notes</em></a></div>
+<p>For dates that are the current day or within one day, return &#8220;today&#8221;,
+&#8220;tomorrow&#8221; or &#8220;yesterday&#8221;, as appropriate. Otherwise, format the date using
+the passed in format string.</p>
+<p><strong>Argument:</strong> Date formatting string as described in the <a class="reference external" href="../../templates/builtins/index.html#ttag-now"><tt class="xref docutils literal"><span class="pre">now</span></tt></a> tag.</p>
+<p>Examples (when &#8216;today&#8217; is 17 Feb 2007):</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">16</span> <span class="pre">Feb</span> <span class="pre">2007</span></tt> becomes <tt class="docutils literal"><span class="pre">yesterday</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">17</span> <span class="pre">Feb</span> <span class="pre">2007</span></tt> becomes <tt class="docutils literal"><span class="pre">today</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">18</span> <span class="pre">Feb</span> <span class="pre">2007</span></tt> becomes <tt class="docutils literal"><span class="pre">tomorrow</span></tt>.</li>
+<li>Any other day is formatted according to given argument or the
+<a class="reference external" href="../../settings/index.html#setting-DATE_FORMAT"><tt class="xref docutils literal"><span class="pre">DATE_FORMAT</span></tt></a> setting if no argument is given.</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">django.contrib.humanize</a><ul>
+<li><a class="reference external" href="index.html#apnumber">apnumber</a></li>
+<li><a class="reference external" href="index.html#intcomma">intcomma</a></li>
+<li><a class="reference external" href="index.html#intword">intword</a></li>
+<li><a class="reference external" href="index.html#ordinal">ordinal</a></li>
+<li><a class="reference external" href="index.html#naturalday">naturalday</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../formtools/form-wizard/index.html">Form wizard</a></li>
+        
+        
+          <li>Next: <a href="../localflavor/index.html">The &#8220;local flavor&#8221; add-ons</a></li>
+        
+        <li><a href="../../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../../index.html">API Reference</a>
+          
+            <ul><li><a href="../index.html">The &#8220;django.contrib&#8221; add-ons</a>
+          
+          <ul><li>django.contrib.humanize</li></ul>
+          </li></ul></li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

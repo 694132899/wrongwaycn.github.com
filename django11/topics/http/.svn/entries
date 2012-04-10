@@ -1,0 +1,83 @@
+10
+
+dir
+26
+svn://192.168.1.198/koder/djangodoc/docs.djangoproject.com/en/dev/topics/http
+svn://192.168.1.198/koder
+
+
+
+2009-12-04T00:11:41.522762Z
+26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+d492fbcb-f7df-4532-980b-997a494e2102
+
+file-uploads
+dir
+
+urls
+dir
+
+sessions
+dir
+
+generic-views
+dir
+
+index.html
+file
+
+
+
+
+2009-12-04T00:13:07.700012Z
+d53f94f210a525c58a20c69cc653c4d7
+2009-12-04T00:11:41.522762Z
+26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8162
+
+middleware
+dir
+
+views
+dir
+
+shortcuts
+dir
+

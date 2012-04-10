@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Managing files | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/topics/files/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-managing-files">
+<span id="s-topics-files"></span><span id="managing-files"></span><span id="topics-files"></span><h1>Managing files<a class="headerlink" href="index.html#managing-files" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<span class="title">New in Django 1.0:</span> <a class="reference external" href="../../releases/1.0/index.html#releases-1-0"><em>Please, see the release notes</em></a></div>
+<p>This document describes Django&#8217;s file access APIs.</p>
+<p>By default, Django stores files locally, using the <a class="reference external" href="../../ref/settings/index.html#setting-MEDIA_ROOT"><tt class="xref docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> and
+<a class="reference external" href="../../ref/settings/index.html#setting-MEDIA_URL"><tt class="xref docutils literal"><span class="pre">MEDIA_URL</span></tt></a> settings. The examples below assume that you&#8217;re using these
+defaults.</p>
+<p>However, Django provides ways to write custom <a class="reference internal" href="index.html#file-storage">file storage systems</a> that
+allow you to completely customize where and how Django stores files. The
+second half of this document describes how these storage systems work.</p>
+<div class="section" id="s-using-files-in-models">
+<span id="using-files-in-models"></span><h2>Using files in models<a class="headerlink" href="index.html#using-files-in-models" title="Permalink to this headline">¶</a></h2>
+<p>When you use a <a title="django.db.models.FileField" class="reference external" href="../../ref/models/fields/index.html#django.db.models.FileField"><tt class="xref docutils literal"><span class="pre">FileField</span></tt></a> or
+<a title="django.db.models.ImageField" class="reference external" href="../../ref/models/fields/index.html#django.db.models.ImageField"><tt class="xref docutils literal"><span class="pre">ImageField</span></tt></a>, Django provides a set of APIs you can use
+to deal with that file.</p>
+<p>Consider the following model, using an <tt class="docutils literal"><span class="pre">ImageField</span></tt> to store a photo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mf">255</span><span class="p">)</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="n">max_digits</span><span class="o">=</span><span class="mf">5</span><span class="p">,</span> <span class="n">decimal_places</span><span class="o">=</span><span class="mf">2</span><span class="p">)</span>
+    <span class="n">photo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">&#39;cars&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Any <tt class="docutils literal"><span class="pre">Car</span></tt> instance will have a <tt class="docutils literal"><span class="pre">photo</span></tt> attribute that you can use to get at
+the details of the attached photo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">car</span> <span class="o">=</span> <span class="n">Car</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;57 Chevy&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">car</span><span class="o">.</span><span class="n">photo</span>
+<span class="go">&lt;ImageFieldFile: chevy.jpg&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">car</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">name</span>
+<span class="go">u&#39;cars/chevy.jpg&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">car</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">path</span>
+<span class="go">u&#39;/media/cars/chevy.jpg&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">car</span><span class="o">.</span><span class="n">photo</span><span class="o">.</span><span class="n">url</span>
+<span class="go">u&#39;http://media.example.com/cars/chevy.jpg&#39;</span>
+</pre></div>
+</div>
+<p>This object -- <tt class="docutils literal"><span class="pre">car.photo</span></tt> in the example -- is a <tt class="docutils literal"><span class="pre">File</span></tt> object, which means
+it has all the methods and attributes described below.</p>
+</div>
+<div class="section" id="s-the-file-object">
+<span id="the-file-object"></span><h2>The <tt class="docutils literal"><span class="pre">File</span></tt> object<a class="headerlink" href="index.html#the-file-object" title="Permalink to this headline">¶</a></h2>
+<p>Internally, Django uses a <tt class="docutils literal"><span class="pre">django.core.files.File</span></tt> any time it needs to
+represent a file. This object is a thin wrapper around Python's <a class="reference external" href="http://docs.python.org/lib/bltin-file-objects.html">built-in file
+object</a> with some Django-specific additions.</p>
+<p>Most of the time you'll simply use a <tt class="docutils literal"><span class="pre">File</span></tt> that Django's given you (i.e. a
+file attached to a model as above, or perhaps an uploaded file).</p>
+<p>If you need to construct a <tt class="docutils literal"><span class="pre">File</span></tt> yourself, the easiest way is to create one
+using a Python built-in <tt class="docutils literal"><span class="pre">file</span></tt> object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">from</span> <span class="nn">django.core.files</span> <span class="k">import</span> <span class="n">File</span>
+
+<span class="go"># Create a Python file object using open()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/hello.world&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now you can use any of the <tt class="docutils literal"><span class="pre">File</span></tt> attributes and methods documented in
+<a class="reference external" href="../../ref/files/file/index.html#ref-files-file"><em>The File object</em></a>.</p>
+</div>
+<div class="section" id="s-file-storage">
+<span id="file-storage"></span><h2>File storage<a class="headerlink" href="index.html#file-storage" title="Permalink to this headline">¶</a></h2>
+<p>Behind the scenes, Django delegates decisions about how and where to store files
+to a file storage system. This is the object that actually understands things
+like file systems, opening and reading files, etc.</p>
+<p>Django's default file storage is given by the <tt class="xref docutils literal"><span class="pre">DEFAULT_FILE_STORAGE</span></tt>
+setting; if you don't explicitly provide a storage system, this is the one that
+will be used.</p>
+<p>See below for details of the built-in default file storage system, and see
+<a class="reference external" href="../../howto/custom-file-storage/index.html#howto-custom-file-storage"><em>Writing a custom storage system</em></a> for information on writing your own file
+storage system.</p>
+<div class="section" id="s-storage-objects">
+<span id="storage-objects"></span><h3>Storage objects<a class="headerlink" href="index.html#storage-objects" title="Permalink to this headline">¶</a></h3>
+<p>Though most of the time you'll want to use a <tt class="docutils literal"><span class="pre">File</span></tt> object (which delegates to
+the proper storage for that file), you can use file storage systems directly.
+You can create an instance of some custom file storage class, or -- often more
+useful -- you can use the global default storage system:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">from</span> <span class="nn">django.core.files.storage</span> <span class="k">import</span> <span class="n">default_storage</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">from</span> <span class="nn">django.core.files.base</span> <span class="k">import</span> <span class="n">ContentFile</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">default_storage</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;/path/to/file&#39;</span><span class="p">,</span> <span class="n">ContentFile</span><span class="p">(</span><span class="s">&#39;new content&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span>
+<span class="go">u&#39;/path/to/file&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_storage</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_storage</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">&#39;new content&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_storage</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_storage</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="../../ref/files/storage/index.html#ref-files-storage"><em>File storage API</em></a> for the file storage API.</p>
+</div>
+<div class="section" id="s-the-built-in-filesystem-storage-class">
+<span id="the-built-in-filesystem-storage-class"></span><h3>The built-in filesystem storage class<a class="headerlink" href="index.html#the-built-in-filesystem-storage-class" title="Permalink to this headline">¶</a></h3>
+<p>Django ships with a built-in <tt class="docutils literal"><span class="pre">FileSystemStorage</span></tt> class (defined in
+<tt class="docutils literal"><span class="pre">django.core.files.storage</span></tt>) which implements basic local filesystem file
+storage. Its initializer takes two arguments:</p>
+<table class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Argument</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">location</span></tt></td>
+<td>Optional. Absolute path to the directory that will
+hold the files. If omitted, it will be set to the
+value of your <tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt> setting.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">base_url</span></tt></td>
+<td>Optional. URL that serves the files stored at this
+location. If omitted, it will default to the value
+of your <tt class="docutils literal"><span class="pre">MEDIA_URL</span></tt> setting.</td>
+</tr>
+</tbody>
+</table>
+<p>For example, the following code will store uploaded files under
+<tt class="docutils literal"><span class="pre">/media/photos</span></tt> regardless of what your <tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt> setting is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+<span class="k">from</span> <span class="nn">django.core.files.storage</span> <span class="k">import</span> <span class="n">FileSystemStorage</span>
+
+<span class="n">fs</span> <span class="o">=</span> <span class="n">FileSystemStorage</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="s">&#39;/media/photos&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">photo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">storage</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../../howto/custom-file-storage/index.html#howto-custom-file-storage"><em>Custom storage systems</em></a> work the same way: you
+can pass them in as the <tt class="docutils literal"><span class="pre">storage</span></tt> argument to a <tt class="docutils literal"><span class="pre">FileField</span></tt>.</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Managing files</a><ul>
+<li><a class="reference external" href="index.html#using-files-in-models">Using files in models</a></li>
+<li><a class="reference external" href="index.html#the-file-object">The <tt class="docutils literal"><span class="pre">File</span></tt> object</a></li>
+<li><a class="reference external" href="index.html#file-storage">File storage</a><ul>
+<li><a class="reference external" href="index.html#storage-objects">Storage objects</a></li>
+<li><a class="reference external" href="index.html#the-built-in-filesystem-storage-class">The built-in filesystem storage class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../generic-views/index.html">Generic views</a></li>
+        
+        
+          <li>Next: <a href="../testing/index.html">Testing Django applications</a></li>
+        
+        <li><a href="../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../index.html">Using Django</a>
+          
+          <ul><li>Managing files</li></ul>
+          </li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

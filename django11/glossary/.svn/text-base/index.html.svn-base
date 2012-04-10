@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Glossary | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/glossary/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-id1">
+<span id="s-glossary"></span><span id="id1"></span><span id="glossary"></span><h1>Glossary<a class="headerlink" href="index.html#id1" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-field">field</dt>
+<dd><p class="first">An attribute on a <a class="reference internal" href="index.html#term-model"><em>model</em></a>; a given field usually maps directly to
+a single database column.</p>
+<p class="last">See <a class="reference external" href="../topics/db/models/index.html#topics-db-models"><em>Models</em></a>.</p>
+</dd>
+<dt id="term-generic-view">generic view</dt>
+<dd><p class="first">A higher-order <a class="reference internal" href="index.html#term-view"><em>view</em></a> function that provides an abstract/generic
+implementation of a common idiom or pattern found in view development.</p>
+<p class="last">See <a class="reference external" href="../ref/generic-views/index.html#ref-generic-views"><em>Generic views</em></a>.</p>
+</dd>
+<dt id="term-model">model</dt>
+<dd><p class="first">Models store your application&#8217;s data.</p>
+<p class="last">See <a class="reference external" href="../topics/db/models/index.html#topics-db-models"><em>Models</em></a>.</p>
+</dd>
+<dt id="term-mtv">MTV</dt>
+<dd>See <a class="reference external" href="../faq/general/index.html#mtv"><em>Django appears to be a MVC framework, but you call the Controller the &#8220;view&#8221;, and the View the &#8220;template&#8221;. How come you don&#8217;t use the standard names?</em></a>.</dd>
+<dt id="term-mvc">MVC</dt>
+<dd><a class="reference external" href="http://en.wikipedia.org/wiki/Model-view-controller">Model-view-controller</a>; a software pattern. Django <a class="reference external" href="../faq/general/index.html#mtv"><em>follows MVC
+to some extent</em></a>.</dd>
+<dt id="term-project">project</dt>
+<dd>A Python package &#8211; i.e. a directory of code &#8211; that contains all the
+settings for an instance of Django. This would include database
+configuration, Django-specific options and application-specific
+settings.</dd>
+<dt id="term-property">property</dt>
+<dd><p class="first">Also known as &#8220;managed attributes&#8221;, and a feature of Python since
+version 2.2. From <a class="reference external" href="http://www.python.org/download/releases/2.2/descrintro/#property">the property documentation</a>:</p>
+<blockquote class="last">
+Properties are a neat way to implement attributes whose usage
+resembles attribute access, but whose implementation uses method
+calls. [...] You
+could only do this by overriding <tt class="docutils literal"><span class="pre">__getattr__</span></tt> and
+<tt class="docutils literal"><span class="pre">__setattr__</span></tt>; but overriding <tt class="docutils literal"><span class="pre">__setattr__</span></tt> slows down all
+attribute assignments considerably, and overriding <tt class="docutils literal"><span class="pre">__getattr__</span></tt>
+is always a bit tricky to get right. Properties let you do this
+painlessly, without having to override <tt class="docutils literal"><span class="pre">__getattr__</span></tt> or
+<tt class="docutils literal"><span class="pre">__setattr__</span></tt>.</blockquote>
+</dd>
+<dt id="term-queryset">queryset</dt>
+<dd><p class="first">An object representing some set of rows to be fetched from the database.</p>
+<p class="last">See <a class="reference external" href="../topics/db/queries/index.html#topics-db-queries"><em>Making queries</em></a>.</p>
+</dd>
+<dt id="term-slug">slug</dt>
+<dd><p class="first">A short label for something, containing only letters, numbers,
+underscores or hyphens. They&#8217;re generally used in URLs. For
+example, in a typical blog entry URL:</p>
+<pre class="literal-block">
+<a class="reference external" href="http://www.djangoproject.com/weblog/2008/apr/12/">http://www.djangoproject.com/weblog/2008/apr/12/</a><strong>spring</strong>/
+</pre>
+<p class="last">the last bit (<tt class="docutils literal"><span class="pre">spring</span></tt>) is the slug.</p>
+</dd>
+<dt id="term-template">template</dt>
+<dd><p class="first">A chunk of text that acts as formatting for representing data. A
+template helps to abstract the presentation of data from the data
+itself.</p>
+<p class="last">See <a class="reference external" href="../topics/templates/index.html#topics-templates"><em>The Django template language</em></a>.</p>
+</dd>
+<dt id="term-view">view</dt>
+<dd>A function responsible for rending a page.</dd>
+</dl>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Glossary</a></li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../misc/distributions/index.html">Third-party distributions of Django</a></li>
+        
+        
+          <li>Next: <a href="../releases/index.html">Release notes</a></li>
+        
+        <li><a href="../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../index.html">Django dev documentation</a>
+          
+          <ul><li>Glossary</li></ul>
+          
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Providing initial data for models | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/howto/initial-data/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-providing-initial-data-for-models">
+<span id="s-howto-initial-data"></span><span id="providing-initial-data-for-models"></span><span id="howto-initial-data"></span><h1>Providing initial data for models<a class="headerlink" href="index.html#providing-initial-data-for-models" title="Permalink to this headline">¶</a></h1>
+<p>It&#8217;s sometimes useful to pre-populate your database with hard-coded data when
+you&#8217;re first setting up an app. There&#8217;s a couple of ways you can have Django
+automatically create this data: you can provide <a class="reference internal" href="index.html#providing-initial-data-with-fixtures">initial data via fixtures</a>, or
+you can provide <a class="reference internal" href="index.html#providing-initial-sql-data">initial data as SQL</a>.</p>
+<p>In general, using a fixture is a cleaner method since it&#8217;s database-agnostic,
+but initial SQL is also quite a bit more flexible.</p>
+<div class="section" id="s-providing-initial-data-with-fixtures">
+<span id="providing-initial-data-with-fixtures"></span><h2>Providing initial data with fixtures<a class="headerlink" href="index.html#providing-initial-data-with-fixtures" title="Permalink to this headline">¶</a></h2>
+<p>A fixture is a collection of data that Django knows how to import into a
+database. The most straightforward way of creating a fixture if you&#8217;ve already
+got some data is to use the <tt class="xref docutils literal"><span class="pre">manage.py</span> <span class="pre">dumpdata</span></tt> command. Or, you can
+write fixtures by hand; fixtures can be written as XML, YAML, or JSON documents.
+The <a class="reference external" href="../../topics/serialization/index.html#topics-serialization"><em>serialization documentation</em></a> has more details
+about each of these supported <a class="reference external" href="../../topics/serialization/index.html#serialization-formats"><em>serialization formats</em></a>.</p>
+<p>As an example, though, here&#8217;s what a fixture for a simple <tt class="docutils literal"><span class="pre">Person</span></tt> model might
+look like in JSON:</p>
+<div class="highlight-js"><div class="highlight"><pre><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;model&quot;</span><span class="o">:</span> <span class="s2">&quot;myapp.person&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;pk&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="o">,</span>
+    <span class="s2">&quot;fields&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;first_name&quot;</span><span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="o">,</span>
+      <span class="s2">&quot;last_name&quot;</span><span class="o">:</span> <span class="s2">&quot;Lennon&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span><span class="o">,</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;model&quot;</span><span class="o">:</span> <span class="s2">&quot;myapp.person&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;pk&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="o">,</span>
+    <span class="s2">&quot;fields&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;first_name&quot;</span><span class="o">:</span> <span class="s2">&quot;Paul&quot;</span><span class="o">,</span>
+      <span class="s2">&quot;last_name&quot;</span><span class="o">:</span> <span class="s2">&quot;McCartney&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>And here's that same fixture as YAML:</p>
+<div class="highlight-none"><div class="highlight"><pre>- model: myapp.person
+  pk: 1
+  fields:
+    first_name: John
+    last_name: Lennon
+- model: myapp.person
+  pk: 2
+  fields:
+    first_name: Paul
+    last_name: McCartney
+</pre></div>
+</div>
+<p>You'll store this data in a <tt class="docutils literal"><span class="pre">fixtures</span></tt> directory inside your app.</p>
+<p>Loading data is easy: just call <tt class="xref docutils literal"><span class="pre">manage.py</span> <span class="pre">loaddata</span> <span class="pre">fixturename</span></tt>, where <em>fixturename</em> is the name of the fixture file you've created.
+Every time you run <tt class="xref docutils literal"><span class="pre">loaddata</span></tt> the data will be read from the fixture
+and re-loaded into the database. Note that this means that if you change one of
+the rows created by a fixture and then run <tt class="xref docutils literal"><span class="pre">loaddata</span></tt> again you'll
+wipe out any changes you've made.</p>
+<div class="section" id="s-automatically-loading-initial-data-fixtures">
+<span id="automatically-loading-initial-data-fixtures"></span><h3>Automatically loading initial data fixtures<a class="headerlink" href="index.html#automatically-loading-initial-data-fixtures" title="Permalink to this headline">¶</a></h3>
+<p>If you create a fixture named <tt class="docutils literal"><span class="pre">initial_data.[xml/yaml/json]</span></tt>, that fixture will
+be loaded every time you run <tt class="xref docutils literal"><span class="pre">syncdb</span></tt>. This is extremely convenient,
+but be careful: remember that the data will be refreshed <em>every time</em> you run
+<tt class="xref docutils literal"><span class="pre">syncdb</span></tt>. So don't use <tt class="docutils literal"><span class="pre">initial_data</span></tt> for data you'll want to edit.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Fixtures are also used by the <a class="reference external" href="../../topics/testing/index.html#topics-testing-fixtures"><em>testing framework</em></a> to help set up a consistent test environment.</p>
+</div>
+</div>
+</div>
+<div class="section" id="s-providing-initial-sql-data">
+<span id="s-initial-sql"></span><span id="providing-initial-sql-data"></span><span id="initial-sql"></span><h2>Providing initial SQL data<a class="headerlink" href="index.html#providing-initial-sql-data" title="Permalink to this headline">¶</a></h2>
+<p>Django provides a hook for passing the database arbitrary SQL that's executed
+just after the CREATE TABLE statements when you run <tt class="xref docutils literal"><span class="pre">syncdb</span></tt>. You can
+use this hook to populate default records, or you could also create SQL
+functions, views, triggers, etc.</p>
+<p>The hook is simple: Django just looks for a file called <tt class="docutils literal"><span class="pre">sql/&lt;modelname&gt;.sql</span></tt>,
+in your app directory, where <tt class="docutils literal"><span class="pre">&lt;modelname&gt;</span></tt> is the model's name in lowercase.</p>
+<p>So, if you had a <tt class="docutils literal"><span class="pre">Person</span></tt> model in an app called <tt class="docutils literal"><span class="pre">myapp</span></tt>, you could add
+arbitrary SQL to the file <tt class="docutils literal"><span class="pre">sql/person.sql</span></tt> inside your <tt class="docutils literal"><span class="pre">myapp</span></tt> directory.
+Here's an example of what the file might contain:</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">myapp_person</span> <span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Lennon&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">myapp_person</span> <span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Paul&#39;</span><span class="p">,</span> <span class="s1">&#39;McCartney&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Each SQL file, if given, is expected to contain valid SQL statements
+which will insert the desired data (e.g., properly-formatted
+<tt class="docutils literal"><span class="pre">INSERT</span></tt> statements separated by semicolons).</p>
+<p>The SQL files are read by the <tt class="xref docutils literal"><span class="pre">sqlcustom</span></tt>, <tt class="xref docutils literal"><span class="pre">sqlreset</span></tt>,
+<tt class="xref docutils literal"><span class="pre">sqlall</span></tt> and <tt class="xref docutils literal"><span class="pre">reset</span></tt> commands in <a class="reference external" href="../../ref/django-admin/index.html#ref-django-admin"><em>manage.py</em></a>. Refer to the <a class="reference external" href="../../ref/django-admin/index.html#ref-django-admin"><em>manage.py documentation</em></a> for more information.</p>
+<p>Note that if you have multiple SQL data files, there's no guarantee of the order
+in which they're executed. The only thing you can assume is that, by the time
+your custom data files are executed, all the database tables already will have
+been created.</p>
+<div class="section" id="s-database-backend-specific-sql-data">
+<span id="database-backend-specific-sql-data"></span><h3>Database-backend-specific SQL data<a class="headerlink" href="index.html#database-backend-specific-sql-data" title="Permalink to this headline">¶</a></h3>
+<p>There's also a hook for backend-specific SQL data. For example, you can have
+separate initial-data files for PostgreSQL and MySQL. For each app, Django
+looks for a file called <tt class="docutils literal"><span class="pre">&lt;appname&gt;/sql/&lt;modelname&gt;.&lt;backend&gt;.sql</span></tt>, where
+<tt class="docutils literal"><span class="pre">&lt;appname&gt;</span></tt> is your app directory, <tt class="docutils literal"><span class="pre">&lt;modelname&gt;</span></tt> is the model's name in
+lowercase and <tt class="docutils literal"><span class="pre">&lt;backend&gt;</span></tt> is the value of <a class="reference external" href="../../ref/settings/index.html#setting-DATABASE_ENGINE"><tt class="xref docutils literal"><span class="pre">DATABASE_ENGINE</span></tt></a> in your
+settings file (e.g., <tt class="docutils literal"><span class="pre">postgresql</span></tt>, <tt class="docutils literal"><span class="pre">mysql</span></tt>).</p>
+<p>Backend-specific SQL data is executed before non-backend-specific SQL data. For
+example, if your app contains the files <tt class="docutils literal"><span class="pre">sql/person.sql</span></tt> and
+<tt class="docutils literal"><span class="pre">sql/person.postgresql.sql</span></tt> and you're installing the app on PostgreSQL,
+Django will execute the contents of <tt class="docutils literal"><span class="pre">sql/person.postgresql.sql</span></tt> first, then
+<tt class="docutils literal"><span class="pre">sql/person.sql</span></tt>.</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Providing initial data for models</a><ul>
+<li><a class="reference external" href="index.html#providing-initial-data-with-fixtures">Providing initial data with fixtures</a><ul>
+<li><a class="reference external" href="index.html#automatically-loading-initial-data-fixtures">Automatically loading initial data fixtures</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#providing-initial-sql-data">Providing initial SQL data</a><ul>
+<li><a class="reference external" href="index.html#database-backend-specific-sql-data">Database-backend-specific SQL data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../error-reporting/index.html">Error reporting via e-mail</a></li>
+        
+        
+          <li>Next: <a href="../jython/index.html">Running Django on Jython</a></li>
+        
+        <li><a href="../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../index.html">&#8220;How-to&#8221; guides</a>
+          
+          <ul><li>Providing initial data for models</li></ul>
+          </li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

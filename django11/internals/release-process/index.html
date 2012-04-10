@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Django&amp;#8217;s release process | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/internals/release-process/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-django-s-release-process">
+<span id="s-internals-release-process"></span><span id="django-s-release-process"></span><span id="internals-release-process"></span><h1>Django&#8217;s release process<a class="headerlink" href="index.html#django-s-release-process" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="s-id1">
+<span id="s-official-releases"></span><span id="id1"></span><span id="official-releases"></span><h2>Official releases<a class="headerlink" href="index.html#id1" title="Permalink to this headline">¶</a></h2>
+<p>Django&#8217;s release numbering works as follows:</p>
+<ul class="simple">
+<li>Versions are numbered in the form <tt class="docutils literal"><span class="pre">A.B</span></tt> or <tt class="docutils literal"><span class="pre">A.B.C</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">A</span></tt> is the <em>major version</em> number, which is only incremented for major
+changes to Django, and these changes are not necessarily
+backwards-compatible. That is, code you wrote for Django 6.0 may break
+when we release Django 7.0.</li>
+<li><tt class="docutils literal"><span class="pre">B</span></tt> is the <em>minor version</em> number, which is incremented for large yet
+backwards compatible changes.  Code written for Django 6.4 will continue
+to work under Django 6.5.</li>
+<li><tt class="docutils literal"><span class="pre">C</span></tt> is the <em>micro version</em> number which, is incremented for bug and
+security fixes.  A new micro-release will always be 100%
+backwards-compatible with the previous micro-release.</li>
+<li>In some cases, we&#8217;ll make alpha, beta, or release candidate releases.
+These are of the form <tt class="docutils literal"><span class="pre">A.B</span> <span class="pre">alpha/beta/rc</span> <span class="pre">N</span></tt>, which means the <tt class="docutils literal"><span class="pre">Nth</span></tt>
+alpha/beta/release candidate of version <tt class="docutils literal"><span class="pre">A.B</span></tt>.</li>
+</ul>
+<p>An exception to this version numbering scheme is the pre-1.0 Django code.
+There&#8217;s no guarantee of backwards-compatibility until the 1.0 release.</p>
+<p>In Subversion, each Django release will be tagged under <tt class="docutils literal"><span class="pre">tags/releases</span></tt>.  If
+it&#8217;s necessary to release a bug fix release or a security release that doesn&#8217;t
+come from the trunk, we&#8217;ll copy that tag to <tt class="docutils literal"><span class="pre">branches/releases</span></tt> to make the
+bug fix release.</p>
+<div class="section" id="s-major-releases">
+<span id="major-releases"></span><h3>Major releases<a class="headerlink" href="index.html#major-releases" title="Permalink to this headline">¶</a></h3>
+<p>Major releases (1.0, 2.0, etc.) will happen very infrequently (think &#8220;years&#8221;,
+not &#8220;months&#8221;), and will probably represent major, sweeping changes to Django.</p>
+</div>
+<div class="section" id="s-minor-releases">
+<span id="minor-releases"></span><h3>Minor releases<a class="headerlink" href="index.html#minor-releases" title="Permalink to this headline">¶</a></h3>
+<p>Minor release (1.1, 1.2, etc.) will happen roughly every six months &#8211; see
+<a class="reference internal" href="index.html#id2">release process</a>, below for details.</p>
+<p id="internal-release-deprecation-policy">These releases will contain new features, improvements to existing features, and
+such. A minor release may deprecate certain features from previous releases. If a
+feature in version <tt class="docutils literal"><span class="pre">A.B</span></tt> is deprecated, it will continue to work in version
+<tt class="docutils literal"><span class="pre">A.B+1</span></tt>. In version <tt class="docutils literal"><span class="pre">A.B+2</span></tt>, use of the feature will raise a
+<tt class="docutils literal"><span class="pre">DeprecationWarning</span></tt> but will continue to work. Version <tt class="docutils literal"><span class="pre">A.B+3</span></tt> will
+remove the feature entirely.</p>
+<p>So, for example, if we decided to remove a function that existed in Django 1.0:</p>
+<ul class="simple">
+<li>Django 1.1 will contain a backwards-compatible replica of the function
+which will raise a <tt class="docutils literal"><span class="pre">PendingDeprecationWarning</span></tt>. This warning is silent
+by default; you need to explicitly turn on display of these warnings.</li>
+<li>Django 1.2 will contain the backwards-compatible replica, but the warning
+will be promoted to a full-fledged <tt class="docutils literal"><span class="pre">DeprecationWarning</span></tt>. This warning is
+<em>loud</em> by default, and will likely be quite annoying.</li>
+<li>Django 1.3 will remove the feature outright.</li>
+</ul>
+</div>
+<div class="section" id="s-micro-releases">
+<span id="micro-releases"></span><h3>Micro releases<a class="headerlink" href="index.html#micro-releases" title="Permalink to this headline">¶</a></h3>
+<p>Micro releases (1.0.1, 1.0.2, 1.1.1, etc.) will be issued at least once half-way
+between minor releases, and probably more often as needed.</p>
+<p>These releases will always be 100% compatible with the associated minor release
+&#8211; the answer to &#8220;should I upgrade to the latest micro release?&#8221; will always be
+&#8220;yes.&#8221;</p>
+<p>Each minor release of Django will have a &#8220;release maintainer&#8221; appointed. This
+person will be responsible for making sure that bug fixes are applied to both
+trunk and the maintained micro-release branch. This person will also work with
+the release manager to decide when to release the micro releases.</p>
+</div>
+</div>
+<div class="section" id="s-supported-versions">
+<span id="supported-versions"></span><h2>Supported versions<a class="headerlink" href="index.html#supported-versions" title="Permalink to this headline">¶</a></h2>
+<p>At any moment in time, Django&#8217;s developer team will support a set of releases to
+varying levels:</p>
+<ul class="simple">
+<li>The current development trunk will get new features and bug fixes
+requiring major refactoring.</li>
+<li>All bug fixes applied to the trunk will also be applied to the last
+minor release, to be released as the next micro release.</li>
+<li>Security fixes will be applied to the current trunk and the previous two
+minor releases.</li>
+</ul>
+<p>As a concrete example, consider a moment in time halfway between the release of
+Django 1.3 and 1.4. At this point in time:</p>
+<ul class="simple">
+<li>Features will be added to development trunk, to be released as Django 1.4.</li>
+<li>Bug fixes will be applied to a <tt class="docutils literal"><span class="pre">1.3.X</span></tt> branch, and released as 1.3.1,
+1.3.2, etc.</li>
+<li>Security releases will be applied to trunk, a <tt class="docutils literal"><span class="pre">1.3.X</span></tt> branch and a
+<tt class="docutils literal"><span class="pre">1.2.X</span></tt> branch. Security fixes will trigger the release of <tt class="docutils literal"><span class="pre">1.3.1</span></tt>,
+<tt class="docutils literal"><span class="pre">1.2.1</span></tt>, etc.</li>
+</ul>
+</div>
+<div class="section" id="s-id2">
+<span id="s-release-process"></span><span id="id2"></span><span id="release-process"></span><h2>Release process<a class="headerlink" href="index.html#id2" title="Permalink to this headline">¶</a></h2>
+<p>Django uses a time-based release schedule, with minor (i.e. 1.1, 1.2, etc.)
+releases every six months, or more, depending on features.</p>
+<p>After each previous release (and after a suitable cooling-off period of a week
+or two), the core development team will examine the landscape and announce a
+timeline for the next release. Most releases will be scheduled in the 6-9 month
+range, but if we have bigger features to development we might schedule a longer
+period to allow for more ambitious work.</p>
+<div class="section" id="s-release-cycle">
+<span id="release-cycle"></span><h3>Release cycle<a class="headerlink" href="index.html#release-cycle" title="Permalink to this headline">¶</a></h3>
+<p>Each release cycle will be split into three periods, each lasting roughly
+one-third of the cycle:</p>
+<div class="section" id="s-phase-one-feature-proposal">
+<span id="phase-one-feature-proposal"></span><h4>Phase one: feature proposal<a class="headerlink" href="index.html#phase-one-feature-proposal" title="Permalink to this headline">¶</a></h4>
+<p>The first phase of the release process will be devoted to figuring out what
+features to include in the next version. This should include a good deal of
+preliminary work on those features &#8211; working code trumps grand design.</p>
+<p>At the end of part one, the core developers will propose a feature list for the
+upcoming release. This will be broken into:</p>
+<ul class="simple">
+<li>&#8220;Must-have&#8221;: critical features that will delay the release if not finished</li>
+<li>&#8220;Maybe&#8221; features: that will be pushed to the next release if not finished</li>
+<li>&#8220;Not going to happen&#8221;: features explicitly deferred to a later release.</li>
+</ul>
+<p>Anything that hasn&#8217;t got at least some work done by the end of the first third
+isn&#8217;t eligible for the next release; a design alone isn&#8217;t sufficient.</p>
+</div>
+<div class="section" id="s-phase-two-development">
+<span id="phase-two-development"></span><h4>Phase two: development<a class="headerlink" href="index.html#phase-two-development" title="Permalink to this headline">¶</a></h4>
+<p>The second third of the release schedule is the &#8220;heads-down&#8221; working period.
+Using the roadmap produced at the end of phase one, we&#8217;ll all work very hard to
+get everything on it done.</p>
+<p>Longer release schedules will likely spend more than a third of the time in this
+phase.</p>
+<p>At the end of phase two, any unfinished &#8220;maybe&#8221; features will be postponed until
+the next release. Though it shouldn&#8217;t happen, any &#8220;must-have&#8221; features will
+extend phase two, and thus postpone the final release.</p>
+<p>Phase two will culminate with an alpha release.</p>
+</div>
+<div class="section" id="s-phase-three-bugfixes">
+<span id="phase-three-bugfixes"></span><h4>Phase three: bugfixes<a class="headerlink" href="index.html#phase-three-bugfixes" title="Permalink to this headline">¶</a></h4>
+<p>The last third of a release is spent fixing bugs &#8211; no new features will be
+accepted during this time. We&#8217;ll release a beta release about halfway through,
+and an rc complete with string freeze two weeks before the end of the schedule.</p>
+</div>
+</div>
+<div class="section" id="s-bug-fix-releases">
+<span id="bug-fix-releases"></span><h3>Bug-fix releases<a class="headerlink" href="index.html#bug-fix-releases" title="Permalink to this headline">¶</a></h3>
+<p>After a minor release (i.e 1.1), the previous release will go into bug-fix mode.</p>
+<p>A branch will be created of the form <tt class="docutils literal"><span class="pre">branches/releases/1.0.X</span></tt> to track
+bug-fixes to the previous release. When possible, bugs fixed on trunk must
+<em>also</em> be fixed on the bug-fix branch; this means that commits need to cleanly
+separate bug fixes from feature additions. The developer who commits a fix to
+trunk will be responsible for also applying the fix to the current bug-fix
+branch.  Each bug-fix branch will have a maintainer who will work with the
+committers to keep them honest on backporting bug fixes.</p>
+</div>
+<div class="section" id="s-how-this-all-fits-together">
+<span id="how-this-all-fits-together"></span><h3>How this all fits together<a class="headerlink" href="index.html#how-this-all-fits-together" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s look at a hypothetical example for how this all first together. Imagine,
+if you will, a point about halfway between 1.1 and 1.2. At this point,
+development will be happening in a bunch of places:</p>
+<ul class="simple">
+<li>On trunk, development towards 1.2 proceeds with small additions, bugs
+fixes, etc. being checked in daily.</li>
+<li>On the branch &#8220;branches/releases/1.1.X&#8221;, bug fixes found in the 1.1
+release are checked in as needed. At some point, this branch will be
+released as &#8220;1.1.1&#8221;, &#8220;1.1.2&#8221;, etc.</li>
+<li>On the branch &#8220;branches/releases/1.0.X&#8221;, security fixes are made if
+needed and released as &#8220;1.0.2&#8221;, &#8220;1.0.3&#8221;, etc.</li>
+<li>On feature branches, development of major features is done. These
+branches will be merged into trunk before the end of phase two.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Django&#8217;s release process</a><ul>
+<li><a class="reference external" href="index.html#id1">Official releases</a><ul>
+<li><a class="reference external" href="index.html#major-releases">Major releases</a></li>
+<li><a class="reference external" href="index.html#minor-releases">Minor releases</a></li>
+<li><a class="reference external" href="index.html#micro-releases">Micro releases</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#supported-versions">Supported versions</a></li>
+<li><a class="reference external" href="index.html#id2">Release process</a><ul>
+<li><a class="reference external" href="index.html#release-cycle">Release cycle</a><ul>
+<li><a class="reference external" href="index.html#phase-one-feature-proposal">Phase one: feature proposal</a></li>
+<li><a class="reference external" href="index.html#phase-two-development">Phase two: development</a></li>
+<li><a class="reference external" href="index.html#phase-three-bugfixes">Phase three: bugfixes</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#bug-fix-releases">Bug-fix releases</a></li>
+<li><a class="reference external" href="index.html#how-this-all-fits-together">How this all fits together</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../committers/index.html">Django committers</a></li>
+        
+        
+          <li>Next: <a href="../deprecation/index.html">Django Deprecation Timeline</a></li>
+        
+        <li><a href="../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../index.html">Django internals</a>
+          
+          <ul><li>Django&#8217;s release process</li></ul>
+          </li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

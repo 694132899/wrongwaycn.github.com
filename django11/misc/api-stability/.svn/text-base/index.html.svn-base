@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | API stability | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/misc/api-stability/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-api-stability">
+<span id="s-misc-api-stability"></span><span id="api-stability"></span><span id="misc-api-stability"></span><h1>API stability<a class="headerlink" href="index.html#api-stability" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="../../releases/1.0/index.html#releases-1-0"><em>The release of Django 1.0</em></a> comes with a promise of API
+stability and forwards-compatibility. In a nutshell, this means that code you
+develop against Django 1.0 will continue to work against 1.1 unchanged, and you
+should need to make only minor changes for any 1.X release.</p>
+<div class="section" id="s-what-stable-means">
+<span id="what-stable-means"></span><h2>What &#8220;stable&#8221; means<a class="headerlink" href="index.html#what-stable-means" title="Permalink to this headline">¶</a></h2>
+<p>In this context, stable means:</p>
+<ul>
+<li><p class="first">All the public APIs &#8211; everything documented in the linked documents below,
+and all methods that don&#8217;t begin with an underscore &#8211; will not be moved or
+renamed without providing backwards-compatible aliases.</p>
+</li>
+<li><p class="first">If new features are added to these APIs &#8211; which is quite possible &#8211;
+they will not break or change the meaning of existing methods. In other
+words, &#8220;stable&#8221; does not (necessarily) mean &#8220;complete.&#8221;</p>
+</li>
+<li><p class="first">If, for some reason, an API declared stable must be removed or replaced, it
+will be declared deprecated but will remain in the API for at least two
+minor version releases. Warnings will be issued when the deprecated method
+is called.</p>
+<p>See <a class="reference external" href="../../internals/release-process/index.html#official-releases"><em>Official releases</em></a> for more details on how Django&#8217;s version
+numbering scheme works, and how features will be deprecated.</p>
+</li>
+<li><p class="first">We&#8217;ll only break backwards compatibility of these APIs if a bug or
+security hole makes it completely unavoidable.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="s-stable-apis">
+<span id="stable-apis"></span><h2>Stable APIs<a class="headerlink" href="index.html#stable-apis" title="Permalink to this headline">¶</a></h2>
+<p>In general, everything covered in the documentation &#8211; with the exception of
+anything in the <a class="reference external" href="../../internals/index.html#internals-index"><em>internals area</em></a> is considered stable as
+of 1.0. This includes these APIs:</p>
+<ul class="simple">
+<li><a class="reference external" href="../../topics/auth/index.html#topics-auth"><em>Authorization</em></a></li>
+<li><a class="reference external" href="../../topics/cache/index.html#topics-cache"><em>Caching</em></a>.</li>
+<li><a class="reference external" href="../../topics/db/index.html#topics-db-index"><em>Model definition, managers, querying and transactions</em></a></li>
+<li><a class="reference external" href="../../topics/email/index.html#topics-email"><em>Sending e-mail</em></a>.</li>
+<li><a class="reference external" href="../../topics/files/index.html#topics-files"><em>File handling and storage</em></a></li>
+<li><a class="reference external" href="../../topics/forms/index.html#topics-forms-index"><em>Forms</em></a></li>
+<li><a class="reference external" href="../../topics/http/index.html#topics-http-index"><em>HTTP request/response handling</em></a>, including file
+uploads, middleware, sessions, URL resolution, view, and shortcut APIs.</li>
+<li><a class="reference external" href="../../topics/http/generic-views/index.html#topics-http-generic-views"><em>Generic views</em></a>.</li>
+<li><a class="reference external" href="../../topics/i18n/index.html#topics-i18n"><em>Internationalization</em></a>.</li>
+<li><a class="reference external" href="../../topics/pagination/index.html#topics-pagination"><em>Pagination</em></a></li>
+<li><a class="reference external" href="../../topics/serialization/index.html#topics-serialization"><em>Serialization</em></a></li>
+<li><a class="reference external" href="../../topics/signals/index.html#topics-signals"><em>Signals</em></a></li>
+<li><a class="reference external" href="../../topics/templates/index.html#topics-templates"><em>Templates</em></a>, including the language, Python-level
+<a class="reference external" href="../../ref/templates/index.html#ref-templates-index"><em>template APIs</em></a>, and <a class="reference external" href="../../howto/custom-template-tags/index.html#howto-custom-template-tags"><em>custom template tags
+and libraries</em></a>. We may add new template
+tags in the future and the names may inadvertently clash with
+external template tags. Before adding any such tags, we&#8217;ll ensure that
+Django raises an error if it tries to load tags with duplicate names.</li>
+<li><a class="reference external" href="../../topics/testing/index.html#topics-testing"><em>Testing</em></a></li>
+<li><a class="reference external" href="../../ref/django-admin/index.html#ref-django-admin"><em>django-admin utility</em></a>.</li>
+<li><a class="reference external" href="../../ref/middleware/index.html#ref-middleware"><em>Built-in middleware</em></a></li>
+<li><a class="reference external" href="../../ref/request-response/index.html#ref-request-response"><em>Request/response objects</em></a>.</li>
+<li><a class="reference external" href="../../ref/settings/index.html#ref-settings"><em>Settings</em></a>. Note, though that while the <a class="reference external" href="../../ref/settings/index.html#ref-settings"><em>list of
+built-in settings</em></a> can be considered complete we may &#8211; and
+probably will &#8211; add new settings in future versions. This is one of those
+places where &#8220;&#8216;stable&#8217; does not mean &#8216;complete.&#8217;&#8221;</li>
+<li><a class="reference external" href="../../ref/signals/index.html#ref-signals"><em>Built-in signals</em></a>. Like settings, we&#8217;ll probably add
+new signals in the future, but the existing ones won&#8217;t break.</li>
+<li><a class="reference external" href="../../ref/unicode/index.html#ref-unicode"><em>Unicode handling</em></a>.</li>
+<li>Everything covered by the <a class="reference external" href="../../howto/index.html#howto-index"><em>HOWTO guides</em></a>.</li>
+</ul>
+<div class="section" id="s-django-utils">
+<span id="django-utils"></span><h3><tt class="docutils literal"><span class="pre">django.utils</span></tt><a class="headerlink" href="index.html#django-utils" title="Permalink to this headline">¶</a></h3>
+<p>Most of the modules in <tt class="docutils literal"><span class="pre">django.utils</span></tt> are designed for internal use. Only the following parts of <tt class="docutils literal"><span class="pre">django.utils</span></tt> can be considered stable:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">django.utils.cache</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">django.utils.datastructures.SortedDict</span></tt> &#8211; only this single class; the
+rest of the module is for internal use.</li>
+<li><tt class="docutils literal"><span class="pre">django.utils.encoding</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">django.utils.feedgenerator</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">django.utils.http</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">django.utils.safestring</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">django.utils.translation</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">django.utils.tzinfo</span></tt></li>
+</ul>
+</div>
+</div>
+<div class="section" id="s-exceptions">
+<span id="exceptions"></span><h2>Exceptions<a class="headerlink" href="index.html#exceptions" title="Permalink to this headline">¶</a></h2>
+<p>There are a few exceptions to this stability and backwards-compatibility
+promise.</p>
+<div class="section" id="s-security-fixes">
+<span id="security-fixes"></span><h3>Security fixes<a class="headerlink" href="index.html#security-fixes" title="Permalink to this headline">¶</a></h3>
+<p>If we become aware of a security problem &#8211; hopefully by someone following our
+<a class="reference external" href="../../internals/contributing/index.html#reporting-security-issues"><em>security reporting policy</em></a> &#8211; we&#8217;ll do
+everything necessary to fix it. This might mean breaking backwards compatibility; security trumps the compatibility guarantee.</p>
+</div>
+<div class="section" id="s-contributed-applications-django-contrib">
+<span id="contributed-applications-django-contrib"></span><h3>Contributed applications (<tt class="docutils literal"><span class="pre">django.contrib</span></tt>)<a class="headerlink" href="index.html#contributed-applications-django-contrib" title="Permalink to this headline">¶</a></h3>
+<p>While we&#8217;ll make every effort to keep these APIs stable &#8211; and have no plans to
+break any contrib apps &#8211; this is an area that will have more flux between
+releases. As the web evolves, Django must evolve with it.</p>
+<p>However, any changes to contrib apps will come with an important guarantee:
+we&#8217;ll make sure it&#8217;s always possible to use an older version of a contrib app if
+we need to make changes. Thus, if Django 1.5 ships with a backwards-incompatible
+<tt class="docutils literal"><span class="pre">django.contrib.flatpages</span></tt>, we&#8217;ll make sure you can still use the Django 1.4
+version alongside Django 1.5. This will continue to allow for easy upgrades.</p>
+<p>Historically, apps in <tt class="docutils literal"><span class="pre">django.contrib</span></tt> have been more stable than the core, so
+in practice we probably won&#8217;t have to ever make this exception. However, it&#8217;s
+worth noting if you&#8217;re building apps that depend on <tt class="docutils literal"><span class="pre">django.contrib</span></tt>.</p>
+</div>
+<div class="section" id="s-apis-marked-as-internal">
+<span id="apis-marked-as-internal"></span><h3>APIs marked as internal<a class="headerlink" href="index.html#apis-marked-as-internal" title="Permalink to this headline">¶</a></h3>
+<p>Certain APIs are explicitly marked as &#8220;internal&#8221; in a couple of ways:</p>
+<ul class="simple">
+<li>Some documentation refers to internals and mentions them as such. If the
+documentation says that something is internal, we reserve the right to
+change it.</li>
+<li>Functions, methods, and other objects prefixed by a leading underscore
+(<tt class="docutils literal"><span class="pre">_</span></tt>). This is the standard Python way of indicating that something is
+private; if any method starts with a single <tt class="docutils literal"><span class="pre">_</span></tt>, it&#8217;s an internal API.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">API stability</a><ul>
+<li><a class="reference external" href="index.html#what-stable-means">What &#8220;stable&#8221; means</a></li>
+<li><a class="reference external" href="index.html#stable-apis">Stable APIs</a><ul>
+<li><a class="reference external" href="index.html#django-utils"><tt class="docutils literal"><span class="pre">django.utils</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="index.html#exceptions">Exceptions</a><ul>
+<li><a class="reference external" href="index.html#security-fixes">Security fixes</a></li>
+<li><a class="reference external" href="index.html#contributed-applications-django-contrib">Contributed applications (<tt class="docutils literal"><span class="pre">django.contrib</span></tt>)</a></li>
+<li><a class="reference external" href="index.html#apis-marked-as-internal">APIs marked as internal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../index.html">Meta-documentation and miscellany</a></li>
+        
+        
+          <li>Next: <a href="../design-philosophies/index.html">Design philosophies</a></li>
+        
+        <li><a href="../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../index.html">Meta-documentation and miscellany</a>
+          
+          <ul><li>API stability</li></ul>
+          </li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+

@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+
+		<title>Django | Signals sent by the comments app | Django Documentation</title>
+
+		<meta name="ROBOTS" content="ALL" />
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
+
+		<meta name="keywords" content="Python, Django, framework, open-source" />
+		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+
+		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
+      
+  
+  <style type="text/css" media="screen">
+    #docs-search {
+      color: #000;
+      float: right;
+    }
+    #docs-search form {
+      font-size: 92%;
+      margin: 0;
+      padding: 1em 1em 0;
+      white-space: nowrap;
+    }
+    form.search ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    form.search li {
+      display: inline;
+      padding-right: 1em;
+    }
+    form.search .query {
+      width: 18em;
+    }
+  </style>
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+
+	</head>
+
+	<body id="documentation" class="default">
+
+	<div id="container">
+		<div id="header">
+			<h1 id="logo"><a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/site/hdr_logo.gif" alt="Django" /></a></h1>
+			<ul id="nav-global">
+				<li id="nav-homepage"><a href="http://www.djangoproject.com/">Home</a></li>
+				<li id="nav-download"><a href="http://www.djangoproject.com/download/">Download</a></li>
+				<li id="nav-documentation"><a href="http://docs.djangoproject.com/">Documentation</a></li>
+				<li id="nav-weblog"><a href="http://www.djangoproject.com/weblog/">Weblog</a></li>
+				<li id="nav-community"><a href="http://www.djangoproject.com/community/">Community</a></li>
+				<li id="nav-code"><a href="http://code.djangoproject.com/">Code</a></li>
+			</ul>
+		</div>
+		<!-- END Header -->
+		<div id="billboard">
+  <h2><a href="../../../../index.html">Django documentation</a></h2>
+</div>
+		<div id="columnwrap">
+			
+		<div id="content-main">
+		
+
+
+  <h2 class="deck">
+  
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="http://docs.djangoproject.com/en/1.0/ref/contrib/comments/signals/">Django 1.0</a>
+  
+  </h2>
+  <div class="section" id="s-module-django.contrib.comments.signals">
+<span id="s-ref-contrib-comments-signals"></span><span id="module-django.contrib.comments.signals"></span><span id="ref-contrib-comments-signals"></span><h1>Signals sent by the comments app<a class="headerlink" href="index.html#module-django.contrib.comments.signals" title="Permalink to this headline">¶</a></h1>
+<p>The comment app sends a series of <a class="reference external" href="../../../../topics/signals/index.html#topics-signals"><em>signals</em></a> to allow for
+comment moderation and similar activities. See <a class="reference external" href="../../../../topics/signals/index.html#topics-signals"><em>the introduction to signals</em></a> for information about how to register for and receive these
+signals.</p>
+<div class="section" id="s-comment-will-be-posted">
+<span id="comment-will-be-posted"></span><h2>comment_will_be_posted<a class="headerlink" href="index.html#comment-will-be-posted" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="django.contrib.comments.signals.comment_will_be_posted">
+<!--[django.contrib.comments.signals.comment_will_be_posted]--><tt class="descclassname">django.contrib.comments.signals.</tt><tt class="descname">comment_will_be_posted</tt><a class="headerlink" href="index.html#django.contrib.comments.signals.comment_will_be_posted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Sent just before a comment will be saved, after it&#8217;s been sanity checked and
+submitted. This can be used to modify the comment (in place) with posting
+details or other such actions.</p>
+<p>If any receiver returns <tt class="xref docutils literal"><span class="pre">False</span></tt> the comment will be discarded and a 403 (not
+allowed) response will be returned.</p>
+<p>This signal is sent at more or less the same time (just before, actually) as the
+<tt class="docutils literal"><span class="pre">Comment</span></tt> object&#8217;s <a title="django.db.models.signals.pre_save" class="reference external" href="../../../signals/index.html#django.db.models.signals.pre_save"><tt class="xref docutils literal"><span class="pre">pre_save</span></tt></a> signal.</p>
+<p>Arguments sent with this signal:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">sender</span></tt></dt>
+<dd>The comment model.</dd>
+<dt><tt class="docutils literal"><span class="pre">comment</span></tt></dt>
+<dd>The comment instance about to be posted. Note that it won&#8217;t have been
+saved into the database yet, so it won&#8217;t have a primary key, and any
+relations might not work correctly yet.</dd>
+<dt><tt class="docutils literal"><span class="pre">request</span></tt></dt>
+<dd>The <a title="django.http.HttpRequest" class="reference external" href="../../../request-response/index.html#django.http.HttpRequest"><tt class="xref docutils literal"><span class="pre">HttpRequest</span></tt></a> that posted the comment.</dd>
+</dl>
+</div>
+<div class="section" id="s-comment-was-posted">
+<span id="comment-was-posted"></span><h2>comment_was_posted<a class="headerlink" href="index.html#comment-was-posted" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="django.contrib.comments.signals.comment_was_posted">
+<!--[django.contrib.comments.signals.comment_was_posted]--><tt class="descclassname">django.contrib.comments.signals.</tt><tt class="descname">comment_was_posted</tt><a class="headerlink" href="index.html#django.contrib.comments.signals.comment_was_posted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Sent just after the comment is saved.</p>
+<p>Arguments sent with this signal:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">sender</span></tt></dt>
+<dd>The comment model.</dd>
+<dt><tt class="docutils literal"><span class="pre">comment</span></tt></dt>
+<dd>The comment instance that was posted. Note that it will have already
+been saved, so if you modify it you&#8217;ll need to call
+<a title="django.db.models.Model.save" class="reference external" href="../../../models/instances/index.html#django.db.models.Model.save"><tt class="xref docutils literal"><span class="pre">save()</span></tt></a> again.</dd>
+<dt><tt class="docutils literal"><span class="pre">request</span></tt></dt>
+<dd>The <a title="django.http.HttpRequest" class="reference external" href="../../../request-response/index.html#django.http.HttpRequest"><tt class="xref docutils literal"><span class="pre">HttpRequest</span></tt></a> that posted the comment.</dd>
+</dl>
+</div>
+<div class="section" id="s-comment-was-flagged">
+<span id="comment-was-flagged"></span><h2>comment_was_flagged<a class="headerlink" href="index.html#comment-was-flagged" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="django.contrib.comments.signals.comment_was_flagged">
+<!--[django.contrib.comments.signals.comment_was_flagged]--><tt class="descclassname">django.contrib.comments.signals.</tt><tt class="descname">comment_was_flagged</tt><a class="headerlink" href="index.html#django.contrib.comments.signals.comment_was_flagged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Sent after a comment was &#8220;flagged&#8221; in some way. Check the flag to see if this
+was a user requesting removal of a comment, a moderator approving/removing a
+comment, or some other custom user flag.</p>
+<p>Arguments sent with this signal:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">sender</span></tt></dt>
+<dd>The comment model.</dd>
+<dt><tt class="docutils literal"><span class="pre">comment</span></tt></dt>
+<dd>The comment instance that was posted. Note that it will have already
+been saved, so if you modify it you&#8217;ll need to call
+<a title="django.db.models.Model.save" class="reference external" href="../../../models/instances/index.html#django.db.models.Model.save"><tt class="xref docutils literal"><span class="pre">save()</span></tt></a> again.</dd>
+<dt><tt class="docutils literal"><span class="pre">flag</span></tt></dt>
+<dd>The <tt class="xref docutils literal"><span class="pre">CommentFlag</span></tt> that&#8217;s been
+attached to the comment.</dd>
+<dt><tt class="docutils literal"><span class="pre">created</span></tt></dt>
+<dd><tt class="xref docutils literal"><span class="pre">True</span></tt> if this is a new flag; <tt class="xref docutils literal"><span class="pre">False</span></tt> if it&#8217;s a duplicate flag.</dd>
+<dt><tt class="docutils literal"><span class="pre">request</span></tt></dt>
+<dd>The <a title="django.http.HttpRequest" class="reference external" href="../../../request-response/index.html#django.http.HttpRequest"><tt class="xref docutils literal"><span class="pre">HttpRequest</span></tt></a> that posted the comment.</dd>
+</dl>
+</div>
+</div>
+
+
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>Having trouble? We'd like to help!</p>
+  <ul>
+    <li>
+      Try the <a href="../../../../faq/index.html">FAQ</a> — it's got answers to many common
+      questions.
+    </li>
+    <li>
+      Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.
+    </li>
+    <li>
+      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      channel</a>, or search the <a href="http://oebfare.com/logger/django/">IRC
+      logs</a> to see if its been asked before.
+    </li>
+    <li>
+      If you notice errors with this documentation, please <a
+      href="http://code.djangoproject.com/simpleticket?component=Documentation">
+      open a ticket</a> and let us know! Please only use the ticket tracker for
+      criticisms and improvements on the docs. For tech support, use the
+      resources above.
+    </li>
+  </ul>
+</div>
+
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		
+  
+    <h2>Contents</h2>
+    
+      <ul>
+<li><a class="reference external" href="index.html">Signals sent by the comments app</a><ul>
+<li><a class="reference external" href="index.html#comment-will-be-posted">comment_will_be_posted</a></li>
+<li><a class="reference external" href="index.html#comment-was-posted">comment_was_posted</a></li>
+<li><a class="reference external" href="index.html#comment-was-flagged">comment_was_flagged</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  
+  
+  
+    <h2>Search</h2>
+    
+    <form action="../../../../search/index.html" id="search" class="search">
+  <div>
+    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="hidden" name="hl" value="" />
+    <input id="id_search_q" type="text" class="query" name="q" />
+    <input type="submit" name="sa" class="submit" value="Search" />
+    <ul>
+<li><label for="id_search_as_q_0"><input checked="checked" type="radio" id="id_search_as_q_0" value="more:dev_docs" name="as_q" /> Latest</label></li>
+<li><label for="id_search_as_q_1"><input type="radio" id="id_search_as_q_1" value="more:1.0_docs" name="as_q" /> 1.0</label></li>
+<li><label for="id_search_as_q_2"><input type="radio" id="id_search_as_q_2" value="more:0.96_docs" name="as_q" /> 0.96</label></li>
+<li><label for="id_search_as_q_3"><input type="radio" id="id_search_as_q_3" value="more:all_docs" name="as_q" /> All</label></li>
+</ul>
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=search&amp;lang="></script>
+  
+  
+  
+    <h2>Browse</h2>
+    <ul>
+      
+        
+          <li>Prev: <a href="../settings/index.html">Comment settings</a></li>
+        
+        
+          <li>Next: <a href="../upgrade/index.html">Upgrading from Django&#8217;s previous comment system</a></li>
+        
+        <li><a href="../../../../contents/index.html">Table of contents</a></li>
+        
+          <li><a href="../../../../genindex/index.html">General Index</a></li>
+        
+          <li><a href="../../../../modindex/index.html">Global Module Index</a></li>
+        
+      
+    </ul>
+  
+  
+  
+    <h2>You are here:</h2>
+    <ul>
+      
+        <li>
+          <a href="../../../../index.html">Django dev documentation</a>
+          
+            <ul><li><a href="../../../index.html">API Reference</a>
+          
+            <ul><li><a href="../../index.html">The &#8220;django.contrib&#8221; add-ons</a>
+          
+            <ul><li><a href="../index.html">Django&#8217;s comments framework</a>
+          
+          <ul><li>Signals sent by the comments app</li></ul>
+          </li></ul></li></ul></li></ul>
+        </li>
+      
+    </ul>
+  
+  
+  
+    <h3>Last update:</h3>
+    <div>November 19, 2009, 4 p.m. (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+  
+
+		</div>
+		<!-- END #content-related -->
+
+		</div>
+		<!-- END #content -->
+		<div id="footer">
+			<p>&copy; 2005-2009 <a href="http://www.djangoproject.com/foundation/">Django Software Foundation</a> unless otherwise noted. Django is a registered trademark of the Django Software Foundation. 
+			Hosting graciously provided by <a href="http://mediatemple.net/">
+			<img style="vertical-align: middle; position: relative; top: -1px;" src="http://media.djangoproject.com/img/site/mt.png" alt="media temple" /></a>
+			</p>
+		</div>
+		<!-- END #footer -->
+	</div>
+	<!-- END #container -->
+	</body>
+</html>
+
